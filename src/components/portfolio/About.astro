@@ -1,0 +1,221 @@
+---
+const facts = [
+  { emoji: '🇧🇪🇵🇪', label: 'Belgian-Peruvian' },
+  { emoji: '💻', label: 'React Developer @ iO Digital' },
+  { emoji: '🧗', label: 'Boulderer' },
+  { emoji: '🏄', label: 'Surfer' },
+  { emoji: '🛹', label: 'Longboarder' },
+  { emoji: '🎮', label: 'Gamer since forever' },
+  { emoji: '🟢', label: 'MrGreenSlime' },
+  { emoji: '🔐', label: 'CTF & Pentesting' },
+  { emoji: '🎲', label: 'DND Worldbuilder' },
+];
+
+const languages = ['English', 'Dutch', 'Spanish', 'French', 'Italian', 'German'];
+---
+
+<section id="about" class="about" data-section="about">
+  <div class="about__container">
+    <h2 class="about__title scroll-reveal">
+      <span class="about__title-line">I build things</span>
+      <span class="about__title-line accent">for the web</span>
+      <span class="about__title-line dim">and beyond.</span>
+    </h2>
+
+    <div class="about__body">
+      <div class="about__text">
+        <p class="scroll-reveal" style="--reveal-delay: 0.1s">
+          I'm a 24-year-old creative developer from Belgium with Peruvian roots.
+          I love making the web feel alive — through animation, interaction, and
+          obsessive attention to the little things that make people go "wait, how?"
+        </p>
+        <p class="scroll-reveal" style="--reveal-delay: 0.2s">
+          By day I build React applications at <strong>iO Digital</strong> in Ghent.
+          By night I'm probably working on one of my many side projects, climbing
+          a wall somewhere, or gaming with my girlfriend.
+        </p>
+        <p class="scroll-reveal" style="--reveal-delay: 0.3s">
+          I have ADD, which means I have 47 ideas per minute and finish approximately
+          3 per year. But the ones I finish? Those are pretty cool.
+        </p>
+      </div>
+
+      <div class="about__facts">
+        {facts.map((fact, i) => (
+          <div
+            class="about__fact scroll-reveal"
+            style={`--reveal-delay: ${0.1 + i * 0.05}s`}
+          >
+            <span class="about__fact-emoji">{fact.emoji}</span>
+            <span class="about__fact-label">{fact.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="about__languages scroll-reveal" style="--reveal-delay: 0.5s">
+      <span class="about__lang-label">I speak</span>
+      <div class="about__lang-orbit">
+        {languages.map((lang, i) => (
+          <span
+            class="about__lang-tag"
+            style={`--orbit-i: ${i}; --orbit-total: ${languages.length}`}
+          >
+            {lang}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    min-height: 100vh;
+    padding: 8rem 2rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .about__container {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .about__title {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    margin-bottom: 4rem;
+  }
+
+  .about__title-line {
+    display: block;
+  }
+
+  .about__title-line.accent {
+    color: var(--color-accent);
+  }
+
+  .about__title-line.dim {
+    color: var(--color-text-dim);
+  }
+
+  .about__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .about__body {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  .about__text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .about__text strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .about__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .about__fact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--color-text-dim);
+    transition: all 0.3s ease;
+  }
+
+  .about__fact:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px var(--color-accent-dim);
+  }
+
+  .about__fact-emoji {
+    font-size: 1.1rem;
+  }
+
+  .about__languages {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .about__lang-label {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .about__lang-orbit {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .about__lang-tag {
+    padding: 6px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+    transition: all 0.3s ease;
+    animation: langFloat 4s ease-in-out infinite;
+    animation-delay: calc(var(--orbit-i) * 0.3s);
+  }
+
+  .about__lang-tag:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateY(-4px);
+  }
+
+  @keyframes langFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  /* Scroll reveal animation */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: scrollReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--reveal-delay, 0s);
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+
+  @keyframes scrollReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

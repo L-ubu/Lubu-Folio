@@ -1,0 +1,212 @@
+---
+---
+
+<section id="hero" class="hero" data-section="hero">
+  <div class="hero__bg">
+    <div class="hero__shape hero__shape--1"></div>
+    <div class="hero__shape hero__shape--2"></div>
+    <div class="hero__shape hero__shape--3"></div>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__name-wrapper">
+      <h1 class="hero__name" data-name-click>
+        {'LUCA VANDENWEGHE'.split('').map((char, i) => (
+          <span
+            class="hero__letter"
+            style={`--i: ${i}; --delay: ${i * 0.04}s`}
+          >
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        ))}
+      </h1>
+    </div>
+
+    <div class="hero__subtitle">
+      <span class="hero__role" id="role-text">Creative Developer</span>
+      <span class="hero__cursor-blink">|</span>
+    </div>
+
+    <div class="hero__scroll-hint">
+      <div class="hero__scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const roles = ['Creative Developer', 'React Specialist', 'CSS Enthusiast', 'MrGreenSlime', 'Builder of Things'];
+  let roleIndex = 0;
+  const roleEl = document.getElementById('role-text');
+
+  async function morphRole() {
+    if (!roleEl) return;
+    const current = roleEl.textContent;
+    const next = roles[(++roleIndex) % roles.length];
+
+    for (let i = current.length; i >= 0; i--) {
+      roleEl.textContent = current.slice(0, i);
+      await new Promise(r => setTimeout(r, 30));
+    }
+    for (let i = 0; i <= next.length; i++) {
+      roleEl.textContent = next.slice(0, i);
+      await new Promise(r => setTimeout(r, 50));
+    }
+  }
+
+  setInterval(morphRole, 3500);
+
+  const nameEl = document.querySelector('[data-name-click]');
+  if (nameEl) {
+    nameEl.addEventListener('click', () => {
+      if (window.__nameClick) window.__nameClick();
+    });
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero__shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.04;
+    background: var(--color-accent);
+    animation: shapeFloat 20s ease-in-out infinite;
+  }
+
+  .hero__shape--1 {
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    right: -100px;
+    animation-delay: 0s;
+  }
+
+  .hero__shape--2 {
+    width: 400px;
+    height: 400px;
+    bottom: -100px;
+    left: -100px;
+    animation-delay: -7s;
+  }
+
+  .hero__shape--3 {
+    width: 300px;
+    height: 300px;
+    top: 40%;
+    left: 60%;
+    animation-delay: -14s;
+  }
+
+  @keyframes shapeFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero__name-wrapper {
+    overflow: hidden;
+    padding: 0.2em 0;
+  }
+
+  .hero__name {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .hero__letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: letterReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes letterReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero__subtitle {
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.9rem, 2vw, 1.3rem);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 2em;
+  }
+
+  .hero__cursor-blink {
+    animation: blink 1s step-end infinite;
+    color: var(--color-accent);
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .hero__scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeInUp 1s ease 2s both;
+  }
+
+  .hero__scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--color-accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.3); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+</style>

@@ -1,0 +1,232 @@
+---
+const entries = [
+  {
+    type: 'work',
+    title: 'React Developer',
+    org: 'iO Digital',
+    period: '2023 — Present',
+    description: 'Building React/TypeScript frontends for Jaguar Land Rover. Working with Drupal, Symfony APIs, Storybook, and a great team in Ghent.',
+    tags: ['React', 'TypeScript', 'Drupal', 'Storybook'],
+    accent: '#3b82f6',
+  },
+  {
+    type: 'education',
+    title: 'ICT — Fullstack Developer',
+    org: 'HOGENT',
+    period: '2019 — 2022',
+    description: 'Studied fullstack development with a focus on web technologies, databases, and software architecture.',
+    tags: ['JavaScript', 'Java', 'SQL', 'Web Dev'],
+    accent: '#22c55e',
+  },
+  {
+    type: 'education',
+    title: 'Business Management',
+    org: 'Extra Courses',
+    period: '2022',
+    description: 'Accounting and business management fundamentals — for the future entrepreneur in me.',
+    tags: ['Business', 'Accounting'],
+    accent: '#f59e0b',
+  },
+  {
+    type: 'education',
+    title: 'Infrastructure & Data Security',
+    org: 'Extra Courses',
+    period: '2022',
+    description: 'Network security, pentesting fundamentals, and infrastructure management.',
+    tags: ['Security', 'Networking', 'Pentesting'],
+    accent: '#f43f5e',
+  },
+  {
+    type: 'education',
+    title: 'Microcontrollers & Electronics',
+    org: 'Extra Courses',
+    period: '2022',
+    description: 'Hardware programming, embedded systems, and electronics basics.',
+    tags: ['Hardware', 'Embedded', 'Electronics'],
+    accent: '#06b6d4',
+  },
+];
+---
+
+<section id="experience" class="experience" data-section="experience">
+  <div class="experience__container">
+    <h2 class="experience__title scroll-reveal">Experience</h2>
+    <p class="experience__subtitle scroll-reveal" style="--reveal-delay: 0.1s">
+      Where I've been and what I've learned
+    </p>
+
+    <div class="experience__scroll">
+      <div class="experience__track">
+        {entries.map((entry, i) => (
+          <article
+            class="exp-card scroll-reveal"
+            style={`--card-accent: ${entry.accent}; --reveal-delay: ${i * 0.1}s`}
+          >
+            <div class="exp-card__type">
+              {entry.type === 'work' ? '💼' : '🎓'}
+              <span>{entry.type}</span>
+            </div>
+            <h3 class="exp-card__title">{entry.title}</h3>
+            <div class="exp-card__org">{entry.org}</div>
+            <div class="exp-card__period">{entry.period}</div>
+            <p class="exp-card__desc">{entry.description}</p>
+            <div class="exp-card__tags">
+              {entry.tags.map(tag => (
+                <span class="exp-card__tag">{tag}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience {
+    padding: 8rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .experience__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .experience__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .experience__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .experience__scroll {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 1rem;
+  }
+
+  .experience__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .experience__track {
+    display: flex;
+    gap: 20px;
+    padding: 1rem 0;
+    width: max-content;
+  }
+
+  .exp-card {
+    flex: 0 0 320px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    scroll-snap-align: start;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--card-accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .exp-card:hover {
+    border-color: var(--card-accent);
+    transform: translateY(-4px);
+  }
+
+  .exp-card:hover::before {
+    opacity: 1;
+  }
+
+  .exp-card__type {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .exp-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-card__org {
+    font-size: 0.9rem;
+    color: var(--card-accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-card__period {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .exp-card__desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-text-dim);
+    margin-bottom: 1rem;
+  }
+
+  .exp-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .exp-card__tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--color-text-muted);
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: scrollReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--reveal-delay, 0s);
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+
+  @keyframes scrollReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

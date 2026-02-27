@@ -1,0 +1,321 @@
+---
+const socials = [
+  { label: 'GitHub', icon: '⌂', href: 'https://github.com/MrGreenSlime', id: 'github' },
+  { label: 'GitLab', icon: '◈', href: '#', id: 'gitlab' },
+  { label: 'Email', icon: '✉', href: 'mailto:vandenweghe.luca@gmail.com', id: 'email' },
+];
+---
+
+<section id="contact" class="contact" data-section="contact">
+  <div class="contact__container">
+    <h2 class="contact__title scroll-reveal">
+      Let's build<br/>
+      <span class="accent">something cool</span>
+    </h2>
+
+    <p class="contact__subtitle scroll-reveal" style="--reveal-delay: 0.1s">
+      Got an idea? Want to collaborate? Or just want to say hi?
+    </p>
+
+    <form class="contact__form scroll-reveal" style="--reveal-delay: 0.2s" data-contact-form>
+      <div class="contact__field">
+        <input type="text" id="name" placeholder=" " required />
+        <label for="name">Your name</label>
+        <div class="contact__field-line"></div>
+      </div>
+
+      <div class="contact__field">
+        <input type="email" id="email-input" placeholder=" " required />
+        <label for="email-input">Your email</label>
+        <div class="contact__field-line"></div>
+      </div>
+
+      <div class="contact__field">
+        <textarea id="message" rows="4" placeholder=" " required></textarea>
+        <label for="message">Your message</label>
+        <div class="contact__field-line"></div>
+      </div>
+
+      <button type="submit" class="contact__submit">
+        <span>Send message</span>
+        <span class="contact__submit-arrow">→</span>
+      </button>
+    </form>
+
+    <div class="contact__socials scroll-reveal" style="--reveal-delay: 0.4s">
+      {socials.map((social, i) => (
+        <a
+          href={social.href}
+          class="contact__social"
+          target="_blank"
+          rel="noopener"
+          data-social={social.id}
+          data-email-clicks="0"
+          style={`--social-delay: ${i * 0.1}s`}
+        >
+          <span class="contact__social-icon">{social.icon}</span>
+          <span class="contact__social-label">{social.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="contact__footer">
+    <p>Built with obsessive attention to detail by <strong>Luca Vandenweghe</strong></p>
+    <p class="contact__footer-sub">Astro + React + Three.js + too much coffee ☕</p>
+  </div>
+</section>
+
+<!-- Hidden ASCII art past the footer -->
+<div class="hidden-ascii" aria-hidden="true">
+<pre>
+      ╭───────────────────────╮
+      │  You scrolled too far │
+      │  Here's a slime: 🟢   │
+      │  — MrGreenSlime       │
+      ╰───────────────────────╯
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+</pre>
+</div>
+
+<script>
+  const emailLink = document.querySelector('[data-social="email"]');
+  if (emailLink) {
+    let clicks = 0;
+    emailLink.addEventListener('click', (e) => {
+      clicks++;
+      if (clicks >= 5) {
+        e.preventDefault();
+        clicks = 0;
+        const msg = document.createElement('div');
+        msg.textContent = '🟢 Psst... the answer to the riddle is "a die" (dice)';
+        msg.style.cssText = 'position:fixed;bottom:80px;right:24px;z-index:99999;background:#111;border:1px solid var(--color-accent);border-radius:8px;padding:12px 16px;font-family:var(--font-mono);font-size:13px;color:var(--color-accent);box-shadow:0 8px 30px rgba(0,0,0,0.5);animation:fadeInUp 0.5s ease;';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 5000);
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact {
+    min-height: 100vh;
+    padding: 8rem 2rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .contact__container {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .contact__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .contact__title .accent {
+    color: var(--color-accent);
+  }
+
+  .contact__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 3rem;
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+    margin-bottom: 3rem;
+  }
+
+  .contact__field {
+    position: relative;
+  }
+
+  .contact__field input,
+  .contact__field textarea {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1rem;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: none;
+  }
+
+  .contact__field input:focus,
+  .contact__field textarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-dim);
+  }
+
+  .contact__field label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact__field input:focus + label,
+  .contact__field input:not(:placeholder-shown) + label,
+  .contact__field textarea:focus + label,
+  .contact__field textarea:not(:placeholder-shown) + label {
+    top: -0.6rem;
+    left: 0.8rem;
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    background: var(--color-bg);
+    padding: 0 4px;
+  }
+
+  .contact__field-line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: 1px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact__field input:focus ~ .contact__field-line,
+  .contact__field textarea:focus ~ .contact__field-line {
+    left: 0;
+    width: 100%;
+  }
+
+  .contact__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 1rem 2rem;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact__submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--color-accent-dim);
+  }
+
+  .contact__submit-arrow {
+    transition: transform 0.3s;
+  }
+
+  .contact__submit:hover .contact__submit-arrow {
+    transform: translateX(4px);
+  }
+
+  .contact__socials {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .contact__social {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-dim);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .contact__social:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .contact__footer {
+    margin-top: 6rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    padding-bottom: 2rem;
+  }
+
+  .contact__footer strong {
+    color: var(--color-text);
+  }
+
+  .contact__footer-sub {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+    opacity: 0.6;
+  }
+
+  .hidden-ascii {
+    text-align: center;
+    color: #222;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 2rem;
+    user-select: none;
+    transition: color 0.5s;
+  }
+
+  .hidden-ascii:hover {
+    color: var(--color-accent);
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: scrollReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--reveal-delay, 0s);
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+
+  @keyframes scrollReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

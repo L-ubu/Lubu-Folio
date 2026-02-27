@@ -1,0 +1,168 @@
+import { useState, useRef, useEffect } from 'react';
+
+const portalData = [
+  {
+    id: 'portfolio',
+    title: 'Portfolio',
+    subtitle: 'The main experience',
+    icon: '◆',
+    href: '/portfolio',
+    locked: false,
+    style: 'primary',
+  },
+  {
+    id: 'arcade',
+    title: 'Arcade',
+    subtitle: '3D game world',
+    icon: '▲',
+    href: '/arcade',
+    locked: true,
+    style: 'pixel',
+  },
+  {
+    id: 'grid',
+    title: 'The Grid',
+    subtitle: 'Idle game',
+    icon: '⬡',
+    href: '/grid',
+    locked: true,
+    style: 'grid',
+  },
+  {
+    id: 'void',
+    title: 'Void',
+    subtitle: 'Darkness awaits',
+    icon: '●',
+    href: '/void',
+    locked: true,
+    style: 'void',
+  },
+  {
+    id: 'construct',
+    title: 'Construct',
+    subtitle: 'Build it yourself',
+    icon: '▢',
+    href: '/construct',
+    locked: true,
+    style: 'construct',
+  },
+];
+
+function Portal({ portal, index, total, onNavigate }) {
+  const [hovered, setHovered] = useState(false);
+  const ref = useRef(null);
+
+  const angle = (index / total) * Math.PI * 2 - Math.PI / 2;
+  const radius = portal.style === 'primary' ? 0 : 180;
+  const x = Math.cos(angle) * radius;
+  const y = Math.sin(angle) * radius;
+
+  const isPrimary = portal.style === 'primary';
+
+  return (
+    <button
+      ref={ref}
+      onClick={() => !portal.locked && onNavigate(portal.href)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="portal-node"
+      style={{
+        position: 'absolute',
+        left: `calc(50% + ${x}px)`,
+        top: `calc(50% + ${y}px)`,
+        transform: `translate(-50%, -50%) scale(${hovered && !portal.locked ? 1.15 : 1})`,
+        transition: 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.5s',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 8,
+        background: 'none',
+        border: 'none',
+        color: portal.locked ? '#555' : '#f5f5f5',
+        cursor: portal.locked ? 'not-allowed' : 'none',
+        zIndex: isPrimary ? 10 : 5,
+        opacity: portal.locked ? 0.4 : 1,
+      }}
+    >
+      <div
+        style={{
+          width: isPrimary ? 90 : 65,
+          height: isPrimary ? 90 : 65,
+          borderRadius: '50%',
+          border: `2px solid ${hovered && !portal.locked ? 'var(--color-accent)' : '#333'}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: isPrimary ? 32 : 22,
+          background: hovered && !portal.locked ? 'var(--color-accent-dim)' : 'rgba(17,17,17,0.6)',
+          backdropFilter: 'blur(10px)',
+          boxShadow: hovered && !portal.locked ? '0 0 30px var(--color-accent-dim), 0 0 60px var(--color-accent-dim)' : 'none',
+          transition: 'all 0.5s cubic-bezier(0.34,1.56,0.64,1)',
+          position: 'relative',
+        }}
+      >
+        {portal.locked ? '🔒' : portal.icon}
+        {isPrimary && !portal.locked && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: -4,
+              borderRadius: '50%',
+              border: '1px solid var(--color-accent)',
+              opacity: hovered ? 0.6 : 0.2,
+              animation: 'portalPulse 2s ease-in-out infinite',
+            }}
+          />
+        )}
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: isPrimary ? 16 : 13,
+            fontWeight: 600,
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+          }}
+        >
+          {portal.title}
+        </div>
+        <div
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 10,
+            color: portal.locked ? '#444' : '#888',
+            marginTop: 2,
+          }}
+        >
+          {portal.locked ? 'Coming soon' : portal.subtitle}
+        </div>
+      </div>
+    </button>
+  );
+}
+
+export default function PortalNodes({ onNavigate }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 10, pointerEvents: 'none' }}>
+      <div style={{ position: 'relative', width: '100%', height: '100%', pointerEvents: 'auto' }}>
+        {portalData.map((portal, i) => (
+          <Portal
+            key={portal.id}
+            portal={portal}
+            index={i}
+            total={portalData.length}
+            onNavigate={onNavigate}
+          />
+        ))}
+      </div>
+
+      <style>{`
+        @keyframes portalPulse {
+          0%, 100% { transform: scale(1); opacity: 0.2; }
+          50% { transform: scale(1.2); opacity: 0.5; }
+        }
+      `}</style>
+    </div>
+  );
+}
