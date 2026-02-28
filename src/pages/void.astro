@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import VoidApp from '../components/void/VoidApp.jsx';
+import AchievementToast from '../components/shared/AchievementToast.jsx';
+---
+
+<Layout title="Lubu | Void">
+  <AchievementToast client:only="react" />
+  <VoidApp client:only="react" />
+</Layout>
