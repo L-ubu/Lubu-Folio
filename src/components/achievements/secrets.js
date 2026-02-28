@@ -146,7 +146,15 @@ function showCustomContextMenu(x, y) {
     { label: '🟢 I am MrGreenSlime', action: triggerSlimeRain },
     { label: '🎮 Konami?', action: triggerKonamiEffect },
     { label: '💚 Go green', action: triggerSlimeFlash },
-    { label: '🔍 View source (the real one)', action: () => window.open('view-source:' + window.location.href) },
+    { label: '🔍 Copy page source', action: () => {
+      navigator.clipboard.writeText(document.documentElement.outerHTML).then(() => {
+        const toast = document.createElement('div');
+        toast.textContent = '📋 Source HTML copied to clipboard!';
+        toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:99999;background:#111;border:1px solid var(--color-accent);border-radius:8px;padding:12px 20px;font-family:var(--font-mono);font-size:13px;color:var(--color-accent);box-shadow:0 8px 30px rgba(0,0,0,0.5);';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+      });
+    }},
   ];
 
   for (const item of items) {

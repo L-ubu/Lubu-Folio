@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent: #3b82f6;
-  --color-accent-dim: #3b82f620;
-  --color-accent-glow: #3b82f640;
+  --color-accent: #16a34a;
+  --color-accent-dim: #16a34a20;
+  --color-accent-glow: #16a34a40;
   --color-bg: #050505;
   --color-bg-elevated: #0a0a0a;
   --color-surface: #111111;
@@ -12,9 +12,9 @@
   --color-text-muted: #555555;
   --color-border: #222222;
 
-  --font-heading: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
@@ -60,7 +60,12 @@
     border-radius: 3px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -75,17 +80,25 @@
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, var(--color-text) 0%, var(--color-accent) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-text) 0%,
+      var(--color-accent) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .glow {
-    box-shadow: 0 0 20px var(--color-accent-dim), 0 0 60px var(--color-accent-dim);
+    box-shadow:
+      0 0 20px var(--color-accent-dim),
+      0 0 60px var(--color-accent-dim);
   }
 
   .glow-text {
-    text-shadow: 0 0 20px var(--color-accent-glow), 0 0 40px var(--color-accent-dim);
+    text-shadow:
+      0 0 20px var(--color-accent-glow),
+      0 0 40px var(--color-accent-dim);
   }
 }

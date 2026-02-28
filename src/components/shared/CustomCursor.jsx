@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function CustomCursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
-  const [hovering, setHovering] = useState(false);
+  const hoveringRef = useRef(false);
 
   useEffect(() => {
     const isTouchDevice = 'ontouchstart' in window;
     if (isTouchDevice) return;
 
-    let mx = -100, my = -100;
-    let dx = -100, dy = -100;
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let dx = mx, dy = my;
+    let raf;
 
     const move = (e) => {
       mx = e.clientX;
@@ -25,38 +27,38 @@ export default function CustomCursor() {
         dotRef.current.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
       }
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${dx - 18}px, ${dy - 18}px) scale(${hovering ? 1.6 : 1})`;
+        const s = hoveringRef.current ? 1.6 : 1;
+        ringRef.current.style.transform = `translate(${dx - 18}px, ${dy - 18}px) scale(${s})`;
+        ringRef.current.style.opacity = hoveringRef.current ? '0.8' : '0.4';
       }
-      requestAnimationFrame(tick);
+      raf = requestAnimationFrame(tick);
     };
 
-    const enterInteractive = () => setHovering(true);
-    const leaveInteractive = () => setHovering(false);
+    const enterInteractive = () => { hoveringRef.current = true; };
+    const leaveInteractive = () => { hoveringRef.current = false; };
 
-    document.addEventListener('mousemove', move);
-    requestAnimationFrame(tick);
-
-    const observer = new MutationObserver(() => {
-      document.querySelectorAll('a, button, [data-cursor-hover], .portal-node').forEach((el) => {
+    const bindInteractives = () => {
+      document.querySelectorAll('a, button, [data-cursor-hover], .portal-node, input, textarea').forEach((el) => {
         el.removeEventListener('mouseenter', enterInteractive);
         el.removeEventListener('mouseleave', leaveInteractive);
         el.addEventListener('mouseenter', enterInteractive);
         el.addEventListener('mouseleave', leaveInteractive);
       });
-    });
+    };
 
+    document.addEventListener('mousemove', move);
+    raf = requestAnimationFrame(tick);
+    bindInteractives();
+
+    const observer = new MutationObserver(bindInteractives);
     observer.observe(document.body, { childList: true, subtree: true });
-
-    document.querySelectorAll('a, button, [data-cursor-hover], .portal-node').forEach((el) => {
-      el.addEventListener('mouseenter', enterInteractive);
-      el.addEventListener('mouseleave', leaveInteractive);
-    });
 
     return () => {
       document.removeEventListener('mousemove', move);
+      cancelAnimationFrame(raf);
       observer.disconnect();
     };
-  }, [hovering]);
+  }, []);
 
   return (
     <>
@@ -73,6 +75,7 @@ export default function CustomCursor() {
           pointerEvents: 'none',
           zIndex: 99999,
           mixBlendMode: 'difference',
+          willChange: 'transform',
         }}
       />
       <div
@@ -87,9 +90,10 @@ export default function CustomCursor() {
           border: '1.5px solid var(--color-accent)',
           pointerEvents: 'none',
           zIndex: 99999,
-          opacity: hovering ? 0.8 : 0.4,
-          transition: 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s',
+          opacity: 0.4,
+          transition: 'opacity 0.3s',
           mixBlendMode: 'difference',
+          willChange: 'transform',
         }}
       />
     </>

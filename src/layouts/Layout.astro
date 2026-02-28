@@ -36,6 +36,58 @@ const { title = "Luca Vandenweghe | Creative Developer", description = "Multi-mo
 
   — MrGreenSlime
 `, 'color: #3b82f6; font-family: monospace;');
+
+      // Animated page title effect
+      const baseTitle = document.title;
+      const glitchChars = '░▒▓█▀▄╔╗╚╝║═╬┼';
+      const frames = ['◐', '◓', '◑', '◒'];
+      let titlePhase = 0;
+      let titleFrame = 0;
+
+      function animateTitle() {
+        titleFrame++;
+
+        if (document.hidden) {
+          const awayFrames = [
+            '👀 come back...',
+            '🟢 *slime noises*',
+            '💤 zzz...',
+            '🔮 secrets await...',
+          ];
+          document.title = awayFrames[Math.floor(titleFrame / 30) % awayFrames.length];
+          return;
+        }
+
+        if (titleFrame < 40) {
+          const progress = Math.floor((titleFrame / 40) * baseTitle.length);
+          let glitched = '';
+          for (let i = 0; i < baseTitle.length; i++) {
+            if (i < progress) {
+              glitched += baseTitle[i];
+            } else if (i < progress + 3) {
+              glitched += glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            } else {
+              glitched += ' ';
+            }
+          }
+          document.title = glitched;
+        } else if (titleFrame < 50) {
+          document.title = baseTitle;
+        } else {
+          const spinner = frames[Math.floor(titleFrame / 8) % frames.length];
+          document.title = `${spinner} ${baseTitle}`;
+          if (titleFrame > 200) titleFrame = 50;
+        }
+      }
+
+      setInterval(animateTitle, 100);
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+          titleFrame = 40;
+          document.title = baseTitle;
+        }
+      });
     </script>
     <!-- If you're reading this source, you're a curious one.
          Here's a riddle: I have 6 faces but no body,

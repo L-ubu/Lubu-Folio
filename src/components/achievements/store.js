@@ -1,11 +1,21 @@
-import { create } from 'zustand';
-import { achievementDefinitions } from '../../data/achievements';
-import { getStored, setStored } from '../../utils/storage';
+import { create } from "zustand";
+import { achievementDefinitions } from "../../data/achievements";
+import { getStored, setStored } from "../../utils/storage";
+
+const loadUnlocked = () => {
+  if (typeof window === "undefined") return [];
+  return getStored("achievements", []);
+};
+
+const loadVisited = () => {
+  if (typeof window === "undefined") return [];
+  return getStored("sections-visited", []);
+};
 
 export const useAchievementStore = create((set, get) => ({
-  unlocked: getStored('achievements', []),
+  unlocked: loadUnlocked(),
   queue: [],
-  sectionsVisited: getStored('sections-visited', []),
+  sectionsVisited: loadVisited(),
 
   unlock: (id) => {
     const state = get();
@@ -14,7 +24,7 @@ export const useAchievementStore = create((set, get) => ({
     if (!def) return;
 
     const newUnlocked = [...state.unlocked, id];
-    setStored('achievements', newUnlocked);
+    setStored("achievements", newUnlocked);
     set({ unlocked: newUnlocked, queue: [...state.queue, def] });
   },
 
@@ -26,11 +36,11 @@ export const useAchievementStore = create((set, get) => ({
     const state = get();
     if (state.sectionsVisited.includes(section)) return;
     const newVisited = [...state.sectionsVisited, section];
-    setStored('sections-visited', newVisited);
+    setStored("sections-visited", newVisited);
     set({ sectionsVisited: newVisited });
 
     if (newVisited.length >= 6) {
-      get().unlock('explorer');
+      get().unlock("explorer");
     }
   },
 
