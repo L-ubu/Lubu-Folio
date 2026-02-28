@@ -1,17 +1,25 @@
 ---
 const facts = [
   { emoji: '🇧🇪🇵🇪', label: 'Belgian-Peruvian' },
-  { emoji: '💻', label: 'React Developer @ iO Digital' },
+  { emoji: '⚛️', label: 'React Developer @ iO Digital' },
+  { emoji: '🎨', label: 'UI & UX Design' },
+  { emoji: '🔐', label: 'Cybersecurity & Pentesting' },
   { emoji: '🧗', label: 'Boulderer' },
   { emoji: '🏄', label: 'Surfer' },
   { emoji: '🛹', label: 'Longboarder' },
-  { emoji: '🎮', label: 'Gamer since forever' },
-  { emoji: '🟢', label: 'MrGreenSlime' },
-  { emoji: '🔐', label: 'CTF & Pentesting' },
+  { emoji: '🎮', label: 'Gamer — MrGreenSlime' },
   { emoji: '🎲', label: 'DND Worldbuilder' },
+  { emoji: '⚜️', label: 'Scout Leader' },
 ];
 
-const languages = ['English', 'Dutch', 'Spanish', 'French', 'Italian', 'German'];
+const languages = [
+  { name: 'Dutch', level: 'Native' },
+  { name: 'English', level: 'C2' },
+  { name: 'Spanish', level: 'C1' },
+  { name: 'French', level: 'B2' },
+  { name: 'German', level: 'A2' },
+  { name: 'Italian', level: 'Learning' },
+];
 ---
 
 <section id="about" class="about" data-section="about">
@@ -25,16 +33,19 @@ const languages = ['English', 'Dutch', 'Spanish', 'French', 'Italian', 'German']
     <div class="about__body">
       <div class="about__text">
         <p class="scroll-reveal" style="--reveal-delay: 0.1s">
-          I'm a 24-year-old creative developer from Belgium with Peruvian roots.
-          I love making the web feel alive — through animation, interaction, and
-          obsessive attention to the little things that make people go "wait, how?"
+          I'm a 24-year-old Full Stack & App Developer from Belgium with Peruvian roots.
+          I create secure, beautiful, and functional digital experiences — through
+          animation, interaction, and obsessive attention to the details that make
+          people go "wait, how?"
         </p>
         <p class="scroll-reveal" style="--reveal-delay: 0.2s">
-          By day I build React applications at <strong>iO Digital</strong> in Ghent.
-          By night I'm probably working on one of my many side projects, climbing
-          a wall somewhere, or gaming with my girlfriend.
+          By day I build React/TypeScript applications at <strong>iO Digital</strong> in Ghent
+          for the Jaguar Land Rover MSS project. By night I'm working on one of my
+          many side projects, climbing a wall somewhere, or gaming with my girlfriend Vale.
         </p>
         <p class="scroll-reveal" style="--reveal-delay: 0.3s">
+          I studied Electronics-ICT at <strong>Odisee</strong> with a specialization in
+          Web & App Development. I'm also into cybersecurity, CTFs, and pentesting.
           I have ADD, which means I have 47 ideas per minute and finish approximately
           3 per year. But the ones I finish? Those are pretty cool.
         </p>
@@ -61,7 +72,7 @@ const languages = ['English', 'Dutch', 'Spanish', 'French', 'Italian', 'German']
             class="about__lang-tag"
             style={`--orbit-i: ${i}; --orbit-total: ${languages.length}`}
           >
-            {lang}
+            {lang.name} <span class="about__lang-level">{lang.level}</span>
           </span>
         ))}
       </div>
@@ -191,10 +202,20 @@ const languages = ['English', 'Dutch', 'Spanish', 'French', 'Italian', 'German']
     animation-delay: calc(var(--orbit-i) * 0.3s);
   }
 
+  .about__lang-level {
+    font-size: 0.65rem;
+    opacity: 0.5;
+    margin-left: 4px;
+  }
+
   .about__lang-tag:hover {
     border-color: var(--color-accent);
     color: var(--color-accent);
     transform: translateY(-4px);
+  }
+
+  .about__lang-tag:hover .about__lang-level {
+    opacity: 1;
   }
 
   @keyframes langFloat {

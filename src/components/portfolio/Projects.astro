@@ -30,6 +30,15 @@ import { projects } from '../../data/projects';
                 <span class="project-card__tag">{t}</span>
               ))}
             </div>
+            {project.links && Object.keys(project.links).length > 0 && (
+              <div class="project-card__links">
+                {Object.entries(project.links).map(([type, url]) => (
+                  <a href={url} target="_blank" rel="noopener" class="project-card__link" data-cursor-hover>
+                    {type === 'live' ? '↗ Live' : type === 'github' ? '⌂ GitHub' : type === 'gitlab' ? '◈ GitLab' : `↗ ${type}`}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
           <div class="project-card__effect" aria-hidden="true"></div>
         </article>
@@ -233,6 +242,29 @@ import { projects } from '../../data/projects';
     border: 1px solid var(--color-border);
     border-radius: 4px;
     color: var(--color-text-muted);
+  }
+
+  .project-card__links {
+    display: flex;
+    gap: 8px;
+    margin-top: 0.75rem;
+  }
+
+  .project-card__link {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-dim);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .project-card__link:hover {
+    border-color: var(--card-accent);
+    color: var(--card-accent);
+    background: color-mix(in srgb, var(--card-accent) 8%, transparent);
   }
 
   .project-card__effect {

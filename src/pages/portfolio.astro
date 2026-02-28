@@ -15,14 +15,14 @@ import SoundToggle from '../components/shared/SoundToggle.jsx';
 import SectionObserver from '../components/shared/SectionObserver.jsx';
 ---
 
-<Layout title="Luca Vandenweghe | Portfolio">
-  <CustomCursor client:load />
-  <ScrollProgress client:load />
-  <SoundToggle client:load />
-  <AccentPicker client:load />
-  <BackToHub client:load />
-  <AchievementToast client:load />
-  <SectionObserver client:load />
+<Layout title="Lubu | Portfolio">
+  <CustomCursor client:only="react" />
+  <ScrollProgress client:only="react" />
+  <SoundToggle client:only="react" />
+  <AccentPicker client:only="react" />
+  <BackToHub client:only="react" />
+  <AchievementToast client:only="react" />
+  <SectionObserver client:only="react" />
 
   <nav class="portfolio-nav" id="portfolio-nav">
     <a href="#hero" class="nav-dot" data-nav="hero" title="Home">
@@ -49,7 +49,7 @@ import SectionObserver from '../components/shared/SectionObserver.jsx';
     <Hero />
     <About />
     <Projects />
-    <SkillsConstellation client:visible />
+    <SkillsConstellation client:only="react" />
     <Experience />
     <Contact />
   </main>

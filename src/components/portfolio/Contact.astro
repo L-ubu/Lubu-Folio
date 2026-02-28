@@ -1,8 +1,9 @@
 ---
 const socials = [
-  { label: 'GitHub', icon: '⌂', href: 'https://github.com/MrGreenSlime', id: 'github' },
+  { label: 'GitHub', icon: '⌂', href: 'https://github.com/L-ubu', id: 'github' },
   { label: 'GitLab', icon: '◈', href: '#', id: 'gitlab' },
   { label: 'Email', icon: '✉', href: 'mailto:vandenweghe.luca@gmail.com', id: 'email' },
+  { label: 'Portfolio', icon: '◆', href: 'https://luca-like.be', id: 'portfolio' },
 ];
 ---
 
@@ -36,11 +37,23 @@ const socials = [
         <div class="contact__field-line"></div>
       </div>
 
-      <button type="submit" class="contact__submit">
-        <span>Send message</span>
+      <button type="submit" class="contact__submit" data-cursor-hover>
+        <span class="contact__submit-text">Send message</span>
         <span class="contact__submit-arrow">→</span>
       </button>
     </form>
+
+    <div class="mail-effect" data-mail-effect>
+      <div class="mail-effect__envelope">
+        <div class="mail-effect__body"></div>
+        <div class="mail-effect__flap"></div>
+        <div class="mail-effect__seal"></div>
+      </div>
+      <div class="mail-effect__trail"></div>
+      <div class="mail-effect__sparks">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
 
     <div class="contact__socials scroll-reveal" style="--reveal-delay: 0.4s">
       {socials.map((social, i) => (
@@ -62,24 +75,25 @@ const socials = [
 
   <div class="contact__footer">
     <p>Built with obsessive attention to detail by <strong>Luca Vandenweghe</strong></p>
-    <p class="contact__footer-sub">Astro + React + Three.js + too much coffee ☕</p>
+    <p class="contact__footer-sub">Astro + React + Three.js + too much Nalu 🥤</p>
   </div>
 </section>
 
 <!-- Hidden ASCII art past the footer -->
 <div class="hidden-ascii" aria-hidden="true">
-<pre>
-      ╭───────────────────────╮
-      │  You scrolled too far │
-      │  Here's a slime: 🟢   │
-      │  — MrGreenSlime       │
-      ╰───────────────────────╯
-            \   ^__^
-             \  (oo)\_______
-                (__)\       )\/\
-                    ||----w |
-                    ||     ||
-</pre>
+<pre>{`
+    ╭─────────────────────────────╮
+    │  You scrolled too far...    │
+    │                             │
+    │  Here's a slime for you:    │
+    │                             │
+    │         ╭───╮               │
+    │        ( °_° )              │
+    │       ╰───────╯             │
+    │                             │
+    │  — MrGreenSlime             │
+    ╰─────────────────────────────╯
+`}</pre>
 </div>
 
 <script>
@@ -97,6 +111,42 @@ const socials = [
         document.body.appendChild(msg);
         setTimeout(() => msg.remove(), 5000);
       }
+    });
+  }
+
+  const contactForm = document.querySelector('[data-contact-form]');
+  const mailEffect = document.querySelector('[data-mail-effect]');
+  if (contactForm && mailEffect) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = contactForm.querySelector('.contact__submit');
+      const btnRect = btn.getBoundingClientRect();
+
+      mailEffect.style.setProperty('--start-x', `${btnRect.left + btnRect.width / 2}px`);
+      mailEffect.style.setProperty('--start-y', `${btnRect.top + btnRect.height / 2}px`);
+
+      btn.classList.add('contact__submit--sending');
+
+      mailEffect.classList.add('mail-effect--active');
+
+      setTimeout(() => {
+        contactForm.reset();
+        btn.classList.remove('contact__submit--sending');
+        btn.classList.add('contact__submit--sent');
+        const textEl = btn.querySelector('.contact__submit-text');
+        const arrowEl = btn.querySelector('.contact__submit-arrow');
+        if (textEl) textEl.textContent = 'Sent!';
+        if (arrowEl) arrowEl.textContent = '✓';
+      }, 1800);
+
+      setTimeout(() => {
+        mailEffect.classList.remove('mail-effect--active');
+        const textEl = btn.querySelector('.contact__submit-text');
+        const arrowEl = btn.querySelector('.contact__submit-arrow');
+        btn.classList.remove('contact__submit--sent');
+        if (textEl) textEl.textContent = 'Send message';
+        if (arrowEl) arrowEl.textContent = '→';
+      }, 4000);
     });
   }
 </script>
@@ -317,5 +367,156 @@ const socials = [
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mail send effect */
+  .mail-effect {
+    position: fixed;
+    left: var(--start-x, 50%);
+    top: var(--start-y, 50%);
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  .mail-effect--active {
+    animation: mailAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+               mailFly 1.2s cubic-bezier(0.5, 0, 0, 1) 0.6s forwards;
+  }
+
+  .mail-effect__envelope {
+    width: 64px;
+    height: 44px;
+    position: relative;
+  }
+
+  .mail-effect__body {
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    border-radius: 4px;
+    box-shadow: 0 4px 20px var(--color-accent-glow);
+  }
+
+  .mail-effect__flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--color-accent);
+    filter: brightness(1.2);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transform-origin: top center;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .mail-effect--active .mail-effect__flap {
+    animation: flapClose 0.3s ease-in 0.2s forwards;
+  }
+
+  .mail-effect__seal {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background: var(--color-bg);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    box-shadow: 0 0 8px var(--color-bg);
+  }
+
+  .mail-effect--active .mail-effect__seal {
+    animation: sealAppear 0.2s ease-out 0.45s forwards;
+  }
+
+  .mail-effect__trail {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to left, var(--color-accent), transparent);
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+
+  .mail-effect--active .mail-effect__trail {
+    animation: trailShow 0.8s ease-out 0.65s forwards;
+  }
+
+  .mail-effect__sparks span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0;
+  }
+
+  .mail-effect--active .mail-effect__sparks span:nth-child(1) {
+    animation: spark 0.6s ease-out 0.6s forwards;
+    --sx: -30px; --sy: -25px;
+  }
+  .mail-effect--active .mail-effect__sparks span:nth-child(2) {
+    animation: spark 0.6s ease-out 0.65s forwards;
+    --sx: 25px; --sy: -30px;
+  }
+  .mail-effect--active .mail-effect__sparks span:nth-child(3) {
+    animation: spark 0.6s ease-out 0.55s forwards;
+    --sx: -20px; --sy: 25px;
+  }
+  .mail-effect--active .mail-effect__sparks span:nth-child(4) {
+    animation: spark 0.6s ease-out 0.7s forwards;
+    --sx: 30px; --sy: 20px;
+  }
+  .mail-effect--active .mail-effect__sparks span:nth-child(5) {
+    animation: spark 0.6s ease-out 0.62s forwards;
+    --sx: -10px; --sy: -35px;
+  }
+
+  @keyframes mailAppear {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(-10deg); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  }
+
+  @keyframes mailFly {
+    0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    30% { transform: translate(-50%, -80%) scale(1.1) rotate(-5deg); }
+    100% { transform: translate(calc(50vw - 50%), -120vh) scale(0.3) rotate(-20deg); opacity: 0; }
+  }
+
+  @keyframes flapClose {
+    0% { transform: rotateX(0deg); }
+    100% { transform: rotateX(180deg); }
+  }
+
+  @keyframes sealAppear {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+
+  @keyframes trailShow {
+    0% { opacity: 0; width: 0; }
+    40% { opacity: 0.8; width: 80px; }
+    100% { opacity: 0; width: 120px; }
+  }
+
+  @keyframes spark {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0); }
+  }
+
+  .contact__submit--sending {
+    transform: scale(0.95);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .contact__submit--sent {
+    background: #16a34a;
+    pointer-events: none;
   }
 </style>

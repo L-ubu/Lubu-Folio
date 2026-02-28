@@ -26,16 +26,16 @@
       <span class="hero__role" id="role-text">Creative Developer</span>
       <span class="hero__cursor-blink">|</span>
     </div>
+  </div>
 
-    <div class="hero__scroll-hint">
-      <div class="hero__scroll-line"></div>
-      <span>scroll</span>
-    </div>
+  <div class="hero__scroll-hint">
+    <div class="hero__scroll-line"></div>
+    <span>scroll</span>
   </div>
 </section>
 
 <script>
-  const roles = ['Creative Developer', 'React Specialist', 'CSS Enthusiast', 'MrGreenSlime', 'Builder of Things'];
+  const roles = ['Creative Developer', 'Full Stack & App Developer', 'UI & UX Designer', 'Cybersecurity Enthusiast', 'React Specialist', 'MrGreenSlime', 'Builder of Things', 'CSS Wizard'];
   let roleIndex = 0;
   const roleEl = document.getElementById('role-text');
 
@@ -178,7 +178,7 @@
 
   .hero__scroll-hint {
     position: absolute;
-    bottom: 3rem;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -191,6 +191,7 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     animation: fadeInUp 1s ease 2s both;
+    z-index: 2;
   }
 
   .hero__scroll-line {
