@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StorybookApp from '../components/storybook/StorybookApp.jsx';
+import CustomCursor from '../components/shared/CustomCursor.jsx';
+import AchievementToast from '../components/shared/AchievementToast.jsx';
+---
+
+<Layout title="Lubu | Through Her Eyes">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <CustomCursor client:only="react" />
+  <AchievementToast client:only="react" />
+  <StorybookApp client:only="react" />
+</Layout>

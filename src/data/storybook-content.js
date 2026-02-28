@@ -1,0 +1,152 @@
+export const COLORS = {
+  red: "#DA291C",
+  yellow: "#F5CD2F",
+  blue: "#006DB7",
+  green: "#009247",
+  bg: "#FDF6E3",
+  text: "#2C2C2C",
+  paper: "#FFF8E7",
+  sticky: "#FFEB3B",
+};
+
+export const pages = [
+  {
+    id: "cover",
+    title: "Through Her Eyes",
+    subtitle: "Een verhaal door Valentina",
+    color: COLORS.blue,
+    accent: COLORS.red,
+  },
+  {
+    id: "once-upon",
+    title: "Once upon a time...",
+    body: "...there was a boy who couldn't sit still. He had too many ideas, too many tabs open, and a smile that could light up a room — even at 3 in the morning when he was 'just finishing one more thing.'",
+    extra:
+      "His name was Luca, and this is his story — but told the way I see it. Because the way he sees himself? Troppo modesto.",
+    annotations: [
+      {
+        text: "Letterlijk, hij kan NIET stilzitten",
+        rotation: -3,
+        x: 72,
+        y: 14,
+      },
+      { text: "...it was never one more thing", rotation: 4, x: 8, y: 70 },
+    ],
+    color: COLORS.yellow,
+    accent: COLORS.red,
+  },
+  {
+    id: "builder",
+    title: "The Builder",
+    body: "He builds things. Constantly. Websites, tools, games, AI assistants, terminal toolkits — if it can be coded, he's already halfway through it at 2 AM with a Nalu in hand.",
+    projects: [
+      { name: "Jorfish", desc: "His own AI assistant", color: COLORS.blue },
+      { name: "Terminup", desc: "100+ terminal tools", color: COLORS.green },
+      { name: "Demergency", desc: "Slime battling game", color: COLORS.green },
+      { name: "ADHD&D", desc: "DnD world in Obsidian", color: COLORS.red },
+      {
+        name: "This Portfolio",
+        desc: "You're looking at it",
+        color: COLORS.blue,
+      },
+      { name: "Bebs", desc: "He made it for me!", color: "#ec4899" },
+    ],
+    skills: ["React", "JavaScript", "CSS", "Three.js", "Python", "Shell"],
+    annotations: [
+      {
+        text: "He says 'almost done' — he means 3 more hours",
+        rotation: 2,
+        x: 65,
+        y: 8,
+      },
+    ],
+    color: COLORS.red,
+    accent: COLORS.yellow,
+  },
+  {
+    id: "explorer",
+    title: "The Explorer",
+    body: "When he's not behind a screen, he's climbing walls, riding waves, or rolling down hills on a longboard. He's a scout leader, a gamer, and somehow finds time for all of it.",
+    adventures: [
+      { icon: "🧗", label: "Bouldering", note: "His happy place" },
+      { icon: "🏄", label: "Surfing", note: "Dreams of Bali" },
+      { icon: "🛹", label: "Longboarding", note: "To and from everything" },
+      { icon: "🎮", label: "Gaming", note: "MrGreenSlime forever" },
+      { icon: "⚜️", label: "Scouts", note: "Akela / leader since forever" },
+      { icon: "🎲", label: "DnD", note: "World builder extraordinaire" },
+    ],
+    annotations: [
+      {
+        text: "His scout totem is basically a whole sentence",
+        rotation: -2,
+        x: 5,
+        y: 72,
+      },
+    ],
+    color: COLORS.green,
+    accent: COLORS.blue,
+  },
+  {
+    id: "dreamer",
+    title: "The Dreamer",
+    body: "He doesn't just build things — he dreams them first. His head is always three steps ahead, sketching out the next idea before the last one is even done.",
+    dreams: [
+      "Start his own company one day",
+      "Build an AI that actually helps people",
+      "Create a game people actually play",
+      "Travel and surf everywhere",
+      "Make something that matters",
+    ],
+    annotations: [
+      { text: "I believe in every single one 💛", rotation: 3, x: 60, y: 65 },
+      {
+        text: "Tranne quando dice 'solo 5 minuti'",
+        rotation: -4,
+        x: 10,
+        y: 12,
+      },
+    ],
+    color: COLORS.blue,
+    accent: COLORS.yellow,
+  },
+  {
+    id: "little-things",
+    title: "The Little Things",
+    body: "These are the things only I notice. The little details that make him... him.",
+    facts: [
+      "Hij drinkt altijd chocomelk op het werk",
+      "He says 'just 5 more minutes' but means 45",
+      "His desk has more screens than a NASA control room",
+      "Latte macchiato in the morning, Nalu the rest of the day",
+      "He codes in the dark like a little hacker goblin",
+      "Falls asleep within 0.3 seconds of lying down",
+      "Will explain any project for 45 minutes if you let him",
+      "His Spotify is 80% lo-fi and 20% chaos",
+      "Altijd bezig met iets nieuws",
+      "He makes the WORST dad jokes and loves it",
+      "Cannot cook to save his life but tries anyway",
+      "Sempre col telefono in mano",
+    ],
+    color: COLORS.yellow,
+    accent: COLORS.green,
+  },
+  {
+    id: "verdict",
+    title: "The Verdict",
+    body: "So that's him. My chaotic, creative, sleep-deprived, endlessly ambitious goofball. And honestly? I wouldn't change a thing. Okay... maybe the cooking.",
+    closingLine: "Ti amo, schatje. Even when you say 'just one more commit.'",
+    color: COLORS.red,
+    accent: COLORS.blue,
+  },
+];
+
+export const ratings = [
+  { label: "Coding", value: 9, max: 10, color: COLORS.blue },
+  { label: "Creativity", value: 10, max: 10, color: COLORS.red },
+  { label: "Koken", value: 3, max: 10, color: COLORS.red },
+  { label: "Knuffelen", value: 11, max: 10, color: COLORS.green },
+  { label: "Time management", value: 4, max: 10, color: COLORS.yellow },
+  { label: "Dad jokes", value: 8, max: 10, color: COLORS.green },
+  { label: "Sleep schedule", value: 2, max: 10, color: COLORS.blue },
+  { label: "Enthusiasm", value: 15, max: 10, color: COLORS.red },
+];
