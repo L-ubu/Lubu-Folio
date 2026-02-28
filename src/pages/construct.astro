@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ConstructApp from '../components/construct/ConstructApp.jsx';
+import CustomCursor from '../components/shared/CustomCursor.jsx';
+import AchievementToast from '../components/shared/AchievementToast.jsx';
+---
+
+<Layout title="Lubu | Construct">
+  <CustomCursor client:only="react" />
+  <AchievementToast client:only="react" />
+  <ConstructApp client:only="react" />
+</Layout>
