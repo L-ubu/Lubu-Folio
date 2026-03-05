@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GridApp from '../components/grid/GridApp.jsx';
+import CustomCursor from '../components/shared/CustomCursor.jsx';
+import AchievementToast from '../components/shared/AchievementToast.jsx';
+---
+
+<Layout title="Lubu | The Grid">
+  <CustomCursor client:only="react" />
+  <AchievementToast client:only="react" />
+  <GridApp client:only="react" />
+</Layout>
