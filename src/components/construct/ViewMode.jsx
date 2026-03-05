@@ -1,21 +1,9 @@
 import { ALL_BLOCKS, MAJOR_BLOCKS } from "./blocks.js";
 
-const SECTION_ORDER = [
-  "hero",
-  "about",
-  "skills",
-  "projects",
-  "experience",
-  "contact",
-];
-
 export default function ViewMode({ placed, onBack }) {
   const sorted = [...placed].sort((a, b) => {
-    const ai = SECTION_ORDER.indexOf(a.id);
-    const bi = SECTION_ORDER.indexOf(b.id);
-    const aOrder = ai >= 0 ? ai : SECTION_ORDER.length + a.id.charCodeAt(0);
-    const bOrder = bi >= 0 ? bi : SECTION_ORDER.length + b.id.charCodeAt(0);
-    return aOrder - bOrder;
+    if (a.row !== b.row) return a.row - b.row;
+    return a.col - b.col;
   });
 
   return (

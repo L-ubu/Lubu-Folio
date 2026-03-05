@@ -27,7 +27,7 @@ const portalData = [
     subtitle: "Idle game",
     icon: "⬡",
     href: "/grid",
-    locked: true,
+    locked: false,
     style: "grid",
     shape: "hexagon",
   },
