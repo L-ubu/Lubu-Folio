@@ -3,6 +3,7 @@ import { useAchievementStore } from "../achievements/store";
 import { registerCommands, unregisterCommands } from "../shared/DevConsole";
 import ArcadeScene from "./ArcadeScene.jsx";
 import ArcadeHUD from "./ArcadeHUD.jsx";
+import StrudelPlayer, { musicState } from "./StrudelPlayer.jsx";
 import SnakeGame from "./games/SnakeGame.jsx";
 import PongGame from "./games/PongGame.jsx";
 import ReactionGame from "./games/ReactionGame.jsx";
@@ -127,6 +128,10 @@ export default function ArcadeApp() {
         "scores        show high scores",
         "master        toggle all mastery",
         "exit          exit current game",
+        "music         strudel live coding music",
+        "music toggle  play / pause",
+        "music eval    re-evaluate pattern",
+        "music code    show current code",
       ],
       games: ({ out }) => {
         out("arcade machines:", "sys");
@@ -167,6 +172,49 @@ export default function ArcadeApp() {
           out("exited game");
         } else {
           out("no game running", "err");
+        }
+      },
+      music: ({ arg, out }) => {
+        if (!arg) {
+          out("\u266B STRUDEL LIVE CODING MUSIC", "sys");
+          out(
+            `  status: ${musicState.playing ? "\u25B6 playing" : "\u25A0 stopped"}`,
+          );
+          out("");
+          out("  music toggle   play / pause");
+          out("  music eval     re-evaluate pattern");
+          out("  music code     show current code");
+          out("");
+          out("  open the strudel panel to edit live", "sys");
+          return;
+        }
+        if (arg === "toggle") {
+          musicState.togglePlay?.();
+          out("toggling playback...", "sys");
+        } else if (arg === "eval") {
+          const editor = musicState.getEditor?.();
+          if (editor) {
+            try {
+              editor.evaluate();
+              out("re-evaluating pattern...", "sys");
+            } catch {
+              out("eval failed", "err");
+            }
+          } else {
+            out("strudel panel not open yet", "err");
+          }
+        } else if (arg === "code") {
+          const editor = musicState.getEditor?.();
+          if (editor) {
+            out("\u2500\u2500 current pattern \u2500\u2500", "sys");
+            String(editor.code || "")
+              .split("\n")
+              .forEach((line) => out("  " + line));
+          } else {
+            out("strudel panel not open yet", "err");
+          }
+        } else {
+          out(`unknown: music ${arg}`, "err");
         }
       },
     });
@@ -224,6 +272,7 @@ export default function ArcadeApp() {
         onExit={handleExit}
         onBackToHub={handleBackToHub}
       />
+      <StrudelPlayer />
       <style>{`@keyframes arcadeFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }`}</style>
     </div>
   );
