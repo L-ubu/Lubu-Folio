@@ -9,7 +9,7 @@ export const projects = [
     color: "#06b6d4",
     size: "large",
     hoverEffect: "brain-pulse",
-    links: { github: "#" },
+    links: {},
   },
   {
     id: "terminup",
@@ -21,7 +21,7 @@ export const projects = [
     color: "#22c55e",
     size: "large",
     hoverEffect: "terminal-type",
-    links: { github: "#" },
+    links: {},
   },
   {
     id: "adhd-and-d",
@@ -45,7 +45,7 @@ export const projects = [
     color: "#4ade80",
     size: "medium",
     hoverEffect: "slime-merge",
-    links: { github: "#" },
+    links: {},
   },
   {
     id: "minecraft-3d",
@@ -57,7 +57,7 @@ export const projects = [
     color: "#22c55e",
     size: "medium",
     hoverEffect: "dice-roll",
-    links: { gitlab: "#" },
+    links: {},
   },
   {
     id: "mikumikubeam",

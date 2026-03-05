@@ -13,7 +13,7 @@ const entries = [
     type: 'work',
     title: 'Internship',
     org: 'Dynamate',
-    period: '2025',
+    period: '2024',
     description: 'Worked on Shopify storefronts and Craft CMS sites with some Laravel. First real agency experience — learned to work with clients and ship production code.',
     tags: ['Shopify', 'Craft', 'Laravel', 'Client Work'],
     accent: '#a855f7',
@@ -205,19 +205,21 @@ const entries = [
     color: var(--color-text-muted);
   }
 
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: scrollReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: var(--reveal-delay, 0s);
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
+  @media (max-width: 640px) {
+    .experience__scroll {
+      overflow-x: visible;
+      scroll-snap-type: none;
+    }
 
-  @keyframes scrollReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    .experience__track {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .exp-card {
+      flex: 0 0 auto;
+      scroll-snap-align: none;
     }
   }
+
 </style>

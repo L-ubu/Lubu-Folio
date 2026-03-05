@@ -4,25 +4,27 @@ import Hero from '../components/portfolio/Hero.astro';
 import About from '../components/portfolio/About.astro';
 import Projects from '../components/portfolio/Projects.astro';
 import SkillsConstellation from '../components/portfolio/SkillsConstellation.jsx';
-import Experience from '../components/portfolio/Experience.astro';
+import ExperienceTimeline from '../components/portfolio/ExperienceTimeline.jsx';
 import Contact from '../components/portfolio/Contact.astro';
 import CustomCursor from '../components/shared/CustomCursor.jsx';
 import AchievementToast from '../components/shared/AchievementToast.jsx';
-import AccentPicker from '../components/shared/AccentPicker.jsx';
+import ThemeSwitcher from '../components/shared/ThemeSwitcher.jsx';
 import BackToHub from '../components/shared/BackToHub.jsx';
 import ScrollProgress from '../components/shared/ScrollProgress.jsx';
-import SoundToggle from '../components/shared/SoundToggle.jsx';
 import SectionObserver from '../components/shared/SectionObserver.jsx';
+import PortfolioCommands from '../components/portfolio/PortfolioCommands.jsx';
 ---
 
 <Layout title="Lubu | Portfolio">
   <CustomCursor client:only="react" />
   <ScrollProgress client:only="react" />
-  <SoundToggle client:only="react" />
-  <AccentPicker client:only="react" />
+  <ThemeSwitcher client:only="react" />
   <BackToHub client:only="react" />
   <AchievementToast client:only="react" />
   <SectionObserver client:only="react" />
+  <PortfolioCommands client:only="react" />
+
+  <div class="portfolio-bg"></div>
 
   <nav class="portfolio-nav" id="portfolio-nav">
     <a href="#hero" class="nav-dot" data-nav="hero" title="Home">
@@ -48,9 +50,13 @@ import SectionObserver from '../components/shared/SectionObserver.jsx';
   <main>
     <Hero />
     <About />
+    <div class="section-divider"></div>
     <Projects />
+    <div class="section-divider"></div>
     <SkillsConstellation client:only="react" />
-    <Experience />
+    <div class="section-divider"></div>
+    <ExperienceTimeline client:visible />
+    <div class="section-divider"></div>
     <Contact />
   </main>
 </Layout>
@@ -59,7 +65,7 @@ import SectionObserver from '../components/shared/SectionObserver.jsx';
   const sections = document.querySelectorAll('[data-section]');
   const dots = document.querySelectorAll('.nav-dot');
 
-  const observer = new IntersectionObserver(
+  const navObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -73,13 +79,52 @@ import SectionObserver from '../components/shared/SectionObserver.jsx';
     { threshold: 0.3 }
   );
 
-  sections.forEach((s) => observer.observe(s));
+  sections.forEach((s) => navObserver.observe(s));
+
+  if (!CSS.supports('animation-timeline', 'view()')) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.scroll-reveal').forEach((el) => revealObserver.observe(el));
+  }
 </script>
 
 <style>
+  .portfolio-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 80%);
+  }
+
   main {
     position: relative;
     z-index: 1;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-accent-dim),
+      transparent
+    );
   }
 
   .portfolio-nav {
@@ -103,7 +148,6 @@ import SectionObserver from '../components/shared/SectionObserver.jsx';
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    cursor: none;
   }
 
   .nav-label {
@@ -139,5 +183,11 @@ import SectionObserver from '../components/shared/SectionObserver.jsx';
     background: var(--color-accent);
     box-shadow: 0 0 10px var(--color-accent-dim);
     transform: scale(1.3);
+    animation: dotPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 10px var(--color-accent-dim); }
+    50% { box-shadow: 0 0 20px var(--color-accent-dim), 0 0 30px var(--color-accent-dim); }
   }
 </style>

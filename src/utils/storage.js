@@ -39,3 +39,11 @@ export function setAccentColor(color) {
     color + "40",
   );
 }
+
+export function getTheme() {
+  return getStored("portfolio-theme", "default");
+}
+
+export function setTheme(themeId) {
+  setStored("portfolio-theme", themeId);
+}

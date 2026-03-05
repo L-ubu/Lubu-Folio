@@ -1,4 +1,6 @@
 ---
+import LanguageSwitcher from './LanguageSwitcher.jsx';
+
 const facts = [
   { emoji: '🇧🇪🇵🇪', label: 'Belgian-Peruvian' },
   { emoji: '⚛️', label: 'React Developer @ iO Digital' },
@@ -12,38 +14,30 @@ const facts = [
   { emoji: '⚜️', label: 'Scout Leader' },
 ];
 
-const languages = [
-  { name: 'Dutch', level: 'Native' },
-  { name: 'English', level: 'C2' },
-  { name: 'Spanish', level: 'C1' },
-  { name: 'French', level: 'B2' },
-  { name: 'German', level: 'A2' },
-  { name: 'Italian', level: 'Learning' },
-];
 ---
 
 <section id="about" class="about" data-section="about">
   <div class="about__container">
     <h2 class="about__title scroll-reveal">
-      <span class="about__title-line">I build things</span>
-      <span class="about__title-line accent">for the web</span>
-      <span class="about__title-line dim">and beyond.</span>
+      <span class="about__title-line" data-translate="about-title-1">I build things</span>
+      <span class="about__title-line accent" data-translate="about-title-2">for the web</span>
+      <span class="about__title-line dim" data-translate="about-title-3">and beyond.</span>
     </h2>
 
     <div class="about__body">
       <div class="about__text">
-        <p class="scroll-reveal" style="--reveal-delay: 0.1s">
+        <p class="scroll-reveal" style="--reveal-delay: 0.1s" data-translate="about-bio-1">
           I'm a 24-year-old Full Stack & App Developer from Belgium with Peruvian roots.
           I create secure, beautiful, and functional digital experiences — through
           animation, interaction, and obsessive attention to the details that make
           people go "wait, how?"
         </p>
-        <p class="scroll-reveal" style="--reveal-delay: 0.2s">
+        <p class="scroll-reveal" style="--reveal-delay: 0.2s" data-translate="about-bio-2">
           By day I build React/TypeScript applications at <strong>iO Digital</strong> in Ghent
           for the Jaguar Land Rover MSS project. By night I'm working on one of my
           many side projects, climbing a wall somewhere, or gaming with my girlfriend Vale.
         </p>
-        <p class="scroll-reveal" style="--reveal-delay: 0.3s">
+        <p class="scroll-reveal" style="--reveal-delay: 0.3s" data-translate="about-bio-3">
           I studied Electronics-ICT at <strong>Odisee</strong> with a specialization in
           Web & App Development. I'm also into cybersecurity, CTFs, and pentesting.
           I have ADD, which means I have 47 ideas per minute and finish approximately
@@ -64,18 +58,8 @@ const languages = [
       </div>
     </div>
 
-    <div class="about__languages scroll-reveal" style="--reveal-delay: 0.5s">
-      <span class="about__lang-label">I speak</span>
-      <div class="about__lang-orbit">
-        {languages.map((lang, i) => (
-          <span
-            class="about__lang-tag"
-            style={`--orbit-i: ${i}; --orbit-total: ${languages.length}`}
-          >
-            {lang.name} <span class="about__lang-level">{lang.level}</span>
-          </span>
-        ))}
-      </div>
+    <div class="scroll-reveal" style="--reveal-delay: 0.5s">
+      <LanguageSwitcher client:visible />
     </div>
   </div>
 </section>
@@ -168,75 +152,5 @@ const languages = [
     font-size: 1.1rem;
   }
 
-  .about__languages {
-    margin-top: 4rem;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
 
-  .about__lang-label {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .about__lang-orbit {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .about__lang-tag {
-    padding: 6px 14px;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-text-dim);
-    transition: all 0.3s ease;
-    animation: langFloat 4s ease-in-out infinite;
-    animation-delay: calc(var(--orbit-i) * 0.3s);
-  }
-
-  .about__lang-level {
-    font-size: 0.65rem;
-    opacity: 0.5;
-    margin-left: 4px;
-  }
-
-  .about__lang-tag:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    transform: translateY(-4px);
-  }
-
-  .about__lang-tag:hover .about__lang-level {
-    opacity: 1;
-  }
-
-  @keyframes langFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-
-  /* Scroll reveal animation */
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: scrollReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: var(--reveal-delay, 0s);
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
-
-  @keyframes scrollReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 </style>

@@ -5,8 +5,8 @@ import { projects } from '../../data/projects';
 <section id="projects" class="projects" data-section="projects">
   <div class="projects__container">
     <div class="projects__header scroll-reveal">
-      <h2 class="projects__title">Projects</h2>
-      <p class="projects__subtitle">Things I build when I should be sleeping</p>
+      <h2 class="projects__title" data-translate="projects-title">Projects</h2>
+      <p class="projects__subtitle" data-translate="projects-subtitle">Things I build when I should be sleeping</p>
     </div>
 
     <div class="projects__grid">
@@ -19,12 +19,12 @@ import { projects } from '../../data/projects';
           <div class="project-card__glow"></div>
           <div class="project-card__content">
             <div class="project-card__header">
-              <h3 class="project-card__title">{project.title}</h3>
+              <h3 class="project-card__title" data-translate={`project-${project.id}-title`}>{project.title}</h3>
               <span class={`project-card__status project-card__status--${project.status}`}>
                 {project.status}
               </span>
             </div>
-            <p class="project-card__desc">{project.description}</p>
+            <p class="project-card__desc" data-translate={`project-${project.id}-desc`}>{project.description}</p>
             <div class="project-card__tech">
               {project.tech.map(t => (
                 <span class="project-card__tag">{t}</span>
@@ -355,19 +355,4 @@ import { projects } from '../../data/projects';
     50% { opacity: 0; }
   }
 
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: scrollReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: var(--reveal-delay, 0s);
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
-
-  @keyframes scrollReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 </style>
