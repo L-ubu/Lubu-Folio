@@ -37,7 +37,10 @@ export function Star({
   size = 20,
   color = "#F5CD2F",
   rotation = 0,
+  twinkle = false,
+  twinkleDuration,
 }) {
+  const dur = twinkleDuration || 2 + (x % 4) * 0.7;
   return (
     <svg
       style={{
@@ -49,6 +52,8 @@ export function Star({
         transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
         opacity: 0.5,
         pointerEvents: "none",
+        animation: twinkle ? `twinkle ${dur}s ease-in-out infinite` : undefined,
+        animationDelay: twinkle ? `${(rotation % 5) * 0.3}s` : undefined,
       }}
       viewBox="0 0 24 24"
       fill={color}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAchievementStore } from "../achievements/store";
 import { pages, COLORS } from "../../data/storybook-content.js";
+import { registerCommands, unregisterCommands } from "../shared/DevConsole";
 import BookShell from "./BookShell.jsx";
 import AudioController from "./AudioController.jsx";
 
@@ -33,42 +34,94 @@ export default function StorybookApp() {
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-        e.preventDefault();
-        handlePageChange(currentPage + 1);
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        e.preventDefault();
-        handlePageChange(currentPage - 1);
-      } else if (e.key === "Home") {
-        e.preventDefault();
-        handlePageChange(0);
-      } else if (e.key === "End") {
-        e.preventDefault();
-        handlePageChange(pages.length - 1);
+      switch (e.key) {
+        case "ArrowRight":
+        case "ArrowDown":
+          e.preventDefault();
+          handlePageChange(currentPage + 1);
+          break;
+        case "ArrowLeft":
+        case "ArrowUp":
+          e.preventDefault();
+          handlePageChange(currentPage - 1);
+          break;
+        case "Home":
+          e.preventDefault();
+          handlePageChange(0);
+          break;
+        case "End":
+          e.preventDefault();
+          handlePageChange(pages.length - 1);
+          break;
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [currentPage, handlePageChange]);
 
-  const bgColor = pages[currentPage]?.color || COLORS.blue;
+  useEffect(() => {
+    registerCommands("through-her-eyes", {
+      __help: [
+        "page <n>      jump to page (0-" + (pages.length - 1) + ")",
+        "next / prev   turn page",
+        "first / last  jump to start/end",
+        "heart         trigger the hidden heart",
+        "status        show reading progress",
+      ],
+      page: ({ arg, out }) => {
+        const n = parseInt(arg);
+        if (isNaN(n) || n < 0 || n >= pages.length) {
+          out(`usage: page <0-${pages.length - 1}>`, "err");
+          return;
+        }
+        handlePageChange(n);
+        out(`turned to page ${n}`);
+      },
+      next: ({ out }) => {
+        if (currentPage >= pages.length - 1) {
+          out("already on last page", "err");
+          return;
+        }
+        handlePageChange(currentPage + 1);
+        out(`page ${currentPage + 1}`);
+      },
+      prev: ({ out }) => {
+        if (currentPage <= 0) {
+          out("already on first page", "err");
+          return;
+        }
+        handlePageChange(currentPage - 1);
+        out(`page ${currentPage - 1}`);
+      },
+      first: ({ out }) => {
+        handlePageChange(0);
+        out("jumped to first page");
+      },
+      last: ({ out }) => {
+        handlePageChange(pages.length - 1);
+        out("jumped to last page");
+      },
+      heart: ({ out }) => {
+        handleHeartFound();
+        out(
+          heartFound ? "heart already found" : "\u2665 cuore nascosto!",
+          "sys",
+        );
+      },
+      status: ({ out }) => {
+        out("storybook status:", "sys");
+        out(`  page: ${currentPage + 1}/${pages.length}`);
+        out(`  heart: ${heartFound ? "found \u2665" : "hidden"}`);
+      },
+    });
+    return () => unregisterCommands("through-her-eyes");
+  }, [currentPage, heartFound, handlePageChange, handleHeartFound]);
 
   return (
-    <div
-      style={{
-        ...S.root,
-        background: `linear-gradient(135deg, ${bgColor}10, ${COLORS.bg}, ${bgColor}08)`,
-      }}
-    >
-      <nav style={S.nav}>
-        <a href="/" style={S.backBtn} data-cursor-hover>
-          ← Hub
-        </a>
-        <div style={S.navTitle}>
-          <span style={{ color: bgColor }}>♥</span> Through Her Eyes
-        </div>
-        <div style={{ width: 80 }} />
-      </nav>
+    <div style={S.root}>
+      <a href="/" style={S.hubPill} data-cursor-hover>
+        ← Hub
+      </a>
 
       <BookShell
         currentPage={currentPage}
@@ -94,41 +147,26 @@ const S = {
   root: {
     position: "fixed",
     inset: 0,
-    display: "flex",
-    flexDirection: "column",
     overflow: "hidden",
-    transition: "background 0.6s",
     fontFamily: "'Inter', sans-serif",
+    background: "#1a1a1a",
   },
-  nav: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "10px 20px",
-    background: "rgba(255,255,255,0.85)",
-    backdropFilter: "blur(10px)",
-    borderBottom: "1px solid rgba(0,0,0,0.06)",
-    zIndex: 60,
-    flexShrink: 0,
-  },
-  backBtn: {
+  hubPill: {
+    position: "fixed",
+    top: 16,
+    left: 16,
+    zIndex: 200,
     fontFamily: "'Inter', sans-serif",
     fontSize: 13,
-    color: "#888",
+    color: "rgba(255,255,255,0.7)",
     textDecoration: "none",
-    padding: "6px 14px",
-    border: "1px solid #ddd",
-    borderRadius: 8,
+    padding: "6px 16px",
+    background: "rgba(0,0,0,0.5)",
+    backdropFilter: "blur(10px)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: 20,
     transition: "all 0.2s",
     cursor: "pointer",
-    whiteSpace: "nowrap",
-  },
-  navTitle: {
-    fontFamily: "'Fredoka', sans-serif",
-    fontSize: "clamp(14px, 2.5vw, 18px)",
-    fontWeight: 600,
-    color: COLORS.text,
-    letterSpacing: "0.02em",
   },
   heartToast: {
     position: "fixed",
@@ -161,10 +199,5 @@ const APP_CSS = `
 .doodle-heart-clickable:hover {
   opacity: 0.4 !important;
   transform: translate(-50%, -50%) scale(1.3) !important;
-}
-@media (max-width: 768px) {
-  nav {
-    padding: 8px 12px !important;
-  }
 }
 `;
