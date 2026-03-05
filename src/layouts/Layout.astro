@@ -1,4 +1,5 @@
 ---
+import DevConsole from '../components/shared/DevConsole.jsx';
 const { title = "Luca Vandenweghe | Creative Developer", description = "Multi-mode portfolio of Luca Vandenweghe — creative developer, MrGreenSlime, builder of weird and wonderful things." } = Astro.props;
 ---
 
@@ -21,6 +22,7 @@ const { title = "Luca Vandenweghe | Creative Developer", description = "Multi-mo
   </head>
   <body>
     <slot />
+    <DevConsole client:only="react" />
     <script>
       console.log(`
 %c

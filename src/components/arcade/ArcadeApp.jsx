@@ -1,5 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useAchievementStore } from "../achievements/store";
+import { registerCommands, unregisterCommands } from "../shared/DevConsole";
 import ArcadeScene from "./ArcadeScene.jsx";
 import ArcadeHUD from "./ArcadeHUD.jsx";
 import SnakeGame from "./games/SnakeGame.jsx";
@@ -117,6 +118,60 @@ export default function ArcadeApp() {
     }
     setRefreshKey((k) => k + 1);
   }, [unlock]);
+
+  useEffect(() => {
+    registerCommands("arcade", {
+      __help: [
+        "games         list all arcade games",
+        "play <game>   launch a game",
+        "scores        show high scores",
+        "master        toggle all mastery",
+        "exit          exit current game",
+      ],
+      games: ({ out }) => {
+        out("arcade machines:", "sys");
+        ALL_GAME_IDS.forEach((id) => {
+          const hi = localStorage.getItem(`arcade-${id}-hi`) || "0";
+          out(`  \u25b8 ${id.padEnd(14)} hi: ${hi}`);
+        });
+      },
+      play: ({ arg, out }) => {
+        if (!arg || !GAMES[arg]) {
+          out(`unknown game: ${arg || "(none)"}`, "err");
+          out("games: " + ALL_GAME_IDS.join(", "));
+          return;
+        }
+        handleSelectMachine(arg);
+        out(`launching ${GAMES[arg].title}...`);
+      },
+      scores: ({ out }) => {
+        out("high scores:", "sys");
+        Object.entries(MASTERY_CHECKS).forEach(([key, check]) => {
+          const val = parseInt(localStorage.getItem(key) || "0", 10);
+          const mastered = check(val);
+          out(
+            `  ${mastered ? "\u2713" : "\u25cb"} ${key.replace("arcade-", "").padEnd(16)} ${val}`,
+          );
+        });
+      },
+      master: ({ out }) => {
+        handleToggleMastery();
+        out(
+          checkAllMastered() ? "mastery cleared" : "all games mastered!",
+          "sys",
+        );
+      },
+      exit: ({ out }) => {
+        if (activeGame) {
+          handleExit();
+          out("exited game");
+        } else {
+          out("no game running", "err");
+        }
+      },
+    });
+    return () => unregisterCommands("arcade");
+  }, [activeGame, handleSelectMachine, handleExit, handleToggleMastery]);
 
   const game = activeGame ? GAMES[activeGame] : null;
   const GameComponent = game?.component;

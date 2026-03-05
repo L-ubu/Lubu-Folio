@@ -7,6 +7,7 @@ import CustomCursor from "../shared/CustomCursor";
 import { useAchievementStore } from "../achievements/store";
 import { initSecrets } from "../achievements/secrets";
 import { getAccentColor } from "../../utils/storage";
+import { registerCommands, unregisterCommands } from "../shared/DevConsole";
 import * as THREE from "three";
 
 export default function HubApp() {
@@ -29,6 +30,35 @@ export default function HubApp() {
     const cleanup = initSecrets(unlock);
     return cleanup;
   }, [unlock]);
+
+  useEffect(() => {
+    registerCommands("hub", {
+      __help: [
+        "portals       list all portals + status",
+        "goto <id>     navigate to a portal",
+        "stats         show achievement progress",
+      ],
+      portals: ({ out }) => {
+        out("hub portals:", "sys");
+        const portals = [
+          "portfolio",
+          "arcade",
+          "grid",
+          "void",
+          "construct",
+          "through-her-eyes",
+        ];
+        portals.forEach((p) =>
+          out(`  \u25b8 ${p.padEnd(20)} /${p === "hub" ? "" : p}`),
+        );
+      },
+      stats: ({ out }) => {
+        out(`achievements: ${count}/${total}`, "sys");
+        out(`accent color: ${accentColor}`);
+      },
+    });
+    return () => unregisterCommands("hub");
+  }, [count, total, accentColor]);
 
   const handleNavigate = useCallback(
     (href) => {
