@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
   const dotRef = useRef(null);
@@ -6,12 +6,13 @@ export default function CustomCursor() {
   const hoveringRef = useRef(false);
 
   useEffect(() => {
-    const isTouchDevice = 'ontouchstart' in window;
+    const isTouchDevice = "ontouchstart" in window;
     if (isTouchDevice) return;
 
     let mx = window.innerWidth / 2;
     let my = window.innerHeight / 2;
-    let dx = mx, dy = my;
+    let dx = mx,
+      dy = my;
     let raf;
 
     const move = (e) => {
@@ -29,24 +30,37 @@ export default function CustomCursor() {
       if (ringRef.current) {
         const s = hoveringRef.current ? 1.6 : 1;
         ringRef.current.style.transform = `translate(${dx - 18}px, ${dy - 18}px) scale(${s})`;
-        ringRef.current.style.opacity = hoveringRef.current ? '0.8' : '0.4';
+        ringRef.current.style.opacity = hoveringRef.current ? "0.8" : "0.4";
       }
       raf = requestAnimationFrame(tick);
     };
 
-    const enterInteractive = () => { hoveringRef.current = true; };
-    const leaveInteractive = () => { hoveringRef.current = false; };
-
-    const bindInteractives = () => {
-      document.querySelectorAll('a, button, [data-cursor-hover], .portal-node, input, textarea').forEach((el) => {
-        el.removeEventListener('mouseenter', enterInteractive);
-        el.removeEventListener('mouseleave', leaveInteractive);
-        el.addEventListener('mouseenter', enterInteractive);
-        el.addEventListener('mouseleave', leaveInteractive);
-      });
+    const enterInteractive = () => {
+      hoveringRef.current = true;
+    };
+    const leaveInteractive = () => {
+      hoveringRef.current = false;
     };
 
-    document.addEventListener('mousemove', move);
+    const bindInteractives = () => {
+      document
+        .querySelectorAll(
+          "a, button, [data-cursor-hover], .portal-node, input, textarea",
+        )
+        .forEach((el) => {
+          el.removeEventListener("mouseenter", enterInteractive);
+          el.removeEventListener("mouseleave", leaveInteractive);
+          el.addEventListener("mouseenter", enterInteractive);
+          el.addEventListener("mouseleave", leaveInteractive);
+        });
+    };
+
+    document.documentElement.style.cursor = "none";
+    const style = document.createElement("style");
+    style.textContent = "*, *::before, *::after { cursor: none !important; }";
+    document.head.appendChild(style);
+
+    document.addEventListener("mousemove", move);
     raf = requestAnimationFrame(tick);
     bindInteractives();
 
@@ -54,9 +68,11 @@ export default function CustomCursor() {
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      document.removeEventListener('mousemove', move);
+      document.removeEventListener("mousemove", move);
       cancelAnimationFrame(raf);
       observer.disconnect();
+      document.documentElement.style.cursor = "";
+      style.remove();
     };
   }, []);
 
@@ -65,35 +81,35 @@ export default function CustomCursor() {
       <div
         ref={dotRef}
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
           width: 8,
           height: 8,
-          borderRadius: '50%',
-          background: 'var(--color-accent)',
-          pointerEvents: 'none',
-          zIndex: 99999,
-          mixBlendMode: 'difference',
-          willChange: 'transform',
+          borderRadius: "50%",
+          background: "var(--color-accent)",
+          pointerEvents: "none",
+          zIndex: 100001,
+          mixBlendMode: "difference",
+          willChange: "transform",
         }}
       />
       <div
         ref={ringRef}
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
           width: 36,
           height: 36,
-          borderRadius: '50%',
-          border: '1.5px solid var(--color-accent)',
-          pointerEvents: 'none',
-          zIndex: 99999,
+          borderRadius: "50%",
+          border: "1.5px solid var(--color-accent)",
+          pointerEvents: "none",
+          zIndex: 100001,
           opacity: 0.4,
-          transition: 'opacity 0.3s',
-          mixBlendMode: 'difference',
-          willChange: 'transform',
+          transition: "opacity 0.3s",
+          mixBlendMode: "difference",
+          willChange: "transform",
         }}
       />
     </>
