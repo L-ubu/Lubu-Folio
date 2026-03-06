@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# FLAG{robots_welcome}
+# Sitemap: https://portfolio.dev/sitemap.xml

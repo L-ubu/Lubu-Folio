@@ -11,6 +11,7 @@
   --color-text-dim: #888888;
   --color-text-muted: #555555;
   --color-border: #222222;
+  --secret-flag: "FLAG{css_ninja}";
 
   --font-heading: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;

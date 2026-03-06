@@ -38,6 +38,22 @@ const { title = "Luca Vandenweghe | Creative Developer", description = "Multi-mo
 
   — MrGreenSlime
 `, 'color: #3b82f6; font-family: monospace;');
+      console.log('%cFLAG{console_cowboy}', 'color: #5ccfcf; font-size: 14px; font-weight: bold; font-family: monospace;');
+
+      document.cookie = 'session_token=FLAG{cookie_monster}; path=/; SameSite=Lax';
+      if (!localStorage.getItem('_ctf_seed')) localStorage.setItem('_ctf_seed', 'FLAG{local_storage_lurker}');
+
+      let konamiSeq = [];
+      const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+      document.addEventListener('keydown', (e) => {
+        konamiSeq.push(e.keyCode);
+        if (konamiSeq.length > 10) konamiSeq.shift();
+        if (konamiSeq.join(',') === konamiCode.join(',')) {
+          console.log('%cFLAG{konami_legend}', 'color: #6ec87a; font-size: 16px; font-weight: bold;');
+          document.title = '🏴 FLAG{konami_legend}';
+          setTimeout(() => document.title = baseTitle, 5000);
+        }
+      });
 
       // Animated page title effect
       const baseTitle = document.title;
@@ -94,6 +110,7 @@ const { title = "Luca Vandenweghe | Creative Developer", description = "Multi-mo
     <!-- If you're reading this source, you're a curious one.
          Here's a riddle: I have 6 faces but no body,
          21 eyes but cannot see. What am I? -->
+    <div data-flag="FLAG{inspect_element}" style="display:none" aria-hidden="true"></div>
   </body>
 </html>
 
