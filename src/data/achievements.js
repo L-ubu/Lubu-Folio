@@ -184,4 +184,37 @@ export const achievementDefinitions = [
     svgPath:
       "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
   },
+  {
+    id: "ssh-connect",
+    title: "Connection Established",
+    description: "Connected to the .ssh terminal",
+    svgPath: "M4 17l6-6-6-6M12 19h8",
+  },
+  {
+    id: "first-flag",
+    title: "Script Kiddie",
+    description: "Captured your first flag",
+    svgPath: "M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z",
+  },
+  {
+    id: "all-flags",
+    title: "White Hat",
+    description: "Captured all 20 flags",
+    svgPath:
+      "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+  },
+  {
+    id: "port-scan",
+    title: "Network Recon",
+    description: "Completed a port scan on the server",
+    svgPath:
+      "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z",
+  },
+  {
+    id: "cipher-crack",
+    title: "Codebreaker",
+    description: "Cracked the cipher and decrypted the message",
+    svgPath:
+      "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+  },
 ];
