@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HackApp from '../components/hack/HackApp.jsx';
+import AchievementToast from '../components/shared/AchievementToast.jsx';
+---
+
+<Layout title="luca@portfolio:~$">
+  <AchievementToast client:only="react" />
+  <HackApp client:only="react" />
+</Layout>
