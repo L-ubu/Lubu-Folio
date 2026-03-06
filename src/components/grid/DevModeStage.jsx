@@ -380,7 +380,7 @@ function drawTypingEditor(ctx, x, y, w, h, typing, frame, dpr) {
     const lineNum = completedCount - i;
     const rowY = lineY + (showPrevCount - 1 - i) * lh;
 
-    ctx.fillStyle = "#3a3a55";
+    ctx.fillStyle = "#5a5a75";
     ctx.textAlign = "right";
     ctx.fillText(String(lineNum), x + lineNumW - 6 * dpr, rowY);
     ctx.textAlign = "start";
@@ -422,10 +422,10 @@ function drawTypingEditor(ctx, x, y, w, h, typing, frame, dpr) {
       ctx.fillStyle =
         c === typing.charIdx && Math.floor(frame / 25) % 2 === 0
           ? "#1e1e2e"
-          : "#556677";
+          : "#99aabb";
       ctx.fillText(ch, cursorX, currentRowY);
     } else {
-      ctx.fillStyle = "#3a3a55";
+      ctx.fillStyle = "#5a5a75";
       ctx.fillText(ch, cursorX, currentRowY);
     }
 
@@ -442,7 +442,7 @@ function drawTypingEditor(ctx, x, y, w, h, typing, frame, dpr) {
   if (typing.charIdx < currentLineStr.length && typing.charIdx > 0) {
     const ghostText = currentLineStr.slice(typing.charIdx);
     const ghostX = cursorX;
-    const pulse = Math.sin(frame * 0.06) * 0.04 + 0.12;
+    const pulse = Math.sin(frame * 0.06) * 0.06 + 0.4;
     ctx.fillStyle = `rgba(80, 255, 120, ${pulse})`;
     ctx.fillText(ghostText, ghostX, currentRowY);
   }
@@ -505,7 +505,7 @@ function drawTypingEditor(ctx, x, y, w, h, typing, frame, dpr) {
     ctx.fillText(String(nextLineNum), x + lineNumW - 6 * dpr, nextRowY);
     ctx.textAlign = "start";
 
-    ctx.fillStyle = `rgba(100, 110, 130, ${0.2 - n * 0.05})`;
+    ctx.fillStyle = `rgba(100, 110, 130, ${0.4 - n * 0.07})`;
     ctx.fillText(nextLine, x + lineNumW + codePad, nextRowY);
   }
 
