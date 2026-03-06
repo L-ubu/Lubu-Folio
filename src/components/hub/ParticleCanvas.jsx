@@ -64,6 +64,7 @@ function getShapeVertices(shape, r, time) {
         return { x: Math.cos(a) * r, y: Math.sin(a) * r };
       });
     }
+    case "skull":
     case "spiral":
       return null;
     default:
@@ -89,6 +90,52 @@ function getShapeForce(shape, px, py, cx, cy, r, time) {
     return {
       fx: nx * radial + -ny * tangent,
       fy: ny * radial + nx * tangent,
+    };
+  }
+
+  if (shape === "skull") {
+    const headR = r * 0.85;
+    const jawR = r * 0.55;
+    const eyeR = r * 0.18;
+    const eyeOffX = r * 0.28;
+    const eyeY = cy - r * 0.1;
+    const jawY = cy + r * 0.35;
+
+    const leftEyeDist = Math.sqrt((relX + eyeOffX) ** 2 + (relY - (eyeY - cy)) ** 2);
+    const rightEyeDist = Math.sqrt((relX - eyeOffX) ** 2 + (relY - (eyeY - cy)) ** 2);
+
+    if (leftEyeDist < eyeR * 2.5) {
+      const repel = 0.08 * Math.max(0, 1 - leftEyeDist / (eyeR * 2.5));
+      const nx = leftEyeDist > 0.01 ? (relX + eyeOffX) / leftEyeDist : 0;
+      const ny = leftEyeDist > 0.01 ? (relY - (eyeY - cy)) / leftEyeDist : 1;
+      return { fx: nx * repel, fy: ny * repel };
+    }
+    if (rightEyeDist < eyeR * 2.5) {
+      const repel = 0.08 * Math.max(0, 1 - rightEyeDist / (eyeR * 2.5));
+      const nx = rightEyeDist > 0.01 ? (relX - eyeOffX) / rightEyeDist : 0;
+      const ny = rightEyeDist > 0.01 ? (relY - (eyeY - cy)) / rightEyeDist : 1;
+      return { fx: nx * repel, fy: ny * repel };
+    }
+
+    const angle = Math.atan2(relY, relX);
+    let targetR;
+    if (angle < -0.3) {
+      targetR = headR * (1 - 0.15 * Math.pow(Math.sin(angle * 0.5), 2));
+    } else if (angle < 1.8) {
+      const jawBlend = Math.max(0, Math.min(1, (angle - (-0.3)) / 2.1));
+      targetR = headR * (1 - jawBlend * 0.35);
+    } else {
+      targetR = headR * (1 - 0.1 * Math.pow(Math.sin(angle * 0.5), 2));
+    }
+
+    const targetX = cx + Math.cos(angle) * targetR;
+    const targetY = cy + Math.sin(angle) * targetR;
+    const attract = 0.05 * Math.max(0, 1 - dist / captureR);
+    const tangent = 0.008 * Math.max(0, 1 - Math.abs(dist - targetR) / (r * 0.5));
+
+    return {
+      fx: (targetX - px) * attract + -relY / dist * tangent,
+      fy: (targetY - py) * attract + relX / dist * tangent,
     };
   }
 

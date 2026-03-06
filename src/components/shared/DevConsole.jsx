@@ -17,6 +17,7 @@ const BUBBLES = [
     path: "/through-her-eyes",
     name: "Through Her Eyes",
   },
+  { id: "ssh", path: "/ssh", name: ".ssh" },
 ];
 
 function loadHistory() {

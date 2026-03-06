@@ -62,6 +62,16 @@ const portalData = [
     shape: "heart",
   },
   {
+    id: "ssh",
+    title: ".ssh",
+    subtitle: "Find the flags",
+    icon: ">_",
+    href: "/ssh",
+    locked: false,
+    style: "hack",
+    shape: "skull",
+  },
+  {
     id: "legacy",
     title: "Legacy",
     subtitle: "The old portfolio",
