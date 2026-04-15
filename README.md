@@ -1,11 +1,12 @@
 <div align="center">
 
 ```
-  _       _   _ ____  _   _   _____ ___  _     ___ ___
- | |     | | | | __ )| | | | |  ___/ _ \| |   |_ _/ _ \
- | |     | | | |  _ \| | | | | |_ | | | | |    | | | | |
- | |___  | |_| | |_) | |_| | |  _|| |_| | |___ | | |_| |
- |_____|  \___/|____/ \___/  |_|   \___/|_____|___|\___/
+ ██╗     ██╗   ██╗██████╗ ██╗   ██╗    ███████╗ ██████╗ ██╗     ██╗ ██████╗
+ ██║     ██║   ██║██╔══██╗██║   ██║    ██╔════╝██╔═══██╗██║     ██║██╔═══██╗
+ ██║     ██║   ██║██████╔╝██║   ██║    █████╗  ██║   ██║██║     ██║██║   ██║
+ ██║     ██║   ██║██╔══██╗██║   ██║    ██╔══╝  ██║   ██║██║     ██║██║   ██║
+ ███████╗╚██████╔╝██████╔╝╚██████╔╝    ██║     ╚██████╔╝███████╗██║╚██████╔╝
+ ╚══════╝ ╚═════╝ ╚═════╝  ╚═════╝     ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝
 ```
 
 **Not a portfolio. An experience.**
@@ -18,7 +19,7 @@
 
 ## What is this
 
-Seven interconnected worlds disguised as a developer portfolio. Each page is its own self-contained experience with unique mechanics, visuals, and secrets. There are 28+ achievements to unlock, 100+ hidden easter eggs, and a terminal-based CTF with 20 flags to capture.
+Seven interconnected worlds disguised as a developer portfolio. Each page is its own self-contained experience with unique mechanics, visuals, and secrets to find. There is a 3D arcade, an idle game, a dark atmospheric explorer, a terminal-based CTF, a drag-and-drop builder, an illustrated storybook, and the portfolio itself.
 
 This is what happens when a developer decides a resume PDF is boring.
 
@@ -40,7 +41,7 @@ A particle-driven portal system. 3,000 particles react to your cursor in real ti
 
 ### Portfolio — The Showcase
 
-The actual portfolio. Hero, about, projects, experience, and contact — but the skills section is a force-directed constellation rendered on canvas. Skill nodes float on sine waves, color-coded by discipline, connected by graph edges that light up on hover. Scroll the entire page in under 10 seconds for a hidden achievement.
+The actual portfolio. Hero, about, projects, experience, and contact — but the skills section is a force-directed constellation rendered on canvas. Skill nodes float on sine waves, color-coded by discipline, connected by graph edges that light up on hover.
 
 ### Arcade — 10 Playable Games
 
@@ -78,7 +79,7 @@ CRT scanlines, monospace type, era-specific neon palettes. Auto-saves every 5 se
 
 ### Void — Atmospheric Explorer
 
-A dark canvas. You have a spotlight. Move it to reveal 20 hidden elements scattered in the black. Discover 5 to unlock flashlight mode (narrow beam, longer reach). Creatures wander in the dark and flee from your light. Footprints fade behind you. Dust particles drift on sine waves. Collect all runes to complete the puzzle.
+A dark canvas. You have a light. Things are hidden in the black — creatures wander, dust drifts, footprints fade behind you. Find what you can.
 
 ### SSH — Capture The Flag
 
@@ -86,21 +87,11 @@ A dark canvas. You have a spotlight. Move it to reveal 20 hidden elements scatte
   luca@portfolio:~$
 ```
 
-A fake UNIX terminal with a real filesystem. Navigate with `ls`, `cd`, `cat`, `grep`, `find`. Decode with `base64` and `decrypt`. Scan with `nmap` and `tcpdump`. Intercept with `curl`. 20 flags are hidden across file contents, encoded strings, packet captures, and API responses.
-
-```
-  0 flags   Guest
-  1+ flags  Guest+
-  5+ flags  User
-  10+ flags Admin
-  20 flags  Root
-```
-
-Full boot sequence animation on first visit. `sudo` is denied.
+A terminal-based CTF. You get a fake UNIX shell with a real filesystem, working commands, and flags hidden in places you would expect flags to be hidden. Earn privilege levels as you find more. `sudo` is denied.
 
 ### Through Her Eyes — Storybook
 
-An intimate, illustrated story with handwritten fonts (Caveat, Fredoka) and warm tones. Navigate pages with arrow keys or drag. Background music shifts per section. There is a hidden heart somewhere — find it.
+An intimate, illustrated story with handwritten fonts and warm tones. Navigate pages with arrow keys or drag. Background music shifts per section.
 
 ### Construct — Portfolio Builder
 
@@ -108,61 +99,9 @@ A drag-and-drop grid where you build your own portfolio layout. Place 6 required
 
 ---
 
-## Hidden Layer
+## Secrets
 
-**Secret Words** — Type any of 100+ hidden words anywhere on any page. The portfolio is always listening.
-
-```
-  People    luca, vale, bebs, scout, maarten, merlo
-  Tech      react, astro, javascript, vim, rust, python, git
-  Memes     yeet, pog, chad, based, bruh, 1337, 420, gg
-  Modes     party (rainbow), glitch, dark, disco, hack, matrix
-  Specials  konami (the code), help, secret, hire
-```
-
-Each word triggers floating text, particles, mode toggles, or visual effects. Discover 1, 10, 50, or all 100+ for escalating achievements.
-
-**Konami Code** — Up Up Down Down Left Right Left Right B A. You know the drill.
-
-**Dev Console** — Press backtick to open. Every page has its own command set:
-
-```
-  Hub        portals, goto <id>, stats
-  Arcade     games, play <game>, scores, music toggle
-  Grid       give <n>, era <n>, reset, deploy
-  Construct  blocks, clear, complete, view
-  Void       light, reveal, solve, reset
-  SSH        flags, hint, submit <flag>, nmap, decrypt
-  Storybook  page <n>, next, prev, heart
-```
-
----
-
-## Achievements
-
-28+ achievements across all worlds. Toast notifications appear top-left on unlock.
-
-```
-  PORTFOLIO    Explorer (visit all sections), Speed Runner (<10s scroll),
-               Constellation (hover all skills)
-
-  ARCADE       Insert Coin (first game), Quarter Muncher (play all),
-               Arcade Master (master all), Tetris-4 (quad clear)
-
-  GRID         System Online through IDE Stage (one per era)
-
-  VOID         Void Walker (complete puzzle + all runes)
-
-  CONSTRUCT    Architect (place all required blocks)
-
-  SSH          Script Kiddie (1 flag), White Hat (all 20 flags),
-               Port Scanner (nmap), Cipher Crack (decrypt)
-
-  STORYBOOK    Cuore Nascosto (find the hidden heart)
-
-  EASTER EGGS  Konami Master, Word Wizard/Hunter/Master/God,
-               MrGreenSlime, Hacker
-```
+There are things hidden in every world. Achievements to unlock, words to type, codes to enter, consoles to open. I am not going to tell you what they are. Explore.
 
 ---
 
@@ -207,8 +146,6 @@ Each word triggers floating text, particles, mode toggles, or visual effects. Di
       ui/           cursor, achievements, theme switcher, nav, console
     stores/
       store.js      achievements, section tracking, game state
-    data/
-      secrets.js    100+ hidden trigger words and their effects
 ```
 
 ---
