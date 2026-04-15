@@ -19,7 +19,7 @@
 
 ## What is this
 
-Seven interconnected worlds disguised as a developer portfolio. Each page is its own self-contained experience with unique mechanics, visuals, and secrets to find. There is a 3D arcade, an idle game, a dark atmospheric explorer, a terminal-based CTF, a drag-and-drop builder, an illustrated storybook, and the portfolio itself.
+Seven interconnected worlds disguised as a developer portfolio. Each page is its own self-contained experience with unique mechanics, visuals, and secrets to find. 28+ achievements to unlock, 100+ hidden easter eggs, and a terminal-based CTF with 20 flags to capture.
 
 This is what happens when a developer decides a resume PDF is boring.
 
