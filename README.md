@@ -15,6 +15,8 @@
 
 </div>
 
+![Screenshot](assets/screenshot.png)
+
 ---
 
 ## What is this
