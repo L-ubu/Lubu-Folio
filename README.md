@@ -1,12 +1,23 @@
 <div align="center">
 
 ```
- ██╗     ██╗   ██╗██████╗ ██╗   ██╗    ███████╗ ██████╗ ██╗     ██╗ ██████╗
- ██║     ██║   ██║██╔══██╗██║   ██║    ██╔════╝██╔═══██╗██║     ██║██╔═══██╗
- ██║     ██║   ██║██████╔╝██║   ██║    █████╗  ██║   ██║██║     ██║██║   ██║
- ██║     ██║   ██║██╔══██╗██║   ██║    ██╔══╝  ██║   ██║██║     ██║██║   ██║
- ███████╗╚██████╔╝██████╔╝╚██████╔╝    ██║     ╚██████╔╝███████╗██║╚██████╔╝
- ╚══════╝ ╚═════╝ ╚═════╝  ╚═════╝     ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝
+                                         bbbbbbbb
+LLLLLLLLLLL                              b::::::b                                               FFFFFFFFFFFFFFFFFFFFFF              lllllll   iiii
+L:::::::::L                              b::::::b                                               F::::::::::::::::::::F              l:::::l  i::::i
+L:::::::::L                              b::::::b                                               F::::::::::::::::::::F              l:::::l   iiii
+LL:::::::LL                               b:::::b                                               FF::::::FFFFFFFFF::::F              l:::::l
+  L:::::L               uuuuuu    uuuuuu  b:::::bbbbbbbbb    uuuuuu    uuuuuu                     F:::::F       FFFFFFooooooooooo    l::::l iiiiiii    ooooooooooo
+  L:::::L               u::::u    u::::u  b::::::::::::::bb  u::::u    u::::u                     F:::::F           oo:::::::::::oo  l::::l i:::::i  oo:::::::::::oo
+  L:::::L               u::::u    u::::u  b::::::::::::::::b u::::u    u::::u                     F::::::FFFFFFFFFFo:::::::::::::::o l::::l  i::::i o:::::::::::::::o
+  L:::::L               u::::u    u::::u  b:::::bbbbb:::::::bu::::u    u::::u   ---------------   F:::::::::::::::Fo:::::ooooo:::::o l::::l  i::::i o:::::ooooo:::::o
+  L:::::L               u::::u    u::::u  b:::::b    b::::::bu::::u    u::::u   -:::::::::::::-   F:::::::::::::::Fo::::o     o::::o l::::l  i::::i o::::o     o::::o
+  L:::::L               u::::u    u::::u  b:::::b     b:::::bu::::u    u::::u   ---------------   F::::::FFFFFFFFFFo::::o     o::::o l::::l  i::::i o::::o     o::::o
+  L:::::L               u::::u    u::::u  b:::::b     b:::::bu::::u    u::::u                     F:::::F          o::::o     o::::o l::::l  i::::i o::::o     o::::o
+  L:::::L         LLLLLLu:::::uuuu:::::u  b:::::b     b:::::bu:::::uuuu:::::u                     F:::::F          o::::o     o::::o l::::l  i::::i o::::o     o::::o
+LL:::::::LLLLLLLLL:::::Lu:::::::::::::::uub:::::bbbbbb::::::bu:::::::::::::::uu                 FF:::::::FF        o:::::ooooo:::::ol::::::li::::::io:::::ooooo:::::o
+L::::::::::::::::::::::L u:::::::::::::::ub::::::::::::::::b  u:::::::::::::::u                 F::::::::FF        o:::::::::::::::ol::::::li::::::io:::::::::::::::o
+L::::::::::::::::::::::L  uu::::::::uu:::ub:::::::::::::::b    uu::::::::uu:::u                 F::::::::FF         oo:::::::::::oo l::::::li::::::i oo:::::::::::oo
+LLLLLLLLLLLLLLLLLLLLLLLL    uuuuuuuu  uuuubbbbbbbbbbbbbbbb       uuuuuuuu  uuuu                 FFFFFFFFFFF           ooooooooooo   lllllllliiiiiiii   ooooooooooo
 ```
 
 **Not a portfolio. An experience.**
