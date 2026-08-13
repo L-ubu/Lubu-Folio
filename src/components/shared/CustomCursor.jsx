@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { motion } from "../../utils/motion";
 
 export default function CustomCursor() {
   const dotRef = useRef(null);
@@ -21,16 +22,26 @@ export default function CustomCursor() {
     };
 
     const tick = () => {
-      dx += (mx - dx) * 0.15;
-      dy += (my - dy) * 0.15;
+      // Reads the module flag directly (L2) — a value captured once at mount
+      // would go stale the moment the OS setting changes mid-session.
+      const reduced = motion.reduced;
+      const lerp = reduced ? 1 : 0.15;
+      dx += (mx - dx) * lerp;
+      dy += (my - dy) * lerp;
+
+      const ringSize = reduced ? 30 : 36;
+      const half = ringSize / 2;
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
       }
       if (ringRef.current) {
         const s = hoveringRef.current ? 1.6 : 1;
-        ringRef.current.style.transform = `translate(${dx - 18}px, ${dy - 18}px) scale(${s})`;
+        ringRef.current.style.width = `${ringSize}px`;
+        ringRef.current.style.height = `${ringSize}px`;
+        ringRef.current.style.transform = `translate(${dx - half}px, ${dy - half}px) scale(${s})`;
         ringRef.current.style.opacity = hoveringRef.current ? "0.8" : "0.4";
+        ringRef.current.style.transition = reduced ? "none" : "opacity 0.3s";
       }
       raf = requestAnimationFrame(tick);
     };

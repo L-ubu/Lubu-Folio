@@ -46,15 +46,21 @@ import Layout from '../layouts/Layout.astro';
   .glitch::before {
     color: #5ccfcf;
     animation: glitch-shift 2s infinite;
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-    transform: translate(-2px);
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    transform: translate(-3px);
   }
 
   .glitch::after {
     color: #d46a6a;
     animation: glitch-shift 2.5s infinite reverse;
-    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-    transform: translate(2px);
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    transform: translate(3px);
+  }
+
+  html[data-motion="reduced"] .glitch,
+  html[data-motion="reduced"] .glitch::before,
+  html[data-motion="reduced"] .glitch::after {
+    animation: none;
   }
 
   .subtitle {
