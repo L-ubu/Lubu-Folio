@@ -24,6 +24,11 @@ const { title = "Luca Vandenweghe | Creative Developer", description = "Multi-mo
     <slot />
     <DevConsole client:only="react" />
     <script>
+      // Residue: every room records that you were here. Only the hub reads it.
+      import { recordRoomVisit } from '../utils/residue.js';
+      recordRoomVisit();
+    </script>
+    <script>
       console.log(`
 %c
   ██╗     ██╗   ██╗ ██████╗ █████╗

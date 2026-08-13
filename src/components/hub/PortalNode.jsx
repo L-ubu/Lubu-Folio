@@ -84,14 +84,30 @@ const portalData = [
   },
 ];
 
+function portalOffset(index, total, style) {
+  const angle = (index / total) * Math.PI * 2 - Math.PI / 2;
+  const radius = style === "primary" ? 0 : 180;
+  return { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius };
+}
+
+/**
+ * Where each portal sits, as a pixel offset from the centre of the viewport.
+ * Exported so ParticleCanvas can anchor residue to the same points the DOM
+ * draws the portals at, rather than duplicating the orbit maths.
+ */
+export function getPortalAnchors() {
+  const total = portalData.length;
+  return portalData.map((portal, i) => ({
+    id: portal.id,
+    ...portalOffset(i, total, portal.style),
+  }));
+}
+
 function Portal({ portal, index, total, onNavigate, onHover }) {
   const [hovered, setHovered] = useState(false);
   const iconRef = useRef(null);
 
-  const angle = (index / total) * Math.PI * 2 - Math.PI / 2;
-  const radius = portal.style === "primary" ? 0 : 180;
-  const x = Math.cos(angle) * radius;
-  const y = Math.sin(angle) * radius;
+  const { x, y } = portalOffset(index, total, portal.style);
 
   const isPrimary = portal.style === "primary";
 

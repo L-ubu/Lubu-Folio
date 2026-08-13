@@ -1,10 +1,22 @@
-import { useRef, useMemo, useCallback } from "react";
+import { useRef, useMemo, useCallback, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { getPortalAnchors } from "./PortalNode";
 
 const PARTICLE_COUNT = 3000;
 const MOUSE_RADIUS = 2.0;
 const MOUSE_STRENGTH = 0.04;
+
+// --- Residue -------------------------------------------------------------
+// Visited portals warp the field's rest positions toward themselves, so the
+// particles settle a little denser where you have already been. This is a
+// one-off displacement of `basePositions`, not a per-frame force: it costs
+// nothing in useFrame and it does not animate, which is why the reduced-motion
+// version and the full version are the same picture.
+const RESIDUE_RADIUS = 3.4; // world units of influence around an anchor
+const RESIDUE_PULL = 0.6; // max world-unit displacement toward an anchor
+const RESIDUE_PULL_CLAMP = 0.5; // never pull a particle more than half way in
+const RESIDUE_RESIZE_DEBOUNCE_MS = 150;
 
 function screenToWorld(sx, sy, camera) {
   const nx = (sx / window.innerWidth) * 2 - 1;
@@ -191,18 +203,35 @@ function getShapeForce(shape, px, py, cx, cy, r, time) {
   };
 }
 
-function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
+function ParticleField({
+  accentColor,
+  hoveredPortalRef,
+  clickPulseRef,
+  residue,
+}) {
   const meshRef = useRef();
   const mouseWorldRef = useRef(new THREE.Vector3(9999, 9999, 0));
+  const residueSeededRef = useRef(false);
   const { camera } = useThree();
 
-  const { positions, velocities, basePositions, colors, sizes } =
-    useMemo(() => {
+  const {
+    positions,
+    velocities,
+    basePositions,
+    pristinePositions,
+    colors,
+    sizes,
+    residueValues,
+  } = useMemo(() => {
       const positions = new Float32Array(PARTICLE_COUNT * 3);
       const velocities = new Float32Array(PARTICLE_COUNT * 3);
       const basePositions = new Float32Array(PARTICLE_COUNT * 3);
+      // The unwarped rest field. Residue is always recomputed from this, so
+      // clearing it restores the original layout exactly.
+      const pristinePositions = new Float32Array(PARTICLE_COUNT * 3);
       const colors = new Float32Array(PARTICLE_COUNT * 3);
       const sizes = new Float32Array(PARTICLE_COUNT);
+      const residueValues = new Float32Array(PARTICLE_COUNT);
 
       const accentR = parseInt(accentColor.slice(1, 3), 16) / 255;
       const accentG = parseInt(accentColor.slice(3, 5), 16) / 255;
@@ -222,6 +251,10 @@ function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
         basePositions[i3 + 1] = positions[i3 + 1];
         basePositions[i3 + 2] = positions[i3 + 2];
 
+        pristinePositions[i3] = positions[i3];
+        pristinePositions[i3 + 1] = positions[i3 + 1];
+        pristinePositions[i3 + 2] = positions[i3 + 2];
+
         velocities[i3] = 0;
         velocities[i3 + 1] = 0;
         velocities[i3 + 2] = 0;
@@ -239,9 +272,18 @@ function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
         }
 
         sizes[i] = 0.03 + Math.random() * 0.06;
+        residueValues[i] = 0;
       }
 
-      return { positions, velocities, basePositions, colors, sizes };
+      return {
+        positions,
+        velocities,
+        basePositions,
+        pristinePositions,
+        colors,
+        sizes,
+        residueValues,
+      };
     }, [accentColor]);
 
   const handlePointerMove = useCallback(
@@ -258,6 +300,95 @@ function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
     },
     [camera],
   );
+
+  /**
+   * Recompute the worn field from `residue`. Anchors are read from the same
+   * layout the DOM portals use, so a resize re-warps rather than drifting out
+   * of register.
+   *
+   * On the first run the particles are placed directly on their worn
+   * positions, so the hub loads already-worn instead of visibly settling. Later
+   * runs (`residue clear`, a resize) leave positions alone and let the existing
+   * easing carry them, which is what makes clearing read as the paths fading.
+   */
+  const applyResidue = useCallback(() => {
+    const geo = meshRef.current?.geometry;
+    if (!geo) return;
+
+    const anchors = [];
+    for (const anchor of getPortalAnchors()) {
+      const weight = residue[anchor.id];
+      if (!weight) continue;
+      const wp = screenToWorld(
+        window.innerWidth / 2 + anchor.x,
+        window.innerHeight / 2 + anchor.y,
+        camera,
+      );
+      anchors.push({ x: wp.x, y: wp.y, weight });
+    }
+
+    const seed = residueSeededRef.current !== positions;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const i3 = i * 3;
+      const px = pristinePositions[i3];
+      const py = pristinePositions[i3 + 1];
+
+      let shiftX = 0;
+      let shiftY = 0;
+      let density = 0;
+
+      for (let a = 0; a < anchors.length; a++) {
+        const ax = anchors[a].x - px;
+        const ay = anchors[a].y - py;
+        const d = Math.sqrt(ax * ax + ay * ay);
+        if (d > RESIDUE_RADIUS || d < 0.001) continue;
+        const falloff = 1 - d / RESIDUE_RADIUS;
+        const influence = anchors[a].weight * falloff * falloff;
+        const pull = Math.min(RESIDUE_PULL * influence, d * RESIDUE_PULL_CLAMP);
+        shiftX += (ax / d) * pull;
+        shiftY += (ay / d) * pull;
+        density += influence;
+      }
+
+      basePositions[i3] = px + shiftX;
+      basePositions[i3 + 1] = py + shiftY;
+      residueValues[i] = Math.min(1, density);
+
+      if (seed) {
+        positions[i3] = basePositions[i3];
+        positions[i3 + 1] = basePositions[i3 + 1];
+      }
+    }
+
+    residueSeededRef.current = positions;
+    if (geo.attributes.residue) geo.attributes.residue.needsUpdate = true;
+    if (seed && geo.attributes.position) {
+      geo.attributes.position.needsUpdate = true;
+    }
+  }, [
+    residue,
+    camera,
+    positions,
+    basePositions,
+    pristinePositions,
+    residueValues,
+  ]);
+
+  useEffect(() => {
+    applyResidue();
+
+    let timer = null;
+    const onResize = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(applyResidue, RESIDUE_RESIZE_DEBOUNCE_MS);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      if (timer) clearTimeout(timer);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [applyResidue]);
 
   useFrame((state) => {
     if (!meshRef.current) return;
@@ -371,24 +502,28 @@ function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
   const vertexShader = `
     attribute float size;
     attribute vec3 customColor;
+    attribute float residue;
     varying vec3 vColor;
+    varying float vResidue;
     void main() {
       vColor = customColor;
+      vResidue = residue;
       vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-      gl_PointSize = size * (500.0 / -mvPosition.z);
+      gl_PointSize = size * (1.0 + residue * 0.45) * (500.0 / -mvPosition.z);
       gl_Position = projectionMatrix * mvPosition;
     }
   `;
 
   const fragmentShader = `
     varying vec3 vColor;
+    varying float vResidue;
     void main() {
       float d = length(gl_PointCoord - vec2(0.5));
       if (d > 0.5) discard;
       float core = smoothstep(0.5, 0.1, d);
       float glow = smoothstep(0.5, 0.25, d) * 0.3;
       float alpha = core + glow;
-      gl_FragColor = vec4(vColor, alpha * 0.9);
+      gl_FragColor = vec4(vColor, min(1.0, alpha * 0.9 * (1.0 + vResidue * 0.35)));
     }
   `;
 
@@ -414,6 +549,12 @@ function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
             array={sizes}
             itemSize={1}
           />
+          <bufferAttribute
+            attach="attributes-residue"
+            count={PARTICLE_COUNT}
+            array={residueValues}
+            itemSize={1}
+          />
         </bufferGeometry>
         <shaderMaterial
           vertexShader={vertexShader}
@@ -431,6 +572,7 @@ export default function ParticleCanvasWrapper({
   accentColor = "#16a34a",
   hoveredPortalRef,
   clickPulseRef,
+  residue = {},
 }) {
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
@@ -444,6 +586,7 @@ export default function ParticleCanvasWrapper({
           accentColor={accentColor}
           hoveredPortalRef={hoveredPortalRef}
           clickPulseRef={clickPulseRef}
+          residue={residue}
         />
       </Canvas>
     </div>

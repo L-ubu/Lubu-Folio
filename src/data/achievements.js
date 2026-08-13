@@ -13,6 +13,13 @@ export const achievementDefinitions = [
       "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3l2.5 5.5L20 12l-5.5 1.5L12 19l-2.5-5.5L4 12l5.5-1.5L12 5z",
   },
   {
+    id: "grand-tour",
+    title: "Grand Tour",
+    description: "Walked all seven rooms without closing the tab",
+    svgPath:
+      "M12 2a10 10 0 100 20 10 10 0 000-20zm0 0v20M2 12h20M4.5 6.5c4 2.5 11 2.5 15 0M4.5 17.5c4-2.5 11-2.5 15 0",
+  },
+  {
     id: "night-owl",
     title: "Night Owl",
     description: "Visited between 1am and 5am",
