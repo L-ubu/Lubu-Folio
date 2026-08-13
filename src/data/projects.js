@@ -278,4 +278,46 @@ export const projects = [
     hoverEffect: "brain-pulse",
     links: { github: "https://github.com/L-ubu/mutabar" },
   },
+  {
+    id: "frisk",
+    title: "frisk",
+    description:
+      "Single Rust binary that gives any site (and its repo) a security pat-down — headers, TLS, EOL stacks, leaked secrets, and CVEs in one pass. Ships as a CLI and an MCP server so agents can run the scan themselves.",
+    tech: ["Rust", "Security", "CLI", "MCP"],
+    status: "wip",
+    color: "#0ea5e9",
+    size: "medium",
+    hoverEffect: "lock-pick",
+    links: { github: "https://github.com/L-ubu/frisk" },
+  },
+  {
+    id: "exploit-bot",
+    title: "Exploit Bot",
+    description:
+      "Feeds your company's time-off policy to Claude and gets back the loopholes: bridge days, holiday stacking, sick-day conversions, each with an ROI calculation. Free basic scan, $4 for the Sonnet deep-dive via Stripe.",
+    tech: ["Next.js", "Claude AI", "Supabase", "Stripe"],
+    status: "active",
+    color: "#65a30d",
+    size: "medium",
+    hoverEffect: "brain-pulse",
+    links: {
+      live: "https://exploit-bot.vercel.app",
+      github: "https://github.com/L-ubu/exploit-bot",
+    },
+  },
+  {
+    id: "taskquest-pro",
+    title: "TaskQuest Pro",
+    description:
+      "Gamified task manager — XP, levels, streaks, and a Pomodoro timer bolted onto a Remix/SQLite stack, with confetti for actually finishing things.",
+    tech: ["Remix", "TypeScript", "SQLite"],
+    status: "done",
+    color: "#c026d3",
+    size: "medium",
+    hoverEffect: "dice-roll",
+    links: {
+      live: "https://project-remix.vercel.app",
+      github: "https://github.com/L-ubu/Project_Remix",
+    },
+  },
 ];
