@@ -336,6 +336,11 @@ export function initSecrets(unlockAchievement) {
               document.dispatchEvent(new CustomEvent("open-theme-switcher"));
             },
           },
+          {
+            icon: "◐",
+            text: "Toggle Dark/Light",
+            action: () => showToast("◐ Coming soon"),
+          },
         ],
       },
       {
