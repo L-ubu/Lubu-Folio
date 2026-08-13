@@ -1,5 +1,5 @@
 {
   "framework": "astro",
-  "buildCommand": "npx astro build",
+  "buildCommand": "NODE_ENV=production npx astro build",
   "outputDirectory": "dist"
 }
