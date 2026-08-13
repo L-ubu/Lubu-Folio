@@ -62,6 +62,15 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "WordPress website for Scouts en Gidsen Lievegem. 5+ years of active maintenance and improvements.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Single Rust binary that gives any site (and its repo) a security pat-down — headers, TLS, EOL stacks, leaked secrets, and CVEs in one pass. Ships as a CLI and an MCP server so agents can run the scan themselves.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Feeds your company's time-off policy to Claude and gets back the loopholes: bridge days, holiday stacking, sick-day conversions, each with an ROI calculation. Free basic scan, $4 for the Sonnet deep-dive via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gamified task manager — XP, levels, streaks, and a Pomodoro timer bolted onto a Remix/SQLite stack, with confetti for actually finishing things.",
     // Experience cards
     "exp-0-title": "React Developer",
     "exp-0-org": "iO Digital",
@@ -145,6 +154,15 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "WordPress website voor Scouts en Gidsen Lievegem. 5+ jaar actief onderhoud en verbeteringen.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Één Rust-binary die elke site (en z'n repo) een security-fouillering geeft — headers, TLS, verlopen stacks, gelekte secrets en CVE's in één run. Beschikbaar als CLI en als MCP-server zodat agents de scan zelf kunnen draaien.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Voert het verlofbeleid van je bedrijf aan Claude en krijgt de mazen terug: brugdagen, verlofstapelen, ziektedag-conversies, elk met een ROI-berekening. Gratis basisscan, €4 voor de diepere Sonnet-scan via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gamified taakbeheer — XP, levels, streaks en een pomodoro-timer op een Remix/SQLite-stack, met confetti als je iets écht afwerkt.",
     "exp-0-title": "React Developer",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Heden",
@@ -229,6 +247,15 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "Sitio WordPress para Scouts en Gidsen Lievegem. 5+ a\u00f1os de mantenimiento activo y mejoras.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Un solo binario en Rust que le hace un cacheo de seguridad a cualquier sitio (y su repo) \u2014 cabeceras, TLS, stacks obsoletos, secretos filtrados y CVEs en una sola pasada. Disponible como CLI y como servidor MCP para que los agentes ejecuten el escaneo ellos mismos.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Le pasa la pol\u00edtica de vacaciones de tu empresa a Claude y devuelve los resquicios: puentes, acumulaci\u00f3n de festivos, conversi\u00f3n de d\u00edas de baja, cada uno con su c\u00e1lculo de ROI. Escaneo b\u00e1sico gratis, $4 por el an\u00e1lisis profundo con Sonnet v\u00eda Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gestor de tareas gamificado \u2014 XP, niveles, rachas y un temporizador Pomodoro sobre una pila Remix/SQLite, con confeti cuando realmente terminas algo.",
     "exp-0-title": "Desarrollador React",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Presente",
@@ -312,6 +339,15 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "Site WordPress pour Scouts en Gidsen Lievegem. 5+ ans de maintenance active et am\u00e9liorations.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Un seul binaire Rust qui fait une fouille de s\u00e9curit\u00e9 \u00e0 n'importe quel site (et son repo) \u2014 en-t\u00eates, TLS, stacks obsol\u00e8tes, secrets qui fuitent et CVE en un seul passage. Disponible en CLI et en serveur MCP pour que les agents lancent le scan eux-m\u00eames.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Passe la politique de cong\u00e9s de ton entreprise \u00e0 Claude et r\u00e9cup\u00e8re les failles : ponts, cumul de jours f\u00e9ri\u00e9s, conversion de jours de maladie, chacune avec son calcul de ROI. Scan basique gratuit, 4$ pour l'analyse approfondie Sonnet via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gestionnaire de t\u00e2ches gamifi\u00e9 \u2014 XP, niveaux, s\u00e9ries et un minuteur Pomodoro greff\u00e9s sur une stack Remix/SQLite, avec des confettis quand tu finis vraiment quelque chose.",
     "exp-0-title": "D\u00e9veloppeur React",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Pr\u00e9sent",
@@ -395,6 +431,15 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "WordPress-Website f\u00fcr Scouts en Gidsen Lievegem. 5+ Jahre aktive Wartung und Verbesserungen.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Eine einzige Rust-Binary, die jeder Website (und ihrem Repo) eine Sicherheitsdurchsuchung verpasst \u2014 Header, TLS, veraltete Stacks, geleakte Secrets und CVEs in einem Durchlauf. Als CLI und als MCP-Server, damit Agents den Scan selbst fahren k\u00f6nnen.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "F\u00fcttert Claude mit der Urlaubsregelung deiner Firma und liefert die Schlupfl\u00f6cher zur\u00fcck: Br\u00fcckentage, Feiertagsstapeln, Umwandlung von Krankheitstagen, jeweils mit ROI-Berechnung. Kostenloser Basis-Scan, 4$ f\u00fcr die tiefere Sonnet-Analyse via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gamifizierter Task-Manager \u2014 XP, Level, Streaks und ein Pomodoro-Timer auf einem Remix/SQLite-Stack, mit Konfetti, wenn du tats\u00e4chlich mal etwas fertig bekommst.",
     "exp-0-title": "React-Entwickler",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Jetzt",
@@ -478,6 +523,15 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "Sito WordPress per Scouts en Gidsen Lievegem. 5+ anni di manutenzione attiva e miglioramenti.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Un solo binario Rust che fa una perquisizione di sicurezza a qualsiasi sito (e al suo repo) — header, TLS, stack obsoleti, secret trapelati e CVE in un'unica passata. Disponibile come CLI e come server MCP, così gli agent possono lanciare la scansione da soli.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Passa la politica ferie della tua azienda a Claude e restituisce le scappatoie: ponti, accumulo di festivi, conversione dei giorni di malattia, ognuna con il suo calcolo del ROI. Scansione base gratuita, $4 per l'analisi approfondita Sonnet via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gestore di attività gamificato — XP, livelli, streak e un timer Pomodoro innestati su uno stack Remix/SQLite, con i confetti quando finisci davvero qualcosa.",
     "exp-0-title": "Sviluppatore React",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Presente",
