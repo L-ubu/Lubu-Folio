@@ -128,4 +128,10 @@
       transform: translateY(0);
     }
   }
+
+  html[data-motion="reduced"] .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
