@@ -1,3 +1,5 @@
+import { useReducedMotion } from "../../utils/motion";
+
 export function Heart({
   x = 50,
   y = 50,
@@ -40,7 +42,9 @@ export function Star({
   twinkle = false,
   twinkleDuration,
 }) {
+  const reduced = useReducedMotion();
   const dur = twinkleDuration || 2 + (x % 4) * 0.7;
+  const held = twinkle && reduced;
   return (
     <svg
       style={{
@@ -49,11 +53,16 @@ export function Star({
         top: `${y}%`,
         width: size,
         height: size,
-        transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
-        opacity: 0.5,
+        // Held at the twinkle keyframe's own 50% (bright) frame — freezing
+        // at 0% would drop every star to 0.3 opacity (§3.6).
+        transform: held
+          ? `translate(-50%, -50%) rotate(${rotation}deg) scale(1.1)`
+          : `translate(-50%, -50%) rotate(${rotation}deg)`,
+        opacity: held ? 0.7 : 0.5,
         pointerEvents: "none",
-        animation: twinkle ? `twinkle ${dur}s ease-in-out infinite` : undefined,
-        animationDelay: twinkle ? `${(rotation % 5) * 0.3}s` : undefined,
+        animation:
+          twinkle && !reduced ? `twinkle ${dur}s ease-in-out infinite` : undefined,
+        animationDelay: twinkle && !reduced ? `${(rotation % 5) * 0.3}s` : undefined,
       }}
       viewBox="0 0 24 24"
       fill={color}
