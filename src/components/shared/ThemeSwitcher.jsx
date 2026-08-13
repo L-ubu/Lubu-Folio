@@ -7,6 +7,7 @@ import {
   setTheme,
 } from "../../utils/storage";
 import { useAchievementStore } from "../achievements/store";
+import { useReducedMotion } from "../../utils/motion";
 
 export default function ThemeSwitcher() {
   const [open, setOpen] = useState(false);
@@ -14,6 +15,7 @@ export default function ThemeSwitcher() {
   const [activeAccent, setActiveAccent] = useState("#16a34a");
   const [tab, setTab] = useState("themes");
   const unlock = useAchievementStore((s) => s.unlock);
+  const reduced = useReducedMotion();
   const ref = useRef(null);
 
   useEffect(() => {
@@ -123,7 +125,7 @@ export default function ThemeSwitcher() {
             borderRadius: 14,
             padding: 0,
             boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
-            animation: "themePopIn 0.25s ease",
+            animation: reduced ? "none" : "themePopIn 0.25s ease",
             overflow: "hidden",
           }}
         >
