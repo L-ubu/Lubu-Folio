@@ -1,4 +1,5 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { prefersReducedMotion } from "../../utils/motion";
 
 const portalData = [
   {
@@ -84,12 +85,12 @@ const portalData = [
   },
 ];
 
-function Portal({ portal, index, total, onNavigate, onHover }) {
+function Portal({ portal, index, total, orbitRadius, onNavigate, onHover }) {
   const [hovered, setHovered] = useState(false);
   const iconRef = useRef(null);
 
   const angle = (index / total) * Math.PI * 2 - Math.PI / 2;
-  const radius = portal.style === "primary" ? 0 : 180;
+  const radius = portal.style === "primary" ? 0 : orbitRadius;
   const x = Math.cos(angle) * radius;
   const y = Math.sin(angle) * radius;
 
@@ -128,6 +129,8 @@ function Portal({ portal, index, total, onNavigate, onHover }) {
       }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onFocus={handleEnter}
+      onBlur={handleLeave}
       className="portal-node"
       style={{
         position: "absolute",
@@ -181,7 +184,9 @@ function Portal({ portal, index, total, onNavigate, onHover }) {
               borderRadius: "50%",
               border: "1px solid var(--color-accent)",
               opacity: hovered ? 0.6 : 0.2,
-              animation: "portalPulse 2s ease-in-out infinite",
+              animation: prefersReducedMotion()
+                ? "none"
+                : "portalPulse 2s ease-in-out infinite",
             }}
           />
         )}
@@ -214,12 +219,23 @@ function Portal({ portal, index, total, onNavigate, onHover }) {
 }
 
 export default function PortalNodes({ onNavigate, hoveredPortalRef }) {
+  const [orbitRadius, setOrbitRadius] = useState(180);
+
   const handleHover = useCallback(
     (data) => {
       hoveredPortalRef.current = data;
     },
     [hoveredPortalRef],
   );
+
+  useEffect(() => {
+    const computeRadius = () => {
+      setOrbitRadius(Math.max(110, Math.min(180, window.innerWidth / 2 - 70)));
+    };
+    computeRadius();
+    window.addEventListener("resize", computeRadius);
+    return () => window.removeEventListener("resize", computeRadius);
+  }, []);
 
   return (
     <div
@@ -239,6 +255,7 @@ export default function PortalNodes({ onNavigate, hoveredPortalRef }) {
             portal={portal}
             index={i}
             total={portalData.length}
+            orbitRadius={orbitRadius}
             onNavigate={onNavigate}
             onHover={handleHover}
           />
@@ -249,6 +266,9 @@ export default function PortalNodes({ onNavigate, hoveredPortalRef }) {
         @keyframes portalPulse {
           0%, 100% { transform: scale(1); opacity: 0.2; }
           50% { transform: scale(1.2); opacity: 0.5; }
+        }
+        .portal-node:focus-visible {
+          outline: none;
         }
       `}</style>
     </div>
