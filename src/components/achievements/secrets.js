@@ -1,3 +1,5 @@
+import { motion } from "../../utils/motion";
+
 const KONAMI = [
   "ArrowUp",
   "ArrowUp",
@@ -10,6 +12,35 @@ const KONAMI = [
   "b",
   "a",
 ];
+
+// Shared "static particle burst" (§3.11): under reduced motion, particle
+// effects (snow/hearts/stones/fire/slime) scatter at a mid-travel position,
+// hold, then fade out — instead of animating a full fall/float/rise across
+// the screen. One function, every glyph-based call site.
+function staticParticleBurst({
+  glyphs,
+  count,
+  place,
+  holdMs = 1100,
+  fadeMs = 500,
+  containerStyle = "position:fixed;inset:0;",
+}) {
+  const container = document.createElement("div");
+  container.style.cssText = `${containerStyle}z-index:99999;pointer-events:none;overflow:hidden;transition:opacity ${fadeMs}ms;`;
+  document.body.appendChild(container);
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement("div");
+    el.style.position = "absolute";
+    el.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+    place(el, i);
+    container.appendChild(el);
+  }
+  setTimeout(() => {
+    container.style.opacity = "0";
+  }, holdMs);
+  setTimeout(() => container.remove(), holdMs + fadeMs + 50);
+  return container;
+}
 
 export function initSecrets(unlockAchievement) {
   let konamiIndex = 0;
@@ -865,12 +896,45 @@ export function initSecrets(unlockAchievement) {
 
     const confettiCanvas = document.createElement("canvas");
     confettiCanvas.style.cssText =
-      "position:fixed;inset:0;z-index:99998;pointer-events:none;";
+      "position:fixed;inset:0;z-index:99998;pointer-events:none;transition:opacity 500ms;";
     confettiCanvas.width = window.innerWidth;
     confettiCanvas.height = window.innerHeight;
     document.body.appendChild(confettiCanvas);
 
     const cCtx = confettiCanvas.getContext("2d");
+
+    if (motion.reduced) {
+      // One static mid-fall frame instead of the rAF confetti sim, and the
+      // accent settles on a single random color instead of strobing.
+      const chosen = colors[Math.floor(Math.random() * colors.length)];
+      root.style.setProperty("--color-accent", chosen);
+      root.style.setProperty("--color-accent-dim", chosen + "20");
+      root.style.setProperty("--color-accent-glow", chosen + "40");
+      for (let p = 0; p < 150; p++) {
+        const x = Math.random() * confettiCanvas.width;
+        const y = Math.random() * confettiCanvas.height;
+        const r = Math.random() * Math.PI * 2;
+        const w = Math.random() * 8 + 4;
+        const h = Math.random() * 4 + 2;
+        cCtx.save();
+        cCtx.translate(x, y);
+        cCtx.rotate(r);
+        cCtx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+        cCtx.fillRect(-w / 2, -h / 2, w, h);
+        cCtx.restore();
+      }
+      setTimeout(() => {
+        confettiCanvas.style.opacity = "0";
+      }, 1100);
+      setTimeout(() => confettiCanvas.remove(), 1600);
+      setTimeout(() => {
+        root.style.setProperty("--color-accent", original);
+        root.style.setProperty("--color-accent-dim", original + "20");
+        root.style.setProperty("--color-accent-glow", original + "40");
+      }, 3000);
+      return;
+    }
+
     const confetti = Array.from({ length: 150 }, () => ({
       x: Math.random() * confettiCanvas.width,
       y: -20 - Math.random() * 200,
@@ -949,6 +1013,9 @@ export function initSecrets(unlockAchievement) {
         from { opacity: 0.97; }
         to { opacity: 1; }
       }
+      html[data-motion="reduced"] .terminal-scanlines {
+        animation: none;
+      }
     `;
     document.head.appendChild(style);
     document.body.classList.add("terminal-active");
@@ -967,6 +1034,19 @@ export function initSecrets(unlockAchievement) {
   function triggerGravityFlip() {
     showToast("\u{1F30C} Gravity inverted!");
     const main = document.querySelector("main") || document.body;
+
+    if (motion.reduced) {
+      // Static flip, no per-element floaters — the flip itself is the
+      // information (R2); the drift animation is the ambience (dropped).
+      main.style.transformOrigin = "center center";
+      main.style.transform = "rotate(180deg)";
+      setTimeout(() => {
+        main.style.transform = "";
+        main.style.transformOrigin = "";
+      }, 1500);
+      return;
+    }
+
     main.style.transition = "transform 1s cubic-bezier(0.4, 0, 0.2, 1)";
     main.style.transformOrigin = "center center";
     main.style.transform = "rotate(180deg)";
@@ -1001,6 +1081,66 @@ export function initSecrets(unlockAchievement) {
   function triggerGlitchMode() {
     showToast("\u{1F4FA} GLITCH!");
     const main = document.querySelector("main") || document.body;
+
+    if (motion.reduced) {
+      // One held frame: static RGB-split + static scanlines + a handful of
+      // static offset blocks. No skew/filter keyframe, no block-spawn loop.
+      const style = document.createElement("style");
+      style.id = "glitch-mode-style-reduced";
+      style.textContent = `
+        .glitch-scanlines {
+          position: fixed; inset: 0; z-index: 99997; pointer-events: none;
+          background: repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            rgba(0,255,100,0.03) 1px,
+            transparent 2px,
+            transparent 4px
+          );
+          mix-blend-mode: overlay;
+        }
+        .glitch-rgb-split {
+          position: fixed; inset: 0; z-index: 99996; pointer-events: none;
+          box-shadow: inset -3px 0 rgba(255,0,0,0.08), inset 3px 0 rgba(0,255,255,0.08);
+        }
+      `;
+      document.head.appendChild(style);
+
+      const scanlines = document.createElement("div");
+      scanlines.className = "glitch-scanlines";
+      document.body.appendChild(scanlines);
+
+      const rgbSplit = document.createElement("div");
+      rgbSplit.className = "glitch-rgb-split";
+      document.body.appendChild(rgbSplit);
+
+      const blocks = [];
+      for (let i = 0; i < 8; i++) {
+        const block = document.createElement("div");
+        const y = Math.random() * window.innerHeight;
+        const h = 2 + Math.random() * 20;
+        Object.assign(block.style, {
+          position: "fixed",
+          left: "0",
+          right: "0",
+          top: y + "px",
+          height: h + "px",
+          zIndex: "99998",
+          pointerEvents: "none",
+          background: `rgba(${Math.random() > 0.5 ? "0,255,100" : "255,0,80"}, ${0.05 + Math.random() * 0.1})`,
+        });
+        document.body.appendChild(block);
+        blocks.push(block);
+      }
+
+      setTimeout(() => {
+        scanlines.remove();
+        rgbSplit.remove();
+        style.remove();
+        blocks.forEach((b) => b.remove());
+      }, 1500);
+      return;
+    }
 
     const style = document.createElement("style");
     style.id = "glitch-mode-style";
@@ -1175,10 +1315,6 @@ export function initSecrets(unlockAchievement) {
       love: "\u{1F497} Love is in the code!",
     };
     showToast(msgs[word] || "\u2764\uFE0F");
-    const container = document.createElement("div");
-    container.style.cssText =
-      "position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden;";
-    document.body.appendChild(container);
     const hearts = [
       "\u2764\uFE0F",
       "\u{1F49B}",
@@ -1188,6 +1324,27 @@ export function initSecrets(unlockAchievement) {
       "\u{1F90D}",
       "\u{1F90E}",
     ];
+
+    if (motion.reduced) {
+      staticParticleBurst({
+        glyphs: hearts,
+        count: 25,
+        place: (el) => {
+          Object.assign(el.style, {
+            left: 10 + Math.random() * 80 + "%",
+            top: 15 + Math.random() * 65 + "%",
+            fontSize: 16 + Math.random() * 24 + "px",
+            transform: `rotate(${(Math.random() - 0.5) * 40}deg)`,
+          });
+        },
+      });
+      return;
+    }
+
+    const container = document.createElement("div");
+    container.style.cssText =
+      "position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden;";
+    document.body.appendChild(container);
     for (let i = 0; i < 25; i++) {
       const h = document.createElement("div");
       const x = 10 + Math.random() * 80;
@@ -1213,11 +1370,28 @@ export function initSecrets(unlockAchievement) {
 
   function triggerStoneRain() {
     showToast("\u{1FAA8} STEEN!");
+    const rocks = ["\u{1FAA8}", "\u{1F48E}", "\u26F0\uFE0F", "\u{1F5FF}"];
+
+    if (motion.reduced) {
+      staticParticleBurst({
+        glyphs: rocks,
+        count: 20,
+        place: (el) => {
+          Object.assign(el.style, {
+            left: Math.random() * 100 + "%",
+            top: 20 + Math.random() * 55 + "%",
+            fontSize: 20 + Math.random() * 30 + "px",
+            transform: `rotate(${Math.random() * 360}deg)`,
+          });
+        },
+      });
+      return;
+    }
+
     const container = document.createElement("div");
     container.style.cssText =
       "position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden;";
     document.body.appendChild(container);
-    const rocks = ["\u{1FAA8}", "\u{1F48E}", "\u26F0\uFE0F", "\u{1F5FF}"];
     for (let i = 0; i < 20; i++) {
       const r = document.createElement("div");
       const x = Math.random() * 100;
@@ -1254,6 +1428,30 @@ export function initSecrets(unlockAchievement) {
     const drops = Array(cols).fill(0);
     const chars =
       "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    if (motion.reduced) {
+      // One held frame: each column drawn to a random height instead of
+      // animating a fall, so it reads as a paused feed rather than rain.
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "14px monospace";
+      for (let i = 0; i < cols; i++) {
+        const colHeight = 5 + Math.floor(Math.random() * (canvas.height / 14));
+        for (let j = 0; j < colHeight; j++) {
+          const ch = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillStyle =
+            j === colHeight - 1 ? "#fff" : j > colHeight - 4 ? "#0a0" : "#0f0";
+          ctx.fillText(ch, i * 14, j * 14);
+        }
+      }
+      canvas.style.transition = "opacity 500ms";
+      setTimeout(() => {
+        canvas.style.opacity = "0";
+      }, 2000);
+      setTimeout(() => canvas.remove(), 2550);
+      return;
+    }
+
     let frames = 0;
     function draw() {
       ctx.fillStyle = "rgba(0,0,0,0.05)";
@@ -1678,6 +1876,25 @@ export function initSecrets(unlockAchievement) {
 
   function triggerSnow() {
     showToast("\u2744\uFE0F Let it snow!");
+
+    if (motion.reduced) {
+      staticParticleBurst({
+        glyphs: ["\u2744\uFE0F", "\u2022"],
+        count: 60,
+        holdMs: 1400,
+        place: (el) => {
+          Object.assign(el.style, {
+            left: Math.random() * 100 + "%",
+            top: Math.random() * 90 + "%",
+            fontSize: 4 + Math.random() * 10 + "px",
+            color: "rgba(255,255,255,0.8)",
+            opacity: "0.8",
+          });
+        },
+      });
+      return;
+    }
+
     const container = document.createElement("div");
     container.style.cssText =
       "position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden;";
@@ -1708,6 +1925,24 @@ export function initSecrets(unlockAchievement) {
 
   function triggerFire() {
     showToast("\u{1F525} THIS IS FINE");
+    const flames = ["\u{1F525}", "\u{1F7E0}", "\u{1F7E1}"];
+
+    if (motion.reduced) {
+      staticParticleBurst({
+        glyphs: flames,
+        count: 40,
+        containerStyle: "position:fixed;bottom:0;left:0;right:0;height:200px;",
+        place: (el) => {
+          Object.assign(el.style, {
+            bottom: Math.random() * 150 + "px",
+            left: Math.random() * 100 + "%",
+            fontSize: 20 + Math.random() * 25 + "px",
+          });
+        },
+      });
+      return;
+    }
+
     const container = document.createElement("div");
     container.style.cssText =
       "position:fixed;bottom:0;left:0;right:0;height:200px;z-index:99999;pointer-events:none;overflow:hidden;";
@@ -1749,18 +1984,23 @@ export function initSecrets(unlockAchievement) {
       pointerEvents: "none",
       background:
         "linear-gradient(90deg, #f43f5e, #f59e0b, #22c55e, #3b82f6, #a855f7, #ec4899, #f43f5e)",
-      backgroundSize: "200% 100%",
-      animation: "rainbowSlide 1s linear infinite",
     });
-    document.body.appendChild(bar);
-    if (!document.getElementById("rainbow-kf")) {
-      const st = document.createElement("style");
-      st.id = "rainbow-kf";
-      st.textContent =
-        "@keyframes rainbowSlide { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }";
-      document.head.appendChild(st);
+    if (!motion.reduced) {
+      // The rainbow is the point; its movement is not — held gradient at rest.
+      bar.style.backgroundSize = "200% 100%";
+      bar.style.animation = "rainbowSlide 1s linear infinite";
+      if (!document.getElementById("rainbow-kf")) {
+        const st = document.createElement("style");
+        st.id = "rainbow-kf";
+        st.textContent =
+          "@keyframes rainbowSlide { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }";
+        document.head.appendChild(st);
+      }
     }
-    document.body.style.transition = "filter 0.5s";
+    document.body.appendChild(bar);
+    if (!motion.reduced) {
+      document.body.style.transition = "filter 0.5s";
+    }
     document.body.style.filter = "saturate(1.8)";
     setTimeout(() => {
       bar.remove();
@@ -1955,6 +2195,16 @@ function triggerKonamiEffect() {
 
 function triggerSlimeFlash() {
   const overlay = document.createElement("div");
+
+  if (motion.reduced) {
+    // Held tint, no eased fade (R4: transitions over 200ms go instant).
+    overlay.style.cssText =
+      "position:fixed;inset:0;z-index:99999;pointer-events:none;background:#22c55e;opacity:0.35;";
+    document.body.appendChild(overlay);
+    setTimeout(() => overlay.remove(), 700);
+    return;
+  }
+
   overlay.style.cssText =
     "position:fixed;inset:0;z-index:99999;pointer-events:none;background:#22c55e;opacity:0.35;transition:opacity 0.8s;";
   document.body.appendChild(overlay);
@@ -1965,6 +2215,22 @@ function triggerSlimeFlash() {
 }
 
 function triggerSlimeRain() {
+  if (motion.reduced) {
+    staticParticleBurst({
+      glyphs: ["\u{1F7E2}"],
+      count: 30,
+      place: (el) => {
+        Object.assign(el.style, {
+          left: Math.random() * 100 + "%",
+          top: 20 + Math.random() * 60 + "%",
+          fontSize: 20 + Math.random() * 30 + "px",
+          transform: `rotate(${Math.random() * 360}deg)`,
+        });
+      },
+    });
+    return;
+  }
+
   const container = document.createElement("div");
   container.style.cssText =
     "position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden;";

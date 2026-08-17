@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 import { SECRETS, RUNES, CREATURES, ALTAR, STILL_MESSAGE } from "./entities.js";
+import { motion } from "../../utils/motion";
 
 const SPOT_BASE = 160;
 const FLASH_BASE = 340;
@@ -169,7 +170,16 @@ export default function VoidCanvas({
       if (!pulseUnlockedRef.current) return;
       if (Date.now() - s.pulseCooldown < PULSE_COOLDOWN) return;
       const wy = s.my + s.scrollY;
-      s.pulse = { sx: s.mx, pageY: wy, radius: 0, alpha: 1 };
+      s.pulse = motion.reduced
+        ? {
+            sx: s.mx,
+            pageY: wy,
+            radius: PULSE_MAX_RADIUS,
+            alpha: 1,
+            static: true,
+            bornAt: Date.now(),
+          }
+        : { sx: s.mx, pageY: wy, radius: 0, alpha: 1 };
       s.pulseCooldown = Date.now();
       s.creatures.forEach((c) => {
         const csx = w / 2 + c.x;
@@ -226,7 +236,9 @@ export default function VoidCanvas({
         const psx = s.pulse.sx;
         const psy = s.pulse.pageY - s.scrollY;
         const pd = Math.hypot(sx - psx, sy - psy);
-        if (Math.abs(pd - s.pulse.radius) < 60) return true;
+        if (s.pulse.static) {
+          if (pd < s.pulse.radius) return true;
+        } else if (Math.abs(pd - s.pulse.radius) < 60) return true;
       }
       if (s.completionFlash > 0) return true;
 
@@ -270,7 +282,10 @@ export default function VoidCanvas({
       }
 
       if (mode === "spotlight") {
-        const flicker = 1 + Math.sin(s.flickerPhase * 0.3) * 0.015;
+        // Steady beam at rest — the flicker is the horror-movie tell (§3.5).
+        const flicker = motion.reduced
+          ? 1
+          : 1 + Math.sin(s.flickerPhase * 0.3) * 0.015;
         const r = spotRadius() * flicker;
         const grad = darkCtx.createRadialGradient(s.mx, s.my, 0, s.mx, s.my, r);
         grad.addColorStop(0, "rgba(0,0,0,1)");
@@ -282,10 +297,11 @@ export default function VoidCanvas({
         darkCtx.arc(s.mx, s.my, r, 0, Math.PI * 2);
         darkCtx.fill();
       } else if (mode === "flashlight") {
-        const flicker =
-          0.94 +
-          Math.sin(s.flickerPhase * 0.15) * 0.04 +
-          Math.sin(s.flickerPhase * 0.37) * 0.02;
+        const flicker = motion.reduced
+          ? 1
+          : 0.94 +
+            Math.sin(s.flickerPhase * 0.15) * 0.04 +
+            Math.sin(s.flickerPhase * 0.37) * 0.02;
         const len = flashLen() * flicker;
         const a = s.moveAngle;
         const lx = s.mx + Math.cos(a - FLASH_WIDTH) * len;
@@ -326,11 +342,18 @@ export default function VoidCanvas({
 
       if (s.pulse && s.pulse.alpha > 0) {
         const psy = s.pulse.pageY - s.scrollY;
-        darkCtx.lineWidth = 60;
-        darkCtx.strokeStyle = `rgba(0,0,0,${s.pulse.alpha * 0.8})`;
-        darkCtx.beginPath();
-        darkCtx.arc(s.pulse.sx, psy, s.pulse.radius, 0, Math.PI * 2);
-        darkCtx.stroke();
+        if (s.pulse.static) {
+          darkCtx.fillStyle = `rgba(0,0,0,${s.pulse.alpha})`;
+          darkCtx.beginPath();
+          darkCtx.arc(s.pulse.sx, psy, s.pulse.radius, 0, Math.PI * 2);
+          darkCtx.fill();
+        } else {
+          darkCtx.lineWidth = 60;
+          darkCtx.strokeStyle = `rgba(0,0,0,${s.pulse.alpha * 0.8})`;
+          darkCtx.beginPath();
+          darkCtx.arc(s.pulse.sx, psy, s.pulse.radius, 0, Math.PI * 2);
+          darkCtx.stroke();
+        }
       }
 
       darkCtx.globalCompositeOperation = "source-over";
@@ -365,13 +388,21 @@ export default function VoidCanvas({
     function drawDust() {
       const t = Date.now() * 0.001;
       s.dust.forEach((d) => {
-        const dx = d.ox + Math.sin(t * d.speed + d.drift) * 80;
-        const dy = d.oy + Math.cos(t * d.speed * 0.7 + d.drift) * 80;
+        // Freeze at the origin and drop the alpha shimmer at rest — the
+        // dust keeps the beam's volumetric depth without drifting (§3.5).
+        const dx = motion.reduced
+          ? d.ox
+          : d.ox + Math.sin(t * d.speed + d.drift) * 80;
+        const dy = motion.reduced
+          ? d.oy
+          : d.oy + Math.cos(t * d.speed * 0.7 + d.drift) * 80;
         const sx = s.mx + dx;
         const sy = s.my + dy;
         if (sx < -10 || sx > w + 10 || sy < -10 || sy > h + 10) return;
         const fade = Math.max(0, 1 - Math.hypot(dx, dy) / 300);
-        const a = d.alpha * fade * (0.5 + Math.sin(t * 2 + d.drift) * 0.5);
+        const a = motion.reduced
+          ? d.alpha * fade
+          : d.alpha * fade * (0.5 + Math.sin(t * 2 + d.drift) * 0.5);
         if (a <= 0.005) return;
         ctx.fillStyle = `rgba(180,150,240,${a})`;
         ctx.beginPath();
@@ -450,7 +481,9 @@ export default function VoidCanvas({
           );
 
         if (!lit) {
-          const glow = 0.025 + Math.sin(Date.now() * 0.002) * 0.015;
+          const glow = motion.reduced
+            ? 0.04
+            : 0.025 + Math.sin(Date.now() * 0.002) * 0.015;
           ctx.save();
           ctx.font = "26px serif";
           ctx.textAlign = "center";
@@ -462,7 +495,7 @@ export default function VoidCanvas({
         }
 
         if (!isGuarded) onCollectRune(rune.id);
-        const p = 0.7 + Math.sin(Date.now() * 0.005) * 0.3;
+        const p = motion.reduced ? 1 : 0.7 + Math.sin(Date.now() * 0.005) * 0.3;
         ctx.save();
         ctx.font = "26px serif";
         ctx.textAlign = "center";
@@ -482,7 +515,7 @@ export default function VoidCanvas({
       const complete = puzzleRef.current;
 
       if (complete) {
-        const glow = 0.12 + Math.sin(Date.now() * 0.003) * 0.08;
+        const glow = motion.reduced ? 0.2 : 0.12 + Math.sin(Date.now() * 0.003) * 0.08;
         ctx.save();
         ctx.strokeStyle = `rgba(168,85,247,${glow})`;
         ctx.lineWidth = 2;
@@ -537,31 +570,46 @@ export default function VoidCanvas({
 
     function drawCreatures() {
       s.creatures.forEach((c) => {
-        c.wanderTimer--;
-        if (c.scared > 0) {
+        // Autonomous wander is clock-driven ambience — freeze it at rest.
+        // The flee reflex survives: it's the input-driven "you got too
+        // close" feedback, not ambience, so R3 keeps it (§3.5, Q3),
+        // just with a shorter, less disorienting travel distance.
+        if (!motion.reduced) {
+          c.wanderTimer--;
+          if (c.scared > 0) {
+            c.scared--;
+            c.x += (c.tx - c.x) * 0.07;
+            c.y += (c.ty - c.y) * 0.07;
+          } else if (c.wanderTimer <= 0) {
+            c.wanderTimer = 150 + Math.random() * 200;
+            const angle = Math.random() * Math.PI * 2;
+            c.tx = c.startX + Math.cos(angle) * c.wanderRadius;
+            c.ty = c.startY + Math.sin(angle) * c.wanderRadius;
+          } else {
+            c.x += (c.tx - c.x) * 0.01 * c.speed;
+            c.y += (c.ty - c.y) * 0.01 * c.speed;
+          }
+        } else if (c.scared > 0) {
           c.scared--;
           c.x += (c.tx - c.x) * 0.07;
           c.y += (c.ty - c.y) * 0.07;
-        } else if (c.wanderTimer <= 0) {
-          c.wanderTimer = 150 + Math.random() * 200;
-          const angle = Math.random() * Math.PI * 2;
-          c.tx = c.startX + Math.cos(angle) * c.wanderRadius;
-          c.ty = c.startY + Math.sin(angle) * c.wanderRadius;
-        } else {
-          c.x += (c.tx - c.x) * 0.01 * c.speed;
-          c.y += (c.ty - c.y) * 0.01 * c.speed;
         }
 
         const lit = isLit(c.x, c.y);
         if (lit && c.scared <= 0) {
           const wy = s.my + s.scrollY;
           const angle = Math.atan2(c.y - wy, c.x);
-          c.tx = c.x + Math.cos(angle) * 300;
-          c.ty = c.y + Math.sin(angle) * 300;
+          const flee = motion.reduced ? 80 : 300;
+          c.tx = c.x + Math.cos(angle) * flee;
+          c.ty = c.y + Math.sin(angle) * flee;
           c.scared = 80;
         }
 
-        if (Date.now() - s.lastMoveTime > CREEP_TIMEOUT && c.scared <= 0) {
+        if (
+          !motion.reduced &&
+          Date.now() - s.lastMoveTime > CREEP_TIMEOUT &&
+          c.scared <= 0
+        ) {
           const wy = s.my + s.scrollY;
           const dx = 0 - c.x;
           const dy = wy - c.y;
@@ -579,7 +627,9 @@ export default function VoidCanvas({
           ? 0
           : c.scared > 0
             ? 0.08
-            : 0.5 + Math.sin(Date.now() * 0.003 + c.startX) * 0.2;
+            : motion.reduced
+              ? 0.7
+              : 0.5 + Math.sin(Date.now() * 0.003 + c.startX) * 0.2;
         if (eyeAlpha <= 0) return;
 
         ctx.save();
@@ -598,6 +648,38 @@ export default function VoidCanvas({
 
     function drawPulse() {
       if (!s.pulse || s.pulse.alpha <= 0) return;
+      if (s.pulse.static) {
+        // Instant full-radius reveal, held, then faded — no expanding
+        // ring animation (§3.5). isLit()/drawDarkness() already treat
+        // `radius` as fixed at PULSE_MAX_RADIUS for this branch.
+        const age = Date.now() - s.pulse.bornAt;
+        if (age < 500) {
+          s.pulse.alpha = 1;
+        } else if (age < 800) {
+          s.pulse.alpha = 1 - (age - 500) / 300;
+        } else {
+          s.pulse = null;
+          return;
+        }
+        const psy = s.pulse.pageY - s.scrollY;
+        ctx.save();
+        const grad = ctx.createRadialGradient(
+          s.pulse.sx,
+          psy,
+          0,
+          s.pulse.sx,
+          psy,
+          s.pulse.radius,
+        );
+        grad.addColorStop(0, `rgba(168,85,247,${s.pulse.alpha * 0.12})`);
+        grad.addColorStop(1, "rgba(168,85,247,0)");
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(s.pulse.sx, psy, s.pulse.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        return;
+      }
       s.pulse.radius += PULSE_SPEED;
       s.pulse.alpha = Math.max(0, 1 - s.pulse.radius / PULSE_MAX_RADIUS);
       if (s.pulse.alpha <= 0) {
@@ -637,6 +719,9 @@ export default function VoidCanvas({
     }
 
     function drawBreathe() {
+      // Off at rest — a slow scale on the whole viewport is a textbook
+      // vestibular trigger even at this amplitude (§3.5).
+      if (motion.reduced) return;
       s.breathePhase += 0.012;
       const b = Math.sin(s.breathePhase) * 0.008;
       if (b > 0) {
@@ -650,7 +735,7 @@ export default function VoidCanvas({
     const isMobile = "ontouchstart" in window;
     function drawHint() {
       if (s.hasInteracted) return;
-      const p = 0.25 + Math.sin(Date.now() * 0.003) * 0.15;
+      const p = motion.reduced ? 0.4 : 0.25 + Math.sin(Date.now() * 0.003) * 0.15;
       ctx.save();
       ctx.font = `${Math.max(10, w * 0.026)}px monospace`;
       ctx.textAlign = "center";

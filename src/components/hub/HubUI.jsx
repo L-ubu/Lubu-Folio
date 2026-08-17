@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { achievementDefinitions } from "../../data/achievements";
 import { useAchievementStore } from "../achievements/store";
+import { prefersReducedMotion } from "../../utils/motion";
 
 function AchievementIcon({
   svgPath,
@@ -164,7 +165,10 @@ function AchievementPanel({ open, onClose }) {
               width="120"
               height="120"
               style={{
-                animation: open ? "spinSlow 60s linear infinite" : "none",
+                animation:
+                  open && !prefersReducedMotion()
+                    ? "spinSlow 60s linear infinite"
+                    : "none",
               }}
             >
               <circle
@@ -238,6 +242,7 @@ function AchievementPanel({ open, onClose }) {
             return (
               <button
                 key={def.id}
+                className="achievement-node"
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelected(isActive ? null : def.id);
@@ -406,6 +411,15 @@ function AchievementPanel({ open, onClose }) {
           from { opacity: 0; transform: translateX(-50%) translateY(12px); }
           to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
+        .achievement-node:focus-visible {
+          outline: 2px solid var(--color-accent);
+          outline-offset: 3px;
+        }
+        .achievement-toggle:focus-visible {
+          outline: 2px solid var(--color-accent);
+          outline-offset: 3px;
+          border-radius: 10px;
+        }
       `}</style>
     </>
   );
@@ -462,6 +476,7 @@ export default function HubUI({ achievementCount, achievementTotal }) {
       <button
         onClick={() => setPanelOpen(true)}
         data-cursor-hover
+        className="achievement-toggle"
         style={{
           position: "absolute",
           bottom: 32,
