@@ -27,8 +27,7 @@ export function getAccentColor() {
   return getStored("accent-color", "#16a34a");
 }
 
-export function setAccentColor(color) {
-  setStored("accent-color", color);
+function applyAccentVars(color) {
   document.documentElement.style.setProperty("--color-accent", color);
   document.documentElement.style.setProperty(
     "--color-accent-dim",
@@ -38,6 +37,18 @@ export function setAccentColor(color) {
     "--color-accent-glow",
     color + "40",
   );
+}
+
+export function setAccentColor(color) {
+  setStored("accent-color", color);
+  applyAccentVars(color);
+}
+
+// Applies the stored accent color to the CSS vars on every page, not just
+// pages that mount a picker/switcher. Called once from Layout.astro.
+export function initAccentColor() {
+  if (typeof document === "undefined") return;
+  applyAccentVars(getAccentColor());
 }
 
 export function getTheme() {

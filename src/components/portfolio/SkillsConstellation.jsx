@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { skillNodes, skillEdges, categoryColors } from "../../data/skills";
+import { motion } from "../../utils/motion";
 
 const WIDTH = 1000;
 const HEIGHT = 700;
@@ -105,7 +106,9 @@ export default function SkillsConstellation() {
     const connected = hovered ? getConnected(hovered) : null;
 
     function draw() {
-      time += 0.008;
+      // Node/edge bob is clock-driven ambience (R3) — freeze it at rest.
+      // The loop stays alive so hover highlighting still redraws instantly.
+      if (!motion.reduced) time += 0.008;
       ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
       skillEdges.forEach(([aId, bId]) => {
