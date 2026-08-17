@@ -14,6 +14,18 @@ const { title = "Luca Vandenweghe | Creative Developer", description = "Multi-mo
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#050505" />
+    <script is:inline>
+      (function () {
+        var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var apply = function (reduced) {
+          document.documentElement.dataset.motion = reduced ? "reduced" : "normal";
+        };
+        apply(mq.matches);
+        mq.addEventListener("change", function (e) {
+          apply(e.matches);
+        });
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

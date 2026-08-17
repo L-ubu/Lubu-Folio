@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { setAccentColor, getAccentColor } from "../../utils/storage";
 import { useAchievementStore } from "../achievements/store";
+import { useReducedMotion } from "../../utils/motion";
 
 const COLORS = [
   "#16a34a",
@@ -18,6 +19,7 @@ export default function AccentPicker() {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState("#16a34a");
   const unlock = useAchievementStore((s) => s.unlock);
+  const reduced = useReducedMotion();
   const ref = useRef(null);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function AccentPicker() {
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: 6,
             boxShadow: "0 8px 30px rgba(0,0,0,0.5)",
-            animation: "scaleIn 0.2s ease",
+            animation: reduced ? "none" : "scaleIn 0.2s ease",
           }}
         >
           {COLORS.map((color) => (
