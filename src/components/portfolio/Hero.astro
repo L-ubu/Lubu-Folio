@@ -33,6 +33,8 @@
 </section>
 
 <script>
+  import { motion } from '../../utils/motion';
+
   const roles = ['Creative Developer', 'Full Stack & App Developer', 'UI & UX Designer', 'Cybersecurity Enthusiast', 'React Specialist', 'MrGreenSlime', 'Builder of Things', 'CSS Wizard'];
   let roleIndex = 0;
   const roleEl = document.getElementById('role-text');
@@ -41,8 +43,13 @@
   async function morphRole() {
     if (!roleEl || morphing) return;
     morphing = true;
-    const current = roleEl.textContent || '';
     const next = roles[(++roleIndex) % roles.length];
+    if (motion.reduced) {
+      roleEl.textContent = next;
+      morphing = false;
+      return;
+    }
+    const current = roleEl.textContent || '';
     for (let i = current.length; i >= 0; i--) {
       roleEl.textContent = current.slice(0, i);
       await new Promise(r => setTimeout(r, 30));
@@ -115,7 +122,9 @@
     }
 
     function draw() {
-      time += 0.006;
+      // Ambient wave motion is clock-driven (R3) — freeze it at rest. Mouse
+      // push and click ripples are input-driven and keep working below.
+      if (!motion.reduced) time += 0.006;
       ctx.clearRect(0, 0, w, h);
 
       smoothMouseX += (mouseX - smoothMouseX) * 0.08;
@@ -281,6 +290,12 @@
     }
   }
 
+  html[data-motion="reduced"] .hero__letter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
   .hero__subtitle {
     margin-top: 1.5rem;
     font-family: var(--font-mono);
@@ -300,6 +315,10 @@
 
   @keyframes blink {
     50% { opacity: 0; }
+  }
+
+  html[data-motion="reduced"] .hero__cursor-blink {
+    animation: none;
   }
 
   .hero__scroll-hint {
@@ -344,6 +363,22 @@
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateX(-50%) translateY(20px); }
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  html[data-motion="reduced"] .hero__scroll-hint {
+    opacity: 1;
+    transform: translateX(-50%);
+    animation: none;
+  }
+
+  html[data-motion="reduced"] .hero__scroll-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  html[data-motion="reduced"] .hero__scroll-hint span {
+    animation: none;
   }
 
   .hero__fade {

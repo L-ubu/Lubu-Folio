@@ -333,6 +333,22 @@ const FLIP_CSS = `
 }
 .sb-anim { animation: sb-fadeIn 0.5s ease-out both; }
 
+/* Page flip: 3D rotation, full-width, 0.8s — R3's exception on every count.
+   Instant swap; no half-flipped state can exist without a transition to
+   interrupt (§3.6 R5 check). */
+html[data-motion="reduced"] .flip-page,
+html[data-motion="reduced"] .flip-page.flipped {
+  transition: none !important;
+}
+
+@keyframes sb-fadeInReduced {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+html[data-motion="reduced"] .sb-anim {
+  animation: sb-fadeInReduced 0.15s ease-out both;
+}
+
 @keyframes cloudFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
