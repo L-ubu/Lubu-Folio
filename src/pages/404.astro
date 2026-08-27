@@ -7,7 +7,11 @@ import Layout from '../layouts/Layout.astro';
     <div class="glitch" data-text="404">404</div>
     <p class="subtitle">Page not found</p>
     <p class="hint">But you found something else...</p>
-    <a href="/" class="back">← back to hub</a>
+    <div class="links">
+      <a href="/" class="back">← back to hub</a>
+      <a href="/portfolio" class="back">portfolio</a>
+      <a href="/arcade" class="back">arcade</a>
+    </div>
   </div>
   <!-- FLAG{four_oh_four} -->
 </Layout>
@@ -70,10 +74,15 @@ import Layout from '../layouts/Layout.astro';
     opacity: 0.6;
   }
 
+  .links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
   .back {
     color: #5ccfcf;
     text-decoration: none;
-    margin-top: 2rem;
     font-size: 0.9rem;
     transition: opacity 0.2s;
   }
