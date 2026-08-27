@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BlogApp from '../components/blog/BlogApp.jsx';
+import AchievementToast from '../components/shared/AchievementToast.jsx';
+---
+
+<Layout title="Lubu | War Room">
+  <AchievementToast client:only="react" />
+  <BlogApp client:only="react" />
+</Layout>
