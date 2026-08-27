@@ -34,7 +34,7 @@ export const achievementDefinitions = [
   },
   {
     id: "slime-rain",
-    title: "MrGreenSlime",
+    title: "L-ubu",
     description: "Triggered the slime rain easter egg",
     svgPath: "M12 2C8 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-4-8-8-8z",
   },
@@ -216,5 +216,33 @@ export const achievementDefinitions = [
     description: "Cracked the cipher and decrypted the message",
     svgPath:
       "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+  },
+  {
+    id: "warroom-enter",
+    title: "Briefing Room",
+    description: "Entered the War Room",
+    svgPath:
+      "M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714a2.25 2.25 0 00.659 1.591L19 14.5M14.25 3.104c.251.023.501.05.75.082M19 14.5l-1.5 4.5H6.5L5 14.5m14 0H5",
+  },
+  {
+    id: "warroom-first-read",
+    title: "Intel Report",
+    description: "Read your first article in the War Room",
+    svgPath:
+      "M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z",
+  },
+  {
+    id: "warroom-all-read",
+    title: "Fully Briefed",
+    description: "Read every article in the War Room",
+    svgPath:
+      "M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    id: "warroom-speed-reader",
+    title: "Speed Reader",
+    description: "Read an article in under 30 seconds",
+    svgPath:
+      "M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z",
   },
 ];

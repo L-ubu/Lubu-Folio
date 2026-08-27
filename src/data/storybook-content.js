@@ -71,7 +71,7 @@ export const pages = [
       { icon: "🧗", label: "Bouldering", note: "His happy place" },
       { icon: "🏄", label: "Surfing", note: "Dreams of Bali" },
       { icon: "🛹", label: "Longboarding", note: "To and from everything" },
-      { icon: "🎮", label: "Gaming", note: "MrGreenSlime forever" },
+      { icon: "🎮", label: "Gaming", note: "L-ubu forever" },
       { icon: "⚜️", label: "Scouts", note: "Akela / leader since forever" },
       { icon: "🎲", label: "DnD", note: "World builder extraordinaire" },
     ],

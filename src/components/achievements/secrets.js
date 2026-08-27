@@ -1523,7 +1523,7 @@ export function initSecrets(unlockAchievement) {
   function triggerLucaGreeting() {
     const greetings = [
       "\u{1F44B} Hey, that's me!",
-      "\u{1F7E2} MrGreenSlime says hi!",
+      "\u{1F7E2} L-ubu says hi!",
       "\u{1F4BB} Made with sleepless nights & Nalu",
       "\u{1F3C4} Currently wishing I was surfing",
       "\u26F0\uFE0F Or bouldering tbh",

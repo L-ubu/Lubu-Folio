@@ -73,6 +73,16 @@ const portalData = [
     shape: "skull",
   },
   {
+    id: "blog",
+    title: "Blog",
+    subtitle: "Signal intercepts",
+    icon: "✦",
+    href: "/blog",
+    locked: false,
+    style: "warroom",
+    shape: "octagon",
+  },
+  {
     id: "legacy",
     title: "Legacy",
     subtitle: "The old portfolio",

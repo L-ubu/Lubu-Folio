@@ -65,6 +65,11 @@ function getShapeVertices(shape, r, time) {
         return { x: Math.cos(a) * r, y: Math.sin(a) * r };
       });
     }
+    case "octagon":
+      return [0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+        const a = i * (Math.PI / 4) - Math.PI / 8;
+        return { x: Math.cos(a) * r * 0.92, y: Math.sin(a) * r * 0.92 };
+      });
     case "skull":
     case "spiral":
       return null;
