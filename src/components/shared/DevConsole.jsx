@@ -18,6 +18,7 @@ const BUBBLES = [
     name: "Through Her Eyes",
   },
   { id: "ssh", path: "/ssh", name: ".ssh" },
+  { id: "blog", path: "/blog", name: "Blog" },
 ];
 
 function loadHistory() {
@@ -212,7 +213,7 @@ export default function DevConsole() {
         out("luca vandenweghe", "sys");
         out("  \u25b8 24yo belgian-peruvian developer");
         out("  \u25b8 react/js dev at iO digital, ghent");
-        out("  \u25b8 gamertag: MrGreenSlime");
+        out("  \u25b8 gamertag: L-ubu");
         out("  \u25b8 hobbies: surfing, bouldering, gaming, hacking");
         out("  \u25b8 scout totem: auroragouden praatlustige merlo");
         out("  \u25b8 side projects: jorfish, terminup, adhd&d, demergency");
@@ -226,10 +227,10 @@ export default function DevConsole() {
         out("  bubbles: 7 active");
         out("  status: always evolving");
       } else if (cmd === "source" || cmd === "github") {
-        out("github.com/lucavdw/lubu-folio", "sys");
+        out("github.com/L-ubu/Lubu_Folio", "sys");
         out("  \u2192 opening in new tab...");
         setTimeout(
-          () => window.open("https://github.com/lucavdw", "_blank"),
+          () => window.open("https://github.com/L-ubu", "_blank"),
           500,
         );
       } else if (cmd === "clear" || cmd === "cls") {

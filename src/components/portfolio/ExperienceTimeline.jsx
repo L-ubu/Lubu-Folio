@@ -25,7 +25,7 @@ const entries = [
     type: "education",
     title: "Electronics-ICT, Web & App Dev",
     org: "Odisee",
-    period: "2021 — 2025",
+    period: "2023 — 2026",
     description:
       "Bachelor in Electronics-ICT with specialization in Web & App Development. Courses in infrastructure, security, microcontrollers, and business management.",
     tags: ["Web Dev", "App Dev", "Security", "Electronics"],

@@ -513,7 +513,7 @@ export const HEXGRID_REVEALS = [
   {
     level: 5,
     label: "HEART",
-    text: "Vale \u2764 \u00b7 Scouts \u00b7 MrGreenSlime",
+    text: "Vale \u2764 \u00b7 Scouts \u00b7 L-ubu",
   },
 ];
 

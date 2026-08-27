@@ -45,7 +45,7 @@ export const MAJOR_BLOCKS = [
         "Belgian-Peruvian",
         "React Developer @ iO Digital",
         "Boulderer & Surfer",
-        "Gamer — MrGreenSlime",
+        "Gamer — L-ubu",
         "Scout Leader",
         "DND Worldbuilder",
       ],
@@ -145,7 +145,7 @@ export const MINOR_BLOCKS = [
     color: "#64748b",
     required: false,
     icon: "👤",
-    content: { text: "MrGreenSlime" },
+    content: { text: "L-ubu" },
   },
   {
     id: "fact-1",

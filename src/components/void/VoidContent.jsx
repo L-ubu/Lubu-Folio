@@ -16,7 +16,7 @@ const PROJECTS = [
   },
   {
     name: "Demergency",
-    desc: "Slime merging & battling game. Lootboxes, chaos, and MrGreenSlime vibes.",
+    desc: "Slime merging & battling game. Lootboxes, chaos, and L-ubu vibes.",
     tags: ["Next.js", "React"],
   },
   {
@@ -79,7 +79,7 @@ const FACTS = [
   { label: "Location", value: "Ghent, Belgium" },
   { label: "Origin", value: "Belgian-Peruvian" },
   { label: "Fuel", value: "Nalu & Latte Macchiato" },
-  { label: "Gamertag", value: "MrGreenSlime" },
+  { label: "Gamertag", value: "L-ubu" },
   { label: "Hobbies", value: "Surfing, Bouldering, Gaming" },
   { label: "Languages", value: "EN · NL · ES · FR · DE · IT" },
 ];

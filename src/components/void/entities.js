@@ -6,7 +6,7 @@ export const SECRETS = [
     y: 1350,
     text: "Scout totem: Auroragouden praatlustige merlo",
   },
-  { id: "s3", x: 180, y: 1650, text: "Gamertag: MrGreenSlime" },
+  { id: "s3", x: 180, y: 1650, text: "Gamertag: L-ubu" },
   { id: "s4", x: -120, y: 1950, text: "I have ADD and it's my superpower" },
   { id: "s5", x: 150, y: 2250, text: "Belgian × Peruvian" },
   { id: "s6", x: -170, y: 2550, text: "Best friend: Steen (Maarten)" },

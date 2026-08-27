@@ -148,6 +148,7 @@ export default function StrudelPlayer() {
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+  const [volume, setVolume] = useState(0.7);
   const [panelW, setPanelW] = useState(520);
   const [panelH, setPanelH] = useState(580);
   const containerRef = useRef(null);
@@ -155,6 +156,7 @@ export default function StrudelPlayer() {
   const vizContainerRef = useRef(null);
   const vizCanvasRef = useRef(null);
   const tabCodesRef = useRef(PRESETS.map((p) => p.code));
+  const gainNodeRef = useRef(null);
 
   const getEditor = useCallback(() => editorElRef.current?.editor, []);
 
@@ -162,6 +164,21 @@ export default function StrudelPlayer() {
     setPlaying(val);
     musicState.playing = val;
   }, []);
+
+  // Volume control via Web Audio gain node
+  useEffect(() => {
+    if (!playing) return;
+    try {
+      const ctx = globalThis.Tone?.getContext?.()?.rawContext || globalThis.__strudelAudioCtx;
+      if (!ctx) return;
+      if (!gainNodeRef.current) {
+        const gain = ctx.createGain();
+        gain.connect(ctx.destination);
+        gainNodeRef.current = gain;
+      }
+      gainNodeRef.current.gain.setValueAtTime(volume, ctx.currentTime);
+    } catch {}
+  }, [volume, playing]);
 
   const setupVizCanvas = useCallback(
     (sm) => {
@@ -389,11 +406,11 @@ export default function StrudelPlayer() {
     };
   }, []);
 
-  // Panel is always rendered but hidden via opacity+pointerEvents when closed.
-  // This keeps the editor alive in the DOM (no re-init on reopen).
+  const volIcon = volume > 0.6 ? "\u{1F50A}" : volume > 0.2 ? "\u{1F509}" : volume > 0 ? "\u{1F508}" : "\u{1F507}";
+
   return (
     <>
-      {/* Collapsed button */}
+      {/* Collapsed button — shows playing state */}
       <div
         style={{
           position: "fixed",
@@ -407,21 +424,43 @@ export default function StrudelPlayer() {
           onClick={handleOpen}
           data-cursor-hover
           style={{
-            background: "rgba(8,6,18,.92)",
-            border: "1px solid rgba(100,60,200,.3)",
+            background: playing ? "rgba(100,60,200,.2)" : "rgba(8,6,18,.92)",
+            border: `1px solid ${playing ? "rgba(167,139,250,.5)" : "rgba(100,60,200,.3)"}`,
             borderRadius: 10,
             padding: "8px 14px",
             color: "#a78bfa",
             cursor: "pointer",
             fontSize: 15,
             backdropFilter: "blur(12px)",
-            boxShadow: "0 0 20px rgba(100,60,200,.1)",
+            boxShadow: playing
+              ? "0 0 24px rgba(167,139,250,.25)"
+              : "0 0 20px rgba(100,60,200,.1)",
             fontFamily: "var(--font-mono, monospace)",
             letterSpacing: ".05em",
             transition: "all .3s",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
           }}
         >
-          {"\u266B"} STRUDEL
+          {playing && (
+            <span style={{ display: "flex", alignItems: "center", gap: 3 }}>
+              {[1, 2, 3].map((i) => (
+                <span
+                  key={i}
+                  style={{
+                    display: "inline-block",
+                    width: 2.5,
+                    height: 8 + i * 2,
+                    background: "#a78bfa",
+                    borderRadius: 2,
+                    animation: `strudelBar ${0.4 + i * 0.15}s ease-in-out infinite alternate`,
+                  }}
+                />
+              ))}
+            </span>
+          )}
+          {"\u266B"} {playing ? PRESETS[activeTab].name : "STRUDEL"}
         </button>
       </div>
 
@@ -437,7 +476,8 @@ export default function StrudelPlayer() {
           height: panelH,
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
-          transition: "opacity .15s",
+          transform: open ? "translateY(0) scale(1)" : "translateY(12px) scale(0.97)",
+          transition: "opacity .2s, transform .2s cubic-bezier(0.16,1,0.3,1)",
           fontFamily: "var(--font-mono, monospace)",
         }}
       >
@@ -533,6 +573,36 @@ export default function StrudelPlayer() {
 
             {ready && (
               <>
+                {/* Volume slider */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                    marginRight: 4,
+                  }}
+                >
+                  <span style={{ fontSize: 11, cursor: "pointer" }} onClick={() => setVolume(volume > 0 ? 0 : 0.7)}>
+                    {volIcon}
+                  </span>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                    value={volume}
+                    onChange={(e) => setVolume(parseFloat(e.target.value))}
+                    style={{
+                      width: 50,
+                      height: 3,
+                      accentColor: "#a78bfa",
+                      cursor: "pointer",
+                      opacity: 0.7,
+                    }}
+                    title={`Volume: ${Math.round(volume * 100)}%`}
+                  />
+                </div>
+
                 <button
                   onClick={handlePlay}
                   data-cursor-hover
@@ -605,12 +675,30 @@ export default function StrudelPlayer() {
             <div
               style={{
                 padding: 40,
-                color: "#555",
+                color: "#a78bfa",
                 textAlign: "center",
                 fontSize: 11,
                 letterSpacing: ".1em",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 12,
               }}
             >
+              <div style={{ display: "flex", gap: 4 }}>
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: "#a78bfa",
+                      animation: `strudelDot 0.8s ease-in-out ${i * 0.15}s infinite`,
+                    }}
+                  />
+                ))}
+              </div>
               loading strudel repl...
             </div>
           )}
@@ -625,7 +713,7 @@ export default function StrudelPlayer() {
             }}
           />
 
-          {/* Visualization canvas (draws pianoroll/scope when not inline) */}
+          {/* Visualization canvas */}
           <div
             ref={vizContainerRef}
             style={{
@@ -662,6 +750,16 @@ export default function StrudelPlayer() {
         </div>
 
         <style>{`
+          /* ── Collapsed button animations ── */
+          @keyframes strudelBar {
+            from { height: 4px; }
+            to { height: 14px; }
+          }
+          @keyframes strudelDot {
+            0%, 100% { opacity: 0.3; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-4px); }
+          }
+
           /* ── Container layout ── */
           [data-strudel-container] {
             display: flex !important;
