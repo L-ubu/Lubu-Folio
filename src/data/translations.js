@@ -40,7 +40,7 @@ export const translations = {
       "Custom DND system in a massive Obsidian vault \u2014 worldbuilding, choose-your-own-adventure, graph views, and creative chaos.",
     "project-demergency-title": "Demergency",
     "project-demergency-desc":
-      "Slime merging & battling game. Lootboxes, slimes, and everything MrGreenSlime loves mashed into one game.",
+      "Slime merging & battling game. Lootboxes, slimes, and everything L-ubu loves mashed into one game.",
     "project-minecraft-3d-title": "Minecraft 3D",
     "project-minecraft-3d-desc":
       "Interactive Minecraft-themed experience built with Nuxt.js and Three.js. Utilized 3D elements to create a dynamic and engaging project.",
@@ -75,7 +75,7 @@ export const translations = {
       "Worked on Shopify storefronts and Craft CMS sites with some Laravel. First real agency experience \u2014 learned to work with clients and ship production code.",
     "exp-2-title": "Electronics-ICT, Web & App Dev",
     "exp-2-org": "Odisee",
-    "exp-2-period": "2021 \u2014 2025",
+    "exp-2-period": "2023 \u2014 2026",
     "exp-2-desc":
       "Bachelor in Electronics-ICT with specialization in Web & App Development. Courses in infrastructure, security, microcontrollers, and business management.",
     "exp-3-title": "Applied Computer Science",
@@ -123,7 +123,7 @@ export const translations = {
       "Eigen DND-systeem in een enorme Obsidian-vault \u2014 wereldbouw, kies-je-eigen-avontuur, grafiekweergaven en creatieve chaos.",
     "project-demergency-title": "Demergency",
     "project-demergency-desc":
-      "Slime merge & gevecht game. Lootboxes, slimes, en alles wat MrGreenSlime leuk vindt in \u00e9\u00e9n game.",
+      "Slime merge & gevecht game. Lootboxes, slimes, en alles wat L-ubu leuk vindt in \u00e9\u00e9n game.",
     "project-minecraft-3d-title": "Minecraft 3D",
     "project-minecraft-3d-desc":
       "Interactieve Minecraft-ervaring gebouwd met Nuxt.js en Three.js. 3D-elementen voor een dynamisch en boeiend project.",
@@ -157,7 +157,7 @@ export const translations = {
       "Gewerkt aan Shopify webshops en Craft CMS sites met Laravel. Eerste echte bureau-ervaring \u2014 geleerd om met klanten te werken en productiecode te leveren.",
     "exp-2-title": "Elektronica-ICT, Web & App Dev",
     "exp-2-org": "Odisee",
-    "exp-2-period": "2021 \u2014 2025",
+    "exp-2-period": "2023 \u2014 2026",
     "exp-2-desc":
       "Bachelor in Elektronica-ICT met specialisatie in Web & App Development. Vakken in infrastructuur, beveiliging, microcontrollers en bedrijfsbeheer.",
     "exp-3-title": "Toegepaste Informatica",
@@ -207,7 +207,7 @@ export const translations = {
       "Sistema DND personalizado en un enorme vault de Obsidian \u2014 construcci\u00f3n de mundos, elige-tu-aventura, vistas de grafos y caos creativo.",
     "project-demergency-title": "Demergency",
     "project-demergency-desc":
-      "Juego de fusi\u00f3n y batalla de slimes. Lootboxes, slimes y todo lo que MrGreenSlime ama en un solo juego.",
+      "Juego de fusi\u00f3n y batalla de slimes. Lootboxes, slimes y todo lo que L-ubu ama en un solo juego.",
     "project-minecraft-3d-title": "Minecraft 3D",
     "project-minecraft-3d-desc":
       "Experiencia interactiva tem\u00e1tica de Minecraft construida con Nuxt.js y Three.js. Elementos 3D para un proyecto din\u00e1mico y atractivo.",
@@ -241,7 +241,7 @@ export const translations = {
       "Trabaj\u00e9 en tiendas Shopify y sitios Craft CMS con Laravel. Primera experiencia real en agencia \u2014 aprend\u00ed a trabajar con clientes y enviar c\u00f3digo de producci\u00f3n.",
     "exp-2-title": "Electr\u00f3nica-TIC, Web & App Dev",
     "exp-2-org": "Odisee",
-    "exp-2-period": "2021 \u2014 2025",
+    "exp-2-period": "2023 \u2014 2026",
     "exp-2-desc":
       "Grado en Electr\u00f3nica-TIC con especializaci\u00f3n en Desarrollo Web & App. Cursos de infraestructura, seguridad, microcontroladores y gesti\u00f3n empresarial.",
     "exp-3-title": "Inform\u00e1tica Aplicada",
@@ -290,7 +290,7 @@ export const translations = {
       "Syst\u00e8me DND personnalis\u00e9 dans un vault Obsidian massif \u2014 construction de mondes, choisis-ton-aventure, vues en graphes et chaos cr\u00e9atif.",
     "project-demergency-title": "Demergency",
     "project-demergency-desc":
-      "Jeu de fusion et combat de slimes. Lootboxes, slimes, et tout ce que MrGreenSlime adore dans un seul jeu.",
+      "Jeu de fusion et combat de slimes. Lootboxes, slimes, et tout ce que L-ubu adore dans un seul jeu.",
     "project-minecraft-3d-title": "Minecraft 3D",
     "project-minecraft-3d-desc":
       "Exp\u00e9rience interactive Minecraft construite avec Nuxt.js et Three.js. \u00c9l\u00e9ments 3D pour un projet dynamique et captivant.",
@@ -324,7 +324,7 @@ export const translations = {
       "Travaill\u00e9 sur des boutiques Shopify et des sites Craft CMS avec Laravel. Premi\u00e8re exp\u00e9rience r\u00e9elle en agence \u2014 appris \u00e0 travailler avec des clients et livrer du code de production.",
     "exp-2-title": "\u00c9lectronique-TIC, Web & App Dev",
     "exp-2-org": "Odisee",
-    "exp-2-period": "2021 \u2014 2025",
+    "exp-2-period": "2023 \u2014 2026",
     "exp-2-desc":
       "Bachelor en \u00c9lectronique-TIC avec sp\u00e9cialisation en D\u00e9veloppement Web & App. Cours d'infrastructure, s\u00e9curit\u00e9, microcontr\u00f4leurs et gestion d'entreprise.",
     "exp-3-title": "Informatique Appliqu\u00e9e",
@@ -373,7 +373,7 @@ export const translations = {
       "Eigenes DND-System in einem riesigen Obsidian-Vault \u2014 Weltenbau, W\u00e4hle-dein-Abenteuer, Graphansichten und kreatives Chaos.",
     "project-demergency-title": "Demergency",
     "project-demergency-desc":
-      "Slime-Merge & Kampfspiel. Lootboxen, Slimes und alles was MrGreenSlime liebt in einem Spiel.",
+      "Slime-Merge & Kampfspiel. Lootboxen, Slimes und alles was L-ubu liebt in einem Spiel.",
     "project-minecraft-3d-title": "Minecraft 3D",
     "project-minecraft-3d-desc":
       "Interaktives Minecraft-Erlebnis gebaut mit Nuxt.js und Three.js. 3D-Elemente f\u00fcr ein dynamisches und fesselndes Projekt.",
@@ -407,7 +407,7 @@ export const translations = {
       "Arbeit an Shopify-Shops und Craft CMS Seiten mit Laravel. Erste echte Agenturerfahrung \u2014 gelernt mit Kunden zu arbeiten und Produktionscode auszuliefern.",
     "exp-2-title": "Elektronik-IKT, Web & App Dev",
     "exp-2-org": "Odisee",
-    "exp-2-period": "2021 \u2014 2025",
+    "exp-2-period": "2023 \u2014 2026",
     "exp-2-desc":
       "Bachelor in Elektronik-IKT mit Spezialisierung in Web & App Entwicklung. Kurse in Infrastruktur, Sicherheit, Mikrocontroller und Betriebswirtschaft.",
     "exp-3-title": "Angewandte Informatik",
@@ -456,7 +456,7 @@ export const translations = {
       "Sistema DND personalizzato in un vault Obsidian enorme \u2014 costruzione di mondi, scegli-la-tua-avventura, viste a grafo e caos creativo.",
     "project-demergency-title": "Demergency",
     "project-demergency-desc":
-      "Gioco di fusione e battaglia di slime. Lootbox, slime e tutto ci\u00f2 che MrGreenSlime ama in un unico gioco.",
+      "Gioco di fusione e battaglia di slime. Lootbox, slime e tutto ci\u00f2 che L-ubu ama in un unico gioco.",
     "project-minecraft-3d-title": "Minecraft 3D",
     "project-minecraft-3d-desc":
       "Esperienza interattiva a tema Minecraft costruita con Nuxt.js e Three.js. Elementi 3D per un progetto dinamico e coinvolgente.",
@@ -490,7 +490,7 @@ export const translations = {
       "Ho lavorato su negozi Shopify e siti Craft CMS con Laravel. Prima vera esperienza in agenzia \u2014 ho imparato a lavorare con i clienti e consegnare codice di produzione.",
     "exp-2-title": "Elettronica-ICT, Web & App Dev",
     "exp-2-org": "Odisee",
-    "exp-2-period": "2021 \u2014 2025",
+    "exp-2-period": "2023 \u2014 2026",
     "exp-2-desc":
       "Laurea in Elettronica-ICT con specializzazione in Sviluppo Web & App. Corsi di infrastruttura, sicurezza, microcontrollori e gestione aziendale.",
     "exp-3-title": "Informatica Applicata",
