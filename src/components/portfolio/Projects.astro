@@ -79,6 +79,12 @@ import { projects } from '../../data/projects';
         case 'flag-wave':
           effectEl.innerHTML = '<div class="fx-flag">⚜️</div>';
           break;
+        case 'hand-track':
+          effectEl.innerHTML = '<div class="fx-hand">🤚 ✊ 👆</div>';
+          break;
+        case 'lock-pick':
+          effectEl.innerHTML = '<div class="fx-lock">🔓→🔒</div>';
+          break;
       }
     });
 
@@ -322,6 +328,16 @@ import { projects } from '../../data/projects';
   :global(.fx-flag) {
     font-size: 1.5rem;
     animation: fxWave 0.6s ease-in-out infinite alternate;
+  }
+
+  :global(.fx-hand) {
+    font-size: 1.2rem;
+    animation: fxPulse 0.6s ease-in-out infinite alternate;
+  }
+
+  :global(.fx-lock) {
+    font-size: 1rem;
+    animation: fxGlitch 0.3s steps(3) infinite;
   }
 
   @keyframes fxPulse {

@@ -34,6 +34,10 @@
     scrollbar-color: var(--color-accent) var(--color-bg);
   }
 
+  html[data-motion="reduced"] {
+    scroll-behavior: auto;
+  }
+
   body {
     overflow-x: hidden;
     min-height: 100vh;
@@ -123,5 +127,11 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  html[data-motion="reduced"] .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 }
