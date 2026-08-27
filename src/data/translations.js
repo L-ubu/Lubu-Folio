@@ -62,6 +62,51 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "WordPress website for Scouts en Gidsen Lievegem. 5+ years of active maintenance and improvements.",
+    "project-skeleton-studio-title": "Skeleton Studio",
+    "project-skeleton-studio-desc":
+      "Visual gesture automation builder. Drag-and-drop flow editor where you map hand gestures to actions — keypress, mouse click, shell commands. Webcam-powered, runs locally.",
+    "project-bounty-hunter-mcp-title": "Bounty Hunter MCP",
+    "project-bounty-hunter-mcp-desc":
+      "MCP server that turns Claude Code into a bug bounty toolkit — recon, live testing, CVSS scoring, and report generation in single tool calls.",
+    "project-slimeshell-title": "SlimeShell",
+    "project-slimeshell-desc":
+      "CTF hacking desktop app disguised as a slime game. Hidden terminals, exploits, flags, and a full capture-the-flag experience.",
+    "project-planney-title": "Planney",
+    "project-planney-desc":
+      "Couples planning app for me and Vale. Shared lists, date ideas, wishlists, and a private space to organize life together.",
+    "project-snorlax-dex-title": "Snorlax Dex",
+    "project-snorlax-dex-desc":
+      "Pokemon sleep tracker and Pokedex companion. Track catches, view stats, and manage your living dex progress.",
+    "project-flipper-portals-title": "Flipper Portals",
+    "project-flipper-portals-desc":
+      "150+ evil portal templates for Flipper Zero WiFi pentesting. Custom-built portals for US and European brands.",
+    "project-io-tooling-hub-title": "iO Tooling Hub",
+    "project-io-tooling-hub-desc":
+      "Internal tooling platform for iO Digital. Centralized dashboard for dev tools, scripts, and team utilities.",
+    "project-qa-toolkit-title": "QA Toolkit",
+    "project-qa-toolkit-desc":
+      "Browser extension and CLI tools for QA testing. Auto-fill forms, cookie management, and test data generation.",
+    "project-ascii-fix-title": "ASCII Fix",
+    "project-ascii-fix-desc":
+      "Cursor rules and tooling to auto-fix Unicode box-drawing characters in README files for perfect GitHub rendering.",
+    "project-bug-quiz-title": "Bug Quiz",
+    "project-bug-quiz-desc":
+      "Interactive security quiz app. Test your knowledge of common vulnerabilities, OWASP top 10, and hacker trivia.",
+    "project-achievo-title": "Achievo",
+    "project-achievo-desc":
+      "Achievement tracking system. Define personal milestones, track progress, and unlock achievements across projects.",
+    "project-mutabar-title": "Mutabar",
+    "project-mutabar-desc":
+      "Custom macOS menu bar app. Quick-access shortcuts, status indicators, and system controls from the top bar.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Single Rust binary that gives any site (and its repo) a security pat-down — headers, TLS, EOL stacks, leaked secrets, and CVEs in one pass. Ships as a CLI and an MCP server so agents can run the scan themselves.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Feeds your company's time-off policy to Claude and gets back the loopholes: bridge days, holiday stacking, sick-day conversions, each with an ROI calculation. Free basic scan, $4 for the Sonnet deep-dive via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gamified task manager — XP, levels, streaks, and a Pomodoro timer bolted onto a Remix/SQLite stack, with confetti for actually finishing things.",
     // Experience cards
     "exp-0-title": "React Developer",
     "exp-0-org": "iO Digital",
@@ -145,6 +190,51 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "WordPress website voor Scouts en Gidsen Lievegem. 5+ jaar actief onderhoud en verbeteringen.",
+    "project-skeleton-studio-title": "Skeleton Studio",
+    "project-skeleton-studio-desc":
+      "Visuele gesture-automatiseringstool. Drag-and-drop flow-editor waarin je handgebaren koppelt aan acties \u2014 toetsaanslag, muisklik, shell-commando's. Werkt via webcam, draait lokaal.",
+    "project-bounty-hunter-mcp-title": "Bounty Hunter MCP",
+    "project-bounty-hunter-mcp-desc":
+      "MCP-server die Claude Code omzet in een bug bounty-toolkit \u2014 recon, live testen, CVSS-scoring en rapportgeneratie in enkele tool calls.",
+    "project-slimeshell-title": "SlimeShell",
+    "project-slimeshell-desc":
+      "CTF-hackapp vermomd als een slime-game. Verborgen terminals, exploits, flags en een volledige capture-the-flag-ervaring.",
+    "project-planney-title": "Planney",
+    "project-planney-desc":
+      "Planning-app voor koppels, voor mij en Vale. Gedeelde lijsten, date-ide\u00ebn, verlanglijstjes en een priv\u00e9ruimte om samen het leven te organiseren.",
+    "project-snorlax-dex-title": "Snorlax Dex",
+    "project-snorlax-dex-desc":
+      "Pokemon Sleep-tracker en Pokedex-companion. Houd je vangsten bij, bekijk stats en beheer je living dex-voortgang.",
+    "project-flipper-portals-title": "Flipper Portals",
+    "project-flipper-portals-desc":
+      "150+ evil portal-templates voor WiFi-pentesting met de Flipper Zero. Custom-gebouwde portals voor Amerikaanse en Europese merken.",
+    "project-io-tooling-hub-title": "iO Tooling Hub",
+    "project-io-tooling-hub-desc":
+      "Interne tooling-platform voor iO Digital. Gecentraliseerd dashboard voor devtools, scripts en teamhulpmiddelen.",
+    "project-qa-toolkit-title": "QA Toolkit",
+    "project-qa-toolkit-desc":
+      "Browserextensie en CLI-tools voor QA-testing. Formulieren automatisch invullen, cookiebeheer en het genereren van testdata.",
+    "project-ascii-fix-title": "ASCII Fix",
+    "project-ascii-fix-desc":
+      "Cursor-rules en tooling om Unicode box-drawing-tekens in README-bestanden automatisch te herstellen voor perfecte GitHub-weergave.",
+    "project-bug-quiz-title": "Bug Quiz",
+    "project-bug-quiz-desc":
+      "Interactieve security-quizapp. Test je kennis van veelvoorkomende vulnerabilities, de OWASP top 10 en hackertrivia.",
+    "project-achievo-title": "Achievo",
+    "project-achievo-desc":
+      "Achievement-trackingsysteem. Stel persoonlijke mijlpalen in, volg je voortgang en unlock achievements over verschillende projecten heen.",
+    "project-mutabar-title": "Mutabar",
+    "project-mutabar-desc":
+      "Custom macOS menu bar-app. Snelkoppelingen, statusindicatoren en systeembediening rechtstreeks vanuit de menu bar.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Één Rust-binary die elke site (en z'n repo) een security-fouillering geeft — headers, TLS, verlopen stacks, gelekte secrets en CVE's in één run. Beschikbaar als CLI en als MCP-server zodat agents de scan zelf kunnen draaien.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Voert het verlofbeleid van je bedrijf aan Claude en krijgt de mazen terug: brugdagen, verlofstapelen, ziektedag-conversies, elk met een ROI-berekening. Gratis basisscan, €4 voor de diepere Sonnet-scan via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gamified taakbeheer — XP, levels, streaks en een pomodoro-timer op een Remix/SQLite-stack, met confetti als je iets écht afwerkt.",
     "exp-0-title": "React Developer",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Heden",
@@ -229,6 +319,51 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "Sitio WordPress para Scouts en Gidsen Lievegem. 5+ a\u00f1os de mantenimiento activo y mejoras.",
+    "project-skeleton-studio-title": "Skeleton Studio",
+    "project-skeleton-studio-desc":
+      "Constructor visual de automatizaci\u00f3n por gestos. Editor de flujos drag-and-drop donde mapeas gestos de mano a acciones \u2014 pulsaciones de teclado, clics de rat\u00f3n, comandos de shell. Funciona con webcam, corre localmente.",
+    "project-bounty-hunter-mcp-title": "Bounty Hunter MCP",
+    "project-bounty-hunter-mcp-desc":
+      "Servidor MCP que convierte a Claude Code en un toolkit de bug bounty \u2014 reconocimiento, pruebas en vivo, puntuaci\u00f3n CVSS y generaci\u00f3n de informes en llamadas de herramienta \u00fanicas.",
+    "project-slimeshell-title": "SlimeShell",
+    "project-slimeshell-desc":
+      "App de escritorio de hacking CTF disfrazada de juego de slimes. Terminales ocultas, exploits, flags y una experiencia completa de capture-the-flag.",
+    "project-planney-title": "Planney",
+    "project-planney-desc":
+      "App de planificaci\u00f3n para parejas, para Vale y para m\u00ed. Listas compartidas, ideas de citas, listas de deseos y un espacio privado para organizar la vida juntos.",
+    "project-snorlax-dex-title": "Snorlax Dex",
+    "project-snorlax-dex-desc":
+      "Rastreador de Pokemon Sleep y compa\u00f1ero Pokedex. Registra tus capturas, consulta estad\u00edsticas y gestiona el progreso de tu living dex.",
+    "project-flipper-portals-title": "Flipper Portals",
+    "project-flipper-portals-desc":
+      "150+ plantillas de evil portal para pentesting WiFi con Flipper Zero. Portales hechos a medida para marcas estadounidenses y europeas.",
+    "project-io-tooling-hub-title": "iO Tooling Hub",
+    "project-io-tooling-hub-desc":
+      "Plataforma interna de herramientas para iO Digital. Panel centralizado para herramientas de desarrollo, scripts y utilidades del equipo.",
+    "project-qa-toolkit-title": "QA Toolkit",
+    "project-qa-toolkit-desc":
+      "Extensi\u00f3n de navegador y herramientas CLI para pruebas de QA. Autocompletado de formularios, gesti\u00f3n de cookies y generaci\u00f3n de datos de prueba.",
+    "project-ascii-fix-title": "ASCII Fix",
+    "project-ascii-fix-desc":
+      "Reglas de Cursor y herramientas para corregir autom\u00e1ticamente los caracteres Unicode de dibujo de cajas en archivos README, para una renderizaci\u00f3n perfecta en GitHub.",
+    "project-bug-quiz-title": "Bug Quiz",
+    "project-bug-quiz-desc":
+      "App de quiz interactivo sobre seguridad. Pon a prueba tus conocimientos de vulnerabilidades comunes, el OWASP top 10 y curiosidades de hacking.",
+    "project-achievo-title": "Achievo",
+    "project-achievo-desc":
+      "Sistema de seguimiento de logros. Define hitos personales, sigue tu progreso y desbloquea logros en todos tus proyectos.",
+    "project-mutabar-title": "Mutabar",
+    "project-mutabar-desc":
+      "App personalizada para la barra de men\u00fas de macOS. Accesos r\u00e1pidos, indicadores de estado y controles del sistema directamente desde la barra superior.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Un solo binario en Rust que le hace un cacheo de seguridad a cualquier sitio (y su repo) \u2014 cabeceras, TLS, stacks obsoletos, secretos filtrados y CVEs en una sola pasada. Disponible como CLI y como servidor MCP para que los agentes ejecuten el escaneo ellos mismos.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Le pasa la pol\u00edtica de vacaciones de tu empresa a Claude y devuelve los resquicios: puentes, acumulaci\u00f3n de festivos, conversi\u00f3n de d\u00edas de baja, cada uno con su c\u00e1lculo de ROI. Escaneo b\u00e1sico gratis, $4 por el an\u00e1lisis profundo con Sonnet v\u00eda Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gestor de tareas gamificado \u2014 XP, niveles, rachas y un temporizador Pomodoro sobre una pila Remix/SQLite, con confeti cuando realmente terminas algo.",
     "exp-0-title": "Desarrollador React",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Presente",
@@ -312,6 +447,51 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "Site WordPress pour Scouts en Gidsen Lievegem. 5+ ans de maintenance active et am\u00e9liorations.",
+    "project-skeleton-studio-title": "Skeleton Studio",
+    "project-skeleton-studio-desc":
+      "Constructeur visuel d'automatisation par gestes. \u00c9diteur de flux drag-and-drop o\u00f9 tu associes des gestes de la main \u00e0 des actions \u2014 frappe au clavier, clic de souris, commandes shell. Fonctionne via webcam, tourne localement.",
+    "project-bounty-hunter-mcp-title": "Bounty Hunter MCP",
+    "project-bounty-hunter-mcp-desc":
+      "Serveur MCP qui transforme Claude Code en bo\u00eete \u00e0 outils bug bounty \u2014 reconnaissance, tests en direct, scoring CVSS et g\u00e9n\u00e9ration de rapports en de simples appels d'outil.",
+    "project-slimeshell-title": "SlimeShell",
+    "project-slimeshell-desc":
+      "Application de bureau de hacking CTF d\u00e9guis\u00e9e en jeu de slimes. Terminaux cach\u00e9s, exploits, flags et une exp\u00e9rience compl\u00e8te de capture-the-flag.",
+    "project-planney-title": "Planney",
+    "project-planney-desc":
+      "Application de planification pour couples, pour Vale et moi. Listes partag\u00e9es, id\u00e9es de sorties, listes de souhaits et un espace priv\u00e9 pour organiser la vie ensemble.",
+    "project-snorlax-dex-title": "Snorlax Dex",
+    "project-snorlax-dex-desc":
+      "Tracker Pokemon Sleep et compagnon Pokedex. Suis tes captures, consulte les stats et g\u00e8re la progression de ton living dex.",
+    "project-flipper-portals-title": "Flipper Portals",
+    "project-flipper-portals-desc":
+      "150+ templates d'evil portal pour le pentest WiFi avec Flipper Zero. Portails sur mesure pour des marques am\u00e9ricaines et europ\u00e9ennes.",
+    "project-io-tooling-hub-title": "iO Tooling Hub",
+    "project-io-tooling-hub-desc":
+      "Plateforme d'outils interne pour iO Digital. Tableau de bord centralis\u00e9 pour les outils de dev, scripts et utilitaires d'\u00e9quipe.",
+    "project-qa-toolkit-title": "QA Toolkit",
+    "project-qa-toolkit-desc":
+      "Extension de navigateur et outils CLI pour les tests QA. Remplissage automatique de formulaires, gestion des cookies et g\u00e9n\u00e9ration de donn\u00e9es de test.",
+    "project-ascii-fix-title": "ASCII Fix",
+    "project-ascii-fix-desc":
+      "R\u00e8gles Cursor et outils pour corriger automatiquement les caract\u00e8res Unicode de dessin de bo\u00eetes dans les fichiers README, pour un rendu GitHub parfait.",
+    "project-bug-quiz-title": "Bug Quiz",
+    "project-bug-quiz-desc":
+      "Application de quiz interactif sur la s\u00e9curit\u00e9. Teste tes connaissances des vuln\u00e9rabilit\u00e9s courantes, du top 10 OWASP et de trivia de hacker.",
+    "project-achievo-title": "Achievo",
+    "project-achievo-desc":
+      "Syst\u00e8me de suivi de succ\u00e8s. D\u00e9finis des jalons personnels, suis ta progression et d\u00e9bloque des succ\u00e8s \u00e0 travers tes projets.",
+    "project-mutabar-title": "Mutabar",
+    "project-mutabar-desc":
+      "Application personnalis\u00e9e pour la barre de menu macOS. Raccourcis d'acc\u00e8s rapide, indicateurs d'\u00e9tat et contr\u00f4les syst\u00e8me depuis la barre sup\u00e9rieure.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Un seul binaire Rust qui fait une fouille de s\u00e9curit\u00e9 \u00e0 n'importe quel site (et son repo) \u2014 en-t\u00eates, TLS, stacks obsol\u00e8tes, secrets qui fuitent et CVE en un seul passage. Disponible en CLI et en serveur MCP pour que les agents lancent le scan eux-m\u00eames.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Passe la politique de cong\u00e9s de ton entreprise \u00e0 Claude et r\u00e9cup\u00e8re les failles : ponts, cumul de jours f\u00e9ri\u00e9s, conversion de jours de maladie, chacune avec son calcul de ROI. Scan basique gratuit, 4$ pour l'analyse approfondie Sonnet via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gestionnaire de t\u00e2ches gamifi\u00e9 \u2014 XP, niveaux, s\u00e9ries et un minuteur Pomodoro greff\u00e9s sur une stack Remix/SQLite, avec des confettis quand tu finis vraiment quelque chose.",
     "exp-0-title": "D\u00e9veloppeur React",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Pr\u00e9sent",
@@ -395,6 +575,51 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "WordPress-Website f\u00fcr Scouts en Gidsen Lievegem. 5+ Jahre aktive Wartung und Verbesserungen.",
+    "project-skeleton-studio-title": "Skeleton Studio",
+    "project-skeleton-studio-desc":
+      "Visueller Gesten-Automatisierungs-Builder. Drag-and-Drop-Flow-Editor, in dem du Handgesten auf Aktionen abbildest \u2014 Tastenanschlag, Mausklick, Shell-Befehle. L\u00e4uft per Webcam, lokal.",
+    "project-bounty-hunter-mcp-title": "Bounty Hunter MCP",
+    "project-bounty-hunter-mcp-desc":
+      "MCP-Server, der Claude Code in ein Bug-Bounty-Toolkit verwandelt \u2014 Recon, Live-Tests, CVSS-Bewertung und Berichtserstellung in einzelnen Tool-Calls.",
+    "project-slimeshell-title": "SlimeShell",
+    "project-slimeshell-desc":
+      "CTF-Hacking-Desktop-App, getarnt als Slime-Spiel. Versteckte Terminals, Exploits, Flags und ein vollst\u00e4ndiges Capture-the-Flag-Erlebnis.",
+    "project-planney-title": "Planney",
+    "project-planney-desc":
+      "Planungs-App f\u00fcr Paare, f\u00fcr mich und Vale. Geteilte Listen, Date-Ideen, Wunschlisten und ein privater Raum, um das Leben gemeinsam zu organisieren.",
+    "project-snorlax-dex-title": "Snorlax Dex",
+    "project-snorlax-dex-desc":
+      "Pokemon-Sleep-Tracker und Pokedex-Begleiter. Verfolge deine F\u00e4nge, sieh dir Stats an und verwalte deinen Living-Dex-Fortschritt.",
+    "project-flipper-portals-title": "Flipper Portals",
+    "project-flipper-portals-desc":
+      "150+ Evil-Portal-Vorlagen f\u00fcr WiFi-Pentesting mit dem Flipper Zero. Individuell gebaute Portale f\u00fcr US-amerikanische und europ\u00e4ische Marken.",
+    "project-io-tooling-hub-title": "iO Tooling Hub",
+    "project-io-tooling-hub-desc":
+      "Interne Tooling-Plattform f\u00fcr iO Digital. Zentrales Dashboard f\u00fcr Dev-Tools, Skripte und Team-Utilities.",
+    "project-qa-toolkit-title": "QA Toolkit",
+    "project-qa-toolkit-desc":
+      "Browser-Erweiterung und CLI-Tools f\u00fcr QA-Tests. Automatisches Ausf\u00fcllen von Formularen, Cookie-Verwaltung und Testdaten-Generierung.",
+    "project-ascii-fix-title": "ASCII Fix",
+    "project-ascii-fix-desc":
+      "Cursor-Regeln und Tooling zum automatischen Korrigieren von Unicode-Box-Drawing-Zeichen in README-Dateien f\u00fcr perfektes GitHub-Rendering.",
+    "project-bug-quiz-title": "Bug Quiz",
+    "project-bug-quiz-desc":
+      "Interaktive Security-Quiz-App. Teste dein Wissen \u00fcber g\u00e4ngige Schwachstellen, die OWASP-Top-10 und Hacker-Trivia.",
+    "project-achievo-title": "Achievo",
+    "project-achievo-desc":
+      "Achievement-Tracking-System. Definiere pers\u00f6nliche Meilensteine, verfolge deinen Fortschritt und schalte Achievements \u00fcber Projekte hinweg frei.",
+    "project-mutabar-title": "Mutabar",
+    "project-mutabar-desc":
+      "Individuelle macOS-Men\u00fcleisten-App. Schnellzugriff-Shortcuts, Statusanzeigen und Systemsteuerung direkt aus der Men\u00fcleiste.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Eine einzige Rust-Binary, die jeder Website (und ihrem Repo) eine Sicherheitsdurchsuchung verpasst \u2014 Header, TLS, veraltete Stacks, geleakte Secrets und CVEs in einem Durchlauf. Als CLI und als MCP-Server, damit Agents den Scan selbst fahren k\u00f6nnen.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "F\u00fcttert Claude mit der Urlaubsregelung deiner Firma und liefert die Schlupfl\u00f6cher zur\u00fcck: Br\u00fcckentage, Feiertagsstapeln, Umwandlung von Krankheitstagen, jeweils mit ROI-Berechnung. Kostenloser Basis-Scan, 4$ f\u00fcr die tiefere Sonnet-Analyse via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gamifizierter Task-Manager \u2014 XP, Level, Streaks und ein Pomodoro-Timer auf einem Remix/SQLite-Stack, mit Konfetti, wenn du tats\u00e4chlich mal etwas fertig bekommst.",
     "exp-0-title": "React-Entwickler",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Jetzt",
@@ -478,6 +703,51 @@ export const translations = {
     "project-scouts-website-title": "Scouts Lievegem",
     "project-scouts-website-desc":
       "Sito WordPress per Scouts en Gidsen Lievegem. 5+ anni di manutenzione attiva e miglioramenti.",
+    "project-skeleton-studio-title": "Skeleton Studio",
+    "project-skeleton-studio-desc":
+      "Builder visuale per l'automazione tramite gesti. Editor di flussi drag-and-drop dove mappi i gesti della mano su azioni — pressioni di tasti, clic del mouse, comandi shell. Funziona con la webcam, gira in locale.",
+    "project-bounty-hunter-mcp-title": "Bounty Hunter MCP",
+    "project-bounty-hunter-mcp-desc":
+      "Server MCP che trasforma Claude Code in un toolkit da bug bounty — recon, test live, punteggio CVSS e generazione di report in singole chiamate agli strumenti.",
+    "project-slimeshell-title": "SlimeShell",
+    "project-slimeshell-desc":
+      "App desktop di hacking CTF camuffata da gioco di slime. Terminali nascosti, exploit, flag e un'esperienza completa di capture-the-flag.",
+    "project-planney-title": "Planney",
+    "project-planney-desc":
+      "App di pianificazione per coppie, per me e Vale. Liste condivise, idee per appuntamenti, wishlist e uno spazio privato per organizzare la vita insieme.",
+    "project-snorlax-dex-title": "Snorlax Dex",
+    "project-snorlax-dex-desc":
+      "Tracker per Pokemon Sleep e compagno Pokedex. Tieni traccia delle catture, controlla le statistiche e gestisci l'avanzamento del tuo living dex.",
+    "project-flipper-portals-title": "Flipper Portals",
+    "project-flipper-portals-desc":
+      "150+ template di evil portal per il pentesting WiFi con Flipper Zero. Portali costruiti su misura per marchi statunitensi ed europei.",
+    "project-io-tooling-hub-title": "iO Tooling Hub",
+    "project-io-tooling-hub-desc":
+      "Piattaforma interna di strumenti per iO Digital. Dashboard centralizzata per dev tools, script e utility del team.",
+    "project-qa-toolkit-title": "QA Toolkit",
+    "project-qa-toolkit-desc":
+      "Estensione browser e strumenti CLI per il testing QA. Compilazione automatica dei form, gestione dei cookie e generazione di dati di test.",
+    "project-ascii-fix-title": "ASCII Fix",
+    "project-ascii-fix-desc":
+      "Regole Cursor e tooling per correggere automaticamente i caratteri Unicode box-drawing nei file README, per un rendering perfetto su GitHub.",
+    "project-bug-quiz-title": "Bug Quiz",
+    "project-bug-quiz-desc":
+      "App di quiz interattivo sulla sicurezza. Metti alla prova le tue conoscenze sulle vulnerabilità più comuni, la OWASP top 10 e curiosità da hacker.",
+    "project-achievo-title": "Achievo",
+    "project-achievo-desc":
+      "Sistema di tracciamento degli achievement. Definisci traguardi personali, monitora i progressi e sblocca achievement tra i vari progetti.",
+    "project-mutabar-title": "Mutabar",
+    "project-mutabar-desc":
+      "App personalizzata per la barra dei menu di macOS. Scorciatoie ad accesso rapido, indicatori di stato e controlli di sistema direttamente dalla barra superiore.",
+    "project-frisk-title": "frisk",
+    "project-frisk-desc":
+      "Un solo binario Rust che fa una perquisizione di sicurezza a qualsiasi sito (e al suo repo) — header, TLS, stack obsoleti, secret trapelati e CVE in un'unica passata. Disponibile come CLI e come server MCP, così gli agent possono lanciare la scansione da soli.",
+    "project-exploit-bot-title": "Exploit Bot",
+    "project-exploit-bot-desc":
+      "Passa la politica ferie della tua azienda a Claude e restituisce le scappatoie: ponti, accumulo di festivi, conversione dei giorni di malattia, ognuna con il suo calcolo del ROI. Scansione base gratuita, $4 per l'analisi approfondita Sonnet via Stripe.",
+    "project-taskquest-pro-title": "TaskQuest Pro",
+    "project-taskquest-pro-desc":
+      "Gestore di attività gamificato — XP, livelli, streak e un timer Pomodoro innestati su uno stack Remix/SQLite, con i confetti quando finisci davvero qualcosa.",
     "exp-0-title": "Sviluppatore React",
     "exp-0-org": "iO Digital",
     "exp-0-period": "2024 \u2014 Presente",

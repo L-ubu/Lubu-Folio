@@ -258,6 +258,10 @@ html:has(.vc-page)::-webkit-scrollbar-thumb:hover { background: #3d2266; }
   letter-spacing: 0.25em;
   animation: voidPulse 3s ease-in-out infinite;
 }
+html[data-motion="reduced"] .vc-hero__hint {
+  animation: none;
+  opacity: 0.7;
+}
 
 .vc-divider {
   height: 1px;

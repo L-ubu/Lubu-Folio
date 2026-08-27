@@ -91,8 +91,8 @@ const HUD_CSS = `
   transition: all 0.5s;
 }
 .vh-rune--found {
-  color: #a855f7;
-  text-shadow: 0 0 12px #a855f780;
+  color: var(--color-accent, #a855f7);
+  text-shadow: 0 0 12px var(--color-accent-glow, #a855f740);
 }
 
 .vh-stats {

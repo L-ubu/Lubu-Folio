@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAchievementStore } from "../achievements/store";
+import { useReducedMotion } from "../../utils/motion";
 
 export default function AchievementToast() {
   const queue = useAchievementStore((s) => s.queue);
   const dismiss = useAchievementStore((s) => s.dismissToast);
   const [visible, setVisible] = useState(false);
+  const reduced = useReducedMotion();
   const current = queue[0];
 
   useEffect(() => {
@@ -12,10 +14,10 @@ export default function AchievementToast() {
     setVisible(true);
     const timer = setTimeout(() => {
       setVisible(false);
-      setTimeout(dismiss, 400);
+      setTimeout(dismiss, reduced ? 200 : 400);
     }, 3000);
     return () => clearTimeout(timer);
-  }, [current, dismiss]);
+  }, [current, dismiss, reduced]);
 
   if (!current) return null;
 
@@ -36,10 +38,11 @@ export default function AchievementToast() {
         fontFamily: "var(--font-body)",
         boxShadow:
           "0 0 30px var(--color-accent-dim), 0 8px 30px rgba(0,0,0,0.6)",
-        transform: visible ? "translateY(0)" : "translateY(120%)",
+        transform: reduced ? "none" : visible ? "translateY(0)" : "translateY(120%)",
         opacity: visible ? 1 : 0,
-        transition:
-          "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s",
+        transition: reduced
+          ? "opacity 0.2s"
+          : "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s",
         backdropFilter: "blur(20px)",
       }}
     >

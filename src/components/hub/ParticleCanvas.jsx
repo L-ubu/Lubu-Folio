@@ -1,6 +1,7 @@
 import { useRef, useMemo, useCallback } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { prefersReducedMotion } from "../../utils/motion";
 
 const PARTICLE_COUNT = 3000;
 const MOUSE_RADIUS = 2.0;
@@ -199,6 +200,7 @@ function getShapeForce(shape, px, py, cx, cy, r, time) {
 function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
   const meshRef = useRef();
   const mouseWorldRef = useRef(new THREE.Vector3(9999, 9999, 0));
+  const reducedMotionRef = useRef(prefersReducedMotion());
   const { camera } = useThree();
 
   const { positions, velocities, basePositions, colors, sizes } =
@@ -310,8 +312,12 @@ function ParticleField({ accentColor, hoveredPortalRef, clickPulseRef }) {
       const bx = basePositions[i3];
       const by = basePositions[i3 + 1];
 
-      const flowX = Math.sin(time * 0.3 + by * 0.5) * 0.3;
-      const flowY = Math.cos(time * 0.2 + bx * 0.3) * 0.2;
+      const flowX = reducedMotionRef.current
+        ? 0
+        : Math.sin(time * 0.3 + by * 0.5) * 0.3;
+      const flowY = reducedMotionRef.current
+        ? 0
+        : Math.cos(time * 0.2 + bx * 0.3) * 0.2;
 
       const targetX = bx + flowX;
       const targetY = by + flowY;

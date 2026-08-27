@@ -159,101 +159,125 @@ export default function ExperienceTimeline() {
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          <div className="deck-stack">
-            {entries.map((e, i) => {
-              const offset = i - active;
-              const isGone = offset < 0;
-              const isBehind = offset > 0;
-              const isCurrent = offset === 0;
-
-              const stackY = isBehind ? offset * 18 : 0;
-              const stackX = isBehind ? offset * 4 : 0;
-              const stackScale = isBehind ? 1 - offset * 0.035 : 1;
-              const stackBright = isBehind ? 1 - offset * 0.12 : 1;
-
-              return (
-                <article
+          <div className="deck-layout">
+            <div className="deck-timeline">
+              <div className="deck-timeline__line" />
+              {entries.map((e, i) => (
+                <button
                   key={i}
-                  className={`deck-card ${isCurrent ? "current" : ""}`}
-                  style={{
-                    "--card-accent": e.accent,
-                    transform: isGone
-                      ? "translateX(-110%) rotateZ(-3deg) scale(0.95)"
-                      : `translateY(${stackY}px) translateX(${stackX}px) scale(${stackScale})`,
-                    opacity: isGone
-                      ? 0
-                      : isBehind
-                        ? Math.max(0.2, 1 - offset * 0.3)
-                        : 1,
-                    zIndex: entries.length - i,
-                    filter: isBehind ? `brightness(${stackBright})` : "none",
-                    pointerEvents: isCurrent ? "auto" : "none",
-                  }}
+                  className={`deck-timeline__dot ${i === active ? "active" : ""}`}
+                  style={{ "--dot-color": e.accent }}
+                  onClick={() => setActive(i)}
+                  aria-label={`Go to ${e.title}`}
+                />
+              ))}
+            </div>
+
+            <div className="deck-main">
+              <div className="deck-stack">
+                {entries.map((e, i) => {
+                  const offset = i - active;
+                  const isGone = offset < 0;
+                  const isBehind = offset > 0;
+                  const isCurrent = offset === 0;
+
+                  const stackY = isBehind ? offset * 18 : 0;
+                  const stackX = isBehind ? offset * 4 : 0;
+                  const stackScale = isBehind ? 1 - offset * 0.035 : 1;
+                  const stackBright = isBehind ? 1 - offset * 0.12 : 1;
+
+                  return (
+                    <article
+                      key={i}
+                      className={`deck-card ${isCurrent ? "current" : ""}`}
+                      style={{
+                        "--card-accent": e.accent,
+                        transform: isGone
+                          ? "translateX(-110%) rotateZ(-3deg) scale(0.95)"
+                          : `translateY(${stackY}px) translateX(${stackX}px) scale(${stackScale})`,
+                        opacity: isGone
+                          ? 0
+                          : isBehind
+                            ? Math.max(0.2, 1 - offset * 0.3)
+                            : 1,
+                        zIndex: entries.length - i,
+                        filter: isBehind
+                          ? `brightness(${stackBright})`
+                          : "none",
+                        pointerEvents: isCurrent ? "auto" : "none",
+                      }}
+                    >
+                      <div className="deck-card__accent" />
+                      <div className="deck-card__header">
+                        <span className="deck-card__type">{e.type}</span>
+                        <span className="deck-card__counter">
+                          {i + 1}/{entries.length}
+                        </span>
+                      </div>
+                      <h3
+                        className="deck-card__title"
+                        data-translate={`exp-${i}-title`}
+                      >
+                        {e.title}
+                      </h3>
+                      <div className="deck-card__meta">
+                        <span
+                          className="deck-card__org"
+                          data-translate={`exp-${i}-org`}
+                        >
+                          {e.org}
+                        </span>
+                        <span className="deck-card__dot">·</span>
+                        <span
+                          className="deck-card__period"
+                          data-translate={`exp-${i}-period`}
+                        >
+                          {e.period}
+                        </span>
+                      </div>
+                      <p
+                        className="deck-card__desc"
+                        data-translate={`exp-${i}-desc`}
+                      >
+                        {e.description}
+                      </p>
+                      <div className="deck-card__tags">
+                        {e.tags.map((t) => (
+                          <span key={t} className="deck-card__tag">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              <div className="deck-controls">
+                <button
+                  className="deck-arrow"
+                  onClick={() => go(-1)}
+                  disabled={active === 0}
+                  aria-label="Previous experience"
                 >
-                  <div className="deck-card__accent" />
-                  <div className="deck-card__header">
-                    <span className="deck-card__type">{e.type}</span>
-                    <span className="deck-card__counter">
-                      {i + 1}/{entries.length}
-                    </span>
-                  </div>
-                  <h3
-                    className="deck-card__title"
-                    data-translate={`exp-${i}-title`}
-                  >
-                    {e.title}
-                  </h3>
-                  <div className="deck-card__meta">
-                    <span
-                      className="deck-card__org"
-                      data-translate={`exp-${i}-org`}
-                    >
-                      {e.org}
-                    </span>
-                    <span className="deck-card__dot">·</span>
-                    <span
-                      className="deck-card__period"
-                      data-translate={`exp-${i}-period`}
-                    >
-                      {e.period}
-                    </span>
-                  </div>
-                  <p
-                    className="deck-card__desc"
-                    data-translate={`exp-${i}-desc`}
-                  >
-                    {e.description}
-                  </p>
-                  <div className="deck-card__tags">
-                    {e.tags.map((t) => (
-                      <span key={t} className="deck-card__tag">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              );
-            })}
+                  ‹
+                </button>
+                <p className="deck-hint">
+                  {active < entries.length - 1
+                    ? "scroll or swipe to browse"
+                    : "back to the start?"}
+                </p>
+                <button
+                  className="deck-arrow"
+                  onClick={() => go(1)}
+                  disabled={active === entries.length - 1}
+                  aria-label="Next experience"
+                >
+                  ›
+                </button>
+              </div>
+            </div>
           </div>
-
-          {/* Dots */}
-          <div className="deck-dots">
-            {entries.map((e, i) => (
-              <button
-                key={i}
-                className={`deck-dots__dot ${i === active ? "active" : ""}`}
-                style={{ "--dot-color": e.accent }}
-                onClick={() => setActive(i)}
-                aria-label={`Go to ${e.title}`}
-              />
-            ))}
-          </div>
-
-          <p className="deck-hint">
-            {active < entries.length - 1
-              ? "scroll or swipe to browse"
-              : "back to the start?"}
-          </p>
         </div>
       </div>
 
@@ -378,34 +402,100 @@ export default function ExperienceTimeline() {
           color: var(--color-text-muted);
         }
 
-        .deck-dots {
+        .deck-layout {
           display: flex;
-          justify-content: center;
-          gap: 10px;
-          margin-top: 2rem;
+          gap: 1.75rem;
+          align-items: stretch;
         }
 
-        .deck-dots__dot {
-          width: 10px;
-          height: 10px;
+        .deck-timeline {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          height: 340px;
+          padding: 6px 0;
+          flex: 0 0 auto;
+        }
+
+        .deck-timeline__line {
+          position: absolute;
+          top: 6px;
+          bottom: 6px;
+          left: 50%;
+          width: 2px;
+          transform: translateX(-50%);
+          background: var(--color-border);
+        }
+
+        .deck-timeline__dot {
+          position: relative;
+          z-index: 1;
+          width: 12px;
+          height: 12px;
           border-radius: 50%;
           border: 2px solid var(--color-border);
-          background: transparent;
+          background: var(--color-bg);
           cursor: pointer;
           padding: 0;
+          margin: 0;
+          flex-shrink: 0;
           transition: all 0.3s ease;
         }
 
-        .deck-dots__dot:hover {
+        .deck-timeline__dot:hover {
           border-color: var(--dot-color);
           transform: scale(1.2);
         }
 
-        .deck-dots__dot.active {
+        .deck-timeline__dot.active {
           background: var(--dot-color);
           border-color: var(--dot-color);
-          box-shadow: 0 0 10px color-mix(in srgb, var(--dot-color) 40%, transparent);
-          transform: scale(1.15);
+          box-shadow: 0 0 10px color-mix(in srgb, var(--dot-color) 50%, transparent),
+                      0 0 20px color-mix(in srgb, var(--dot-color) 30%, transparent);
+          transform: scale(1.25);
+        }
+
+        .deck-main {
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        .deck-controls {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1.25rem;
+          margin-top: 1.5rem;
+        }
+
+        .deck-arrow {
+          flex: 0 0 auto;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: 1px solid var(--color-border);
+          background: var(--color-surface);
+          color: var(--color-text);
+          font-size: 1.1rem;
+          line-height: 1;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .deck-arrow:hover:not(:disabled) {
+          border-color: var(--color-text-muted);
+          transform: scale(1.08);
+        }
+
+        .deck-arrow:disabled {
+          opacity: 0.3;
+          cursor: default;
+        }
+
+        html[data-motion="reduced"] .deck-card {
+          transition: none;
         }
 
         .deck-hint {
@@ -413,12 +503,33 @@ export default function ExperienceTimeline() {
           font-family: var(--font-mono);
           font-size: 0.7rem;
           color: var(--color-text-muted);
-          margin-top: 1rem;
           opacity: 0.5;
           letter-spacing: 0.05em;
         }
 
         @media (max-width: 640px) {
+          .deck-layout {
+            flex-direction: column-reverse;
+            gap: 1rem;
+          }
+
+          .deck-timeline {
+            flex-direction: row;
+            width: 100%;
+            height: auto;
+            padding: 0 6px;
+          }
+
+          .deck-timeline__line {
+            top: 50%;
+            bottom: auto;
+            left: 6px;
+            right: 6px;
+            width: auto;
+            height: 2px;
+            transform: translateY(-50%);
+          }
+
           .deck-stack {
             height: 320px;
           }
