@@ -349,22 +349,192 @@ public/audio/
 
 ---
 
-## 6. Priority & Dependencies
+## 6. Security & Data Hygiene
+
+Harden what's publicly visible on GitHub and what visitors can learn from reading source.
+
+### Obfuscate / Hide from GitHub
+
+- **CTF flags**: cleartext `FLAG{...}` strings are scattered across Layout.astro, portfolio.astro, 404.astro, global.css, robots.txt, etc. Anyone reading the repo can grep for every flag instantly. Needs obfuscation (hashing, env-var injection at build time, Astro middleware, or a build-step that injects flags so they never appear in source).
+- **Flag hashes in hack-flags.js**: the flag IDs and hint text still reveal too much -- consider stripping hints from the published build or hashing the IDs too.
+- **Personal details**: review all components for hardcoded names, locations, girlfriend info, gamertags, etc. Keep what's intentional, strip or generalize anything that's TMI.
+- **Console / cookie flags**: `console.log('%cFLAG{...}')` and `document.cookie = '...FLAG{...}'` are trivially searchable in the repo.
+- **robots.txt flag**: visible in `public/robots.txt` -- could move to a build-generated version.
+- **Consider**: a `.env.flags` file (gitignored) that feeds flag values into the build so the repo never contains cleartext flags.
+
+### Rework "About Me" Data
+
+The portfolio currently gives away too much personal info. Goal: let visitors **get to know Luca** without **knowing everything**.
+
+**Keep (public-friendly):**
+
+- First name, general location (Belgium)
+- Job title & company (or just "frontend dev")
+- Tech stack & skills
+- Hobbies (surfing, bouldering, gaming, etc.) -- names only, no deep personal details
+- Fun personality traits (night owl, chocolate milk, ADD-powered)
+- Scout totem (it's quirky, keep it)
+
+**Tone down or remove:**
+
+- Full name from prominent places (keep for resume/contact only)
+- Girlfriend's full name -- use nickname or just "my partner" in public-facing text
+- Parents' town name -- generalize to region
+- Gamertag (fine to keep but don't link to real accounts)
+- Best friend's full name -- use first name or nickname only
+- Exact daily schedule (standup times, lunch routines)
+- Exact addresses / neighborhoods
+
+**Implementation:**
+
+- Audit all data files, components, and text for over-sharing
+- Create a `src/data/about.js` (or similar) as the single source of truth for public bio data
+- Portfolio components pull from that file so there's one place to edit
+- Anything sensitive stays in `.personal/` (already gitignored) and never leaks into `src/`
+
+---
+
+## 7. Code Cleanup & Project Structure
+
+The codebase has grown organically and needs a cleanup pass to keep it maintainable.
+
+### File Size / Splitting
+
+- **HackApp.jsx** (~600+ lines) -- the `handleCommand` switch is massive. Split commands into a `commands/` folder with one file per command group (filesystem cmds, network cmds, system cmds, etc.). HackApp just orchestrates.
+- **GridApp.jsx** -- likely oversized. State management, era logic, and upgrade logic could be split into custom hooks (`useGridState`, `useEras`, `useUpgrades`).
+- **ParticleCanvas.jsx** -- shape force functions are growing. Move shape definitions to a `shapes.js` data file.
+- **DevConsole.jsx** -- command registry + UI + rendering all in one. Split into `DevConsoleUI.jsx` + `commandRegistry.js`.
+- **StrudelPlayer.jsx** -- heavily patched with monkey-patching and canvas hacks. Needs a clean rewrite once Strudel is revisited.
+
+### Confusing Naming
+
+- `src/components/storybook/` is actually the **"Through Her Eyes"** bubble -- rename to `src/components/through-her-eyes/` or `src/components/love/` to avoid confusion with actual Storybook (the UI testing tool).
+- `src/data/storybook-content.js` -- same issue, rename to match the bubble.
+- `src/components/achievements/` has `secrets.js` and `store.js`, but `src/data/achievements.js` also exists -- consolidate into one location.
+
+### Structure Inconsistencies
+
+- Some bubbles have subfolders for games/minigames (`arcade/games/`, `hack/minigames/`) but others dump everything flat (`grid/`, `void/`).
+- Data files are split: some in `src/data/`, some inline in component folders (`grid/data.js`, `grid/audio.js`, `construct/blocks.js`, `void/entities.js`). Pick one convention.
+- `src/utils/` only has `storage.js` -- other utility-like code is scattered (achievement store, audio helpers).
+
+### Proposed Clean Structure
+
+```
+src/
+├── components/
+│   ├── shared/          # cross-bubble components (DevConsole, BackToHub, etc.)
+│   ├── hub/             # hub world
+│   ├── portfolio/       # portfolio bubble
+│   ├── grid/
+│   │   ├── stages/      # BootStage, DevModeStage, etc.
+│   │   ├── hooks/       # useGridState, useEras
+│   │   └── GridApp.jsx
+│   ├── arcade/
+│   │   ├── games/       # individual games (already done)
+│   │   └── ArcadeApp.jsx
+│   ├── hack/
+│   │   ├── commands/    # command handlers split by category
+│   │   ├── minigames/   # port scanner, cipher, etc. (already done)
+│   │   └── HackApp.jsx
+│   ├── void/
+│   ├── construct/
+│   └── through-her-eyes/  # renamed from storybook/
+├── data/                # ALL data files live here
+│   ├── achievements.js
+│   ├── about.js         # single source of truth for bio
+│   ├── projects.js
+│   ├── skills.js
+│   ├── themes.js
+│   ├── translations.js
+│   ├── grid/            # grid-specific data (eras, upgrades, audio config)
+│   ├── hack/            # hack-specific data (filesystem, flags)
+│   └── ...
+├── utils/               # shared utilities
+│   ├── storage.js
+│   ├── audio.js         # shared audio helpers
+│   └── achievements/    # store + secrets
+├── styles/
+├── layouts/
+└── pages/
+```
+
+### Quick Wins
+
+- [ ] Rename `storybook/` -> `through-her-eyes/`
+- [ ] Move `grid/data.js`, `grid/audio.js` -> `src/data/grid/`
+- [ ] Move `construct/blocks.js` -> `src/data/construct/`
+- [ ] Move `void/entities.js` -> `src/data/void/`
+- [ ] Consolidate `components/achievements/` + `data/achievements.js` into one spot
+- [ ] Add `index.js` barrel exports for shared components
+
+### Longer Term
+
+- [ ] Split HackApp command switch into command modules
+- [ ] Extract GridApp state into hooks
+- [ ] Clean rewrite of StrudelPlayer
+- [ ] Consistent JSDoc on public-facing functions
+- [ ] Remove dead code / unused exports audit
+
+---
+
+## 8. Awesome README
+
+The repo currently has no README (or just the Astro default). Need a proper one that sells the project and looks sick on GitHub.
+
+### Vibe
+
+Not a boring "how to install" README. This is a portfolio that's an **experience** -- the README should reflect that energy. Think: eye-catching header, animated GIF/video preview, badge wall, clear bubble descriptions, and easter eggs.
+
+### Must-haves
+
+- **Hero section**: big ASCII art or custom banner image with the project name
+- **One-liner pitch**: "Not a portfolio. An experience." or similar
+- **Live demo link**: prominent link to the deployed site
+- **Bubble showcase**: screenshot or GIF of each bubble (Hub, Grid, Arcade, CTF, Void, Construct, Through Her Eyes) with a one-sentence description
+- **Tech stack badges**: Astro, React, Three.js, Strudel, etc. with shield.io badges
+- **Features list**: particle hub, 6 interactive eras, CTF with 20 flags, live-coded music, achievements system, dev console, etc.
+- **Getting started**: quick setup instructions (clone, install, dev)
+- **Project structure**: brief overview of the folder layout
+- **Credits / inspiration**: shout out antigravity.google, bruno-simon.com, etc.
+- **Hidden stuff hint**: tease that there are secrets to find without spoiling them
+
+### Nice-to-haves
+
+- Animated terminal GIF showing the CTF boot sequence
+- Stats badges (lines of code, number of components, flags hidden)
+- "Try typing `sudo` anywhere" teaser
+- Dark-mode friendly design (GitHub renders READMEs on both)
+- Custom social preview image (og:image for when the repo is shared)
+
+---
+
+## 9. Priority & Dependencies
 
 ```
 Phase 1: Grid rework + deploy screen [DONE]
 Phase 2: Global dev console extraction [DONE]
-Phase 3 (next):    Hacker/CTF bubble (big project)
-Phase 4:           Hobby minigames (can be incremental)
-Phase 5:           Custom favicon
-Phase 6:           Music & audio system
+Phase 3: Hacker/CTF bubble (MVP) [DONE]
+Phase 4 (next):    Code cleanup & project restructure
+Phase 5:           Security & data hygiene (flag obfuscation, about-me rework)
+Phase 6:           Awesome README
+Phase 7:           Grid rework (gameplay polish, better visuals, balancing)
+Phase 8:           Hobby minigames (can be incremental)
+Phase 9:           Custom favicon
+Phase 10:          Music & audio system (Strudel WIP)
 ```
 
 ### Notes
 
+- **Code cleanup first** -- restructuring now prevents headaches in every future phase. Easier to work on Grid rework when files are clean and split properly.
+- **Security/data pass** should happen before the site goes truly public -- no point hiding flags if the repo exposes them all
+- **README** after security pass -- write the README once the structure is clean and secrets are hidden, so it reflects the final state
 - The CTF bubble is the biggest project -- could be developed incrementally (start with the terminal + 5 flags, add more over time)
 - Hobby minigames can be added one at a time
 - Global dev console should be extracted first since it benefits everything
 - Favicon is quick win -- can bang it out in a session
 - Music/audio is medium effort: start with arcade SFX (most impactful), then add ambient tracks per bubble
+- Grid rework: gameplay needs polish, some eras feel samey, deploy screen needs work, previews hard to see, sudo cheats buggy in some eras
+- About-me rework: create a single `about.js` data source, audit all components, tone down personal details
+- Code cleanup: rename confusing folders, consolidate data files, split oversized components, consistent structure
 - All of these reinforce the portfolio's unique factor: "it's not just a portfolio, it's an experience"
