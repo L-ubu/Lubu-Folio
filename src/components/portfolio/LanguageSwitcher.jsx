@@ -175,6 +175,10 @@ export default function LanguageSwitcher() {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
         }
+
+        html[data-motion="reduced"] .lang-switcher__tag {
+          animation: none;
+        }
       `}</style>
     </div>
   );

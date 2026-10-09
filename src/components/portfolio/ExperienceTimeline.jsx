@@ -408,6 +408,10 @@ export default function ExperienceTimeline() {
           transform: scale(1.15);
         }
 
+        html[data-motion="reduced"] .deck-card {
+          transition: none;
+        }
+
         .deck-hint {
           text-align: center;
           font-family: var(--font-mono);
