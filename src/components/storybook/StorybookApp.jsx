@@ -4,6 +4,7 @@ import { pages, COLORS } from "../../data/storybook-content.js";
 import { registerCommands, unregisterCommands } from "../shared/DevConsole";
 import BookShell from "./BookShell.jsx";
 import AudioController from "./AudioController.jsx";
+import { useReducedMotion } from "../../utils/motion";
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(false);
@@ -21,6 +22,7 @@ export default function StorybookApp() {
   const [heartFound, setHeartFound] = useState(false);
   const unlock = useAchievementStore((s) => s.unlock);
   const isMobile = useIsMobile();
+  const reducedMotion = useReducedMotion();
 
   const handlePageChange = useCallback((idx) => {
     setCurrentPage(Math.max(0, Math.min(pages.length - 1, idx)));
@@ -133,7 +135,15 @@ export default function StorybookApp() {
       <AudioController currentPage={currentPage} />
 
       {heartFound && (
-        <div style={S.heartToast} className="heart-toast">
+        <div
+          style={{
+            ...S.heartToast,
+            animation: reducedMotion
+              ? "heartToastInReduced 0.15s ease-out, heartToastOutReduced 0.15s 3s ease-in forwards"
+              : S.heartToast.animation,
+          }}
+          className="heart-toast"
+        >
           ♥ Cuore Nascosto — You found the hidden heart!
         </div>
       )}
@@ -196,8 +206,19 @@ const APP_CSS = `
   from { opacity: 1; }
   to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
 }
+@keyframes heartToastInReduced {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes heartToastOutReduced {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 .doodle-heart-clickable:hover {
   opacity: 0.4 !important;
   transform: translate(-50%, -50%) scale(1.3) !important;
+}
+html[data-motion="reduced"] .doodle-heart-clickable {
+  transition: none !important;
 }
 `;

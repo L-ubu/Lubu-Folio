@@ -1,6 +1,7 @@
 import { pages, ratings, COLORS } from "../../data/storybook-content.js";
 import StickyNote from "./StickyNote.jsx";
 import { Heart, Star, Squiggle } from "./Doodle.jsx";
+import { useReducedMotion } from "../../utils/motion";
 
 export default function PageContent({ pageIndex, onHeartFound, isActive }) {
   const page = pages[pageIndex];
@@ -604,6 +605,12 @@ function ExplorerPage({ page, isActive }) {
         @keyframes trailDraw {
           to { stroke-dashoffset: 0; }
         }
+        /* forwards-fill from a hidden start — cancelling without setting
+           the end state erases the path entirely (§3.6 R5). */
+        html[data-motion="reduced"] .sb-trail path {
+          animation: none;
+          stroke-dashoffset: 0;
+        }
       `}</style>
     </div>
   );
@@ -612,13 +619,18 @@ function ExplorerPage({ page, isActive }) {
 // ─── The Dreamer ────────────────────────────────────
 
 function Cloud({ children, color, index = 0 }) {
+  const reduced = useReducedMotion();
   const dur = 4 + index * 0.7;
   const del = index * 0.4;
+  // Deterministic per-cloud jitter — scattered offsets read as illustration;
+  // aligned clouds read as a broken loop (§3.6 R1).
+  const restOffset = ((index * 37) % 21) - 10;
   return (
     <Anim index={2 + index} style={{
       position: "relative",
       flex: "1 1 220px",
-      animation: `cloudFloat ${dur}s ease-in-out ${del}s infinite`,
+      animation: reduced ? undefined : `cloudFloat ${dur}s ease-in-out ${del}s infinite`,
+      transform: reduced ? `translateY(${restOffset}px)` : undefined,
       minWidth: 0,
     }}>
       <div style={{ position: "relative", zIndex: 1 }}>
@@ -795,6 +807,7 @@ function LittleThingsPage({ page, isActive }) {
 // ─── The Verdict ────────────────────────────────────
 
 function StarRating({ label, value, max, color }) {
+  const reduced = useReducedMotion();
   const total = Math.max(max, value);
   return (
     <div style={{
@@ -829,10 +842,14 @@ function StarRating({ label, value, max, color }) {
               color: filled ? color : "#ddd0c0",
               filter: filled ? `drop-shadow(0 0 1px ${color}40)` : "none",
               lineHeight: 1,
-              ...(overflow ? {
-                animation: "starPop 0.6s ease-in-out infinite alternate",
-                animationDelay: `${(i - max) * 0.15}s`,
-              } : {}),
+              ...(overflow
+                ? reduced
+                  ? { transform: "scale(1.25)" }
+                  : {
+                      animation: "starPop 0.6s ease-in-out infinite alternate",
+                      animationDelay: `${(i - max) * 0.15}s`,
+                    }
+                : {}),
             }}>
               {filled ? "★" : "☆"}
             </span>
